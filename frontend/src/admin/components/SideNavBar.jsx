@@ -19,7 +19,6 @@ function SideNavBar() {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const location = useLocation(); // 🔹 Get current URL
 
-    // Determine role based on URL
     const userRole = location.pathname.startsWith("/admin")
         ? "admin"
         : location.pathname.startsWith("/imp-exp")
@@ -70,7 +69,7 @@ function SideNavBar() {
                 collapsed={collapsed}
                 style={{ backgroundColor: "#111C43" }}
             >
-                <CDBSidebarHeader prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />} >
+                {/* <CDBSidebarHeader prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />} >
 
                     {!collapsed && (
                         <Link to="/" className="sidebar-header text-white text-decoration-none">
@@ -82,7 +81,20 @@ function SideNavBar() {
                             <img src={admin_side_logo} alt="THBM" style={{ width: '150px', height: "100", backgroundColor: "#fff" }} />
                         </Link>
                     )}
-                </CDBSidebarHeader>
+                </CDBSidebarHeader> */}
+                <CDBSidebarHeader 
+    prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />} 
+    style={{ position: 'sticky', top: 0, backgroundColor: '#111C43', zIndex: 1000 }}
+>
+    <Link to="/" className="sidebar-header text-white text-decoration-none">
+        <img 
+            src={admin_side_logo} 
+            alt="THBM" 
+            style={{ width: '150px', backgroundColor: "#fff" }} 
+        />
+    </Link>
+</CDBSidebarHeader>
+
 
                 <CDBSidebarContent className="sidebar-content">
                     <Menu>
@@ -103,98 +115,169 @@ function SideNavBar() {
                                         <Link to="/admin/profile" className="submenu-link">Profile Settings</Link>
                                     </MenuItem>
                                 </SubMenu>
-
                                 <SubMenu
                                     icon={<FaFileExport />}
-                                    label="Export Application Form"
+                                    label="Home Banner Slider"
                                     className="submenu-custom"
-                                    open={openMenu === "export"}
-                                    onClick={() => handleMenuClick("export")}
+                                    open={openMenu === "home_slider"}
+                                    onClick={() => handleMenuClick("home_slider")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Apply for New NOC</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Home Sliders</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Applications under review</Link>
-                                    </MenuItem>
-                                    <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Decision on Submitted <br /> Applications</Link>
-                                    </MenuItem>
-                                    <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
-                                    </MenuItem>
-                                    <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Draft Applications</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New Slider</Link>
                                     </MenuItem>
                                 </SubMenu>
-
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Users"
+                                    className="submenu-custom"
+                                    open={openMenu === "users"}
+                                    onClick={() => handleMenuClick("users")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Users</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New User</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Roles"
+                                    className="submenu-custom"
+                                    open={openMenu === "roles"}
+                                    onClick={() => handleMenuClick("roles")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Roles</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New Role</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Pages"
+                                    className="submenu-custom"
+                                    open={openMenu === "pages"}
+                                    onClick={() => handleMenuClick("pages")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Pages</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New Page</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Main Menus"
+                                    className="submenu-custom"
+                                    open={openMenu === "main_menu"}
+                                    onClick={() => handleMenuClick("main_menu")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Main Manus</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New Menus</Link>
+                                    </MenuItem>
+                                </SubMenu>
                                 <MenuItem component={<NavLink to="" />} icon={<FaFileDownload />} className="menu-item">
                                     <span className="menu-text">Format for Declaration <br /> of Recipient</span>
                                 </MenuItem>
-
                                 <SubMenu
-                                    icon={<FaChartArea />}
-                                    label="Decision"
+                                    icon={<FaFileExport />}
+                                    label="Document Master"
                                     className="submenu-custom"
-                                    open={openMenu === "decision"}
-                                    onClick={() => handleMenuClick("decision")}>
+                                    open={openMenu === "doc_master"}
+                                    onClick={() => handleMenuClick("doc_master")}
+                                >
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Documents</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New document</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaChartArea />}
-                                    label="Decision"
+                                    label="Exporter Applications"
                                     className="submenu-custom"
-                                    open={openMenu === "decision"}
-                                    onClick={() => handleMenuClick("decision")}>
+                                    open={openMenu === "exporter"}
+                                    onClick={() => handleMenuClick("exporter")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Exporter Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Apply New NOC Request</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaChartArea />}
-                                    label="Decision"
+                                    label="Importer Applications"
                                     className="submenu-custom"
-                                    open={openMenu === "decision"}
-                                    onClick={() => handleMenuClick("decision")}>
+                                    open={openMenu === "importer"}
+                                    onClick={() => handleMenuClick("importer")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Importer Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Apply New NOC Request</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaChartArea />}
-                                    label="Decision"
+                                    label="Nature of Biomaterial"
                                     className="submenu-custom"
-                                    open={openMenu === "decision"}
-                                    onClick={() => handleMenuClick("decision")}>
+                                    open={openMenu === "nature"}
+                                    onClick={() => handleMenuClick("nature")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Narural Biomaterials</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New Narural Biomaterial</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaChartArea />}
-                                    label="Decision"
+                                    label="PurposeOf End Use"
                                     className="submenu-custom"
-                                    open={openMenu === "decision"}
-                                    onClick={() => handleMenuClick("decision")}>
+                                    open={openMenu === "end_use"}
+                                    onClick={() => handleMenuClick("end_use")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All PurposeOf End Uses</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add PurposeOf End Uses</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="PurposeOf Sample Storage"
+                                    className="submenu-custom"
+                                    open={openMenu === "sample_storage"}
+                                    onClick={() => handleMenuClick("sample_storage")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All PurposeOf Sample Storage</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New PurposeOf Sample Storage</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Samples Exported Volume"
+                                    className="submenu-custom"
+                                    open={openMenu === "exported_volumn"}
+                                    onClick={() => handleMenuClick("exported_volumn")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Samples Exported Volume</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New Samples Exported Volume</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu

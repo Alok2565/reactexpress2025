@@ -75,7 +75,43 @@
     background-color: #0dcaf0 !important;
     color: #f8f9fa;
 }
-
+.css-1tqrhto >.ps-menu-button {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 35px;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+    padding-right: 20px;
+    padding-left: 40px;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0; /* Prevents flexbox from expanding unnecessarily */
+    overflow-y: auto;
+}
+.css-wx7wi4 {
+    width: 15px !important;
+    min-width: 15px !important;
+    margin-right: 10px !important;
+}
+.fRhOkl {
+    padding-top: 0px !important;
+}
+/* .css-16jesut >.ps-menu-button {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+} */
 /* 
 .sidebar-container {
     height: 100vh;
