@@ -1,0 +1,77 @@
+body {
+    background-color: #FAFAFB;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.96rem;
+    font-style: normal;
+}
+
+:root {
+    --bs-blue: #0d6efd;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #dc3545;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #ffc107;
+    --bs-green: #198754;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    --custom-bs-dark: #111C43;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
+
+.custom-dropdown .dropdown-toggle::after {
+    display: none !important;
+}
+
+.dropdown-menu.show.dropdown-menu-end {
+    width: 100% !important;
+    color: #111C43;
+    border-top: 3px solid var(--bs-info);
+}
+
+.dropdown-menu.show.dropdown-menu-end {
+    width: 100% !important;
+    border-top: 3px solid var(--bs-info);
+}
+
+
+
+.admin-header.d-flex.justify-content-between.align-items-center {
+    background-color: #ffffff !important;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: var(--bs-white);
+    border: inherit !important;
+    background-clip: border-box;
+    border-radius: 7px;
+    box-shadow: 0 4px 25px 0 rgba(168, 180, 208, 0.1);
+}
+
+/* ul li a {
+    text-decoration: none;
+} */

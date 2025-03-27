@@ -1,0 +1,93 @@
+:root {
+    --blue: #1e90ff;
+    --white: #ffffff;
+    /* --navbg:#0e6fb3;
+		--navbghover:#34B575; */
+    --navbg: #022759;
+    --navbghover: #00aeff;
+    --bs-navbar-active-color: #f1f1f1;
+    --navtextcolor: #f1f1f1;
+}
+
+body {
+    font-family: "Poppins";
+    font-family: Arial;
+}
+
+.projectName {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+
+.bg-primary-main {
+    background-color: #022759;
+}
+
+.dropdown-item.text-white:hover {
+    background-color: #00aeff;
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+
+}
+
+.dropdown-item {
+    background-color: #022759;
+    color: azure;
+    border: 1px solid #ddd;
+}
+
+.introduction {
+    width: 100%;
+    padding: 15px 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: rgba();
+}
+
+.intro {
+    width: 100%;
+    background: #e6f1f7;
+    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 25px 15px;
+    margin: auto;
+    align-items: center;
+}
+
+.mainHeading {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #132573;
+    line-height: 1.2;
+    margin-bottom: 35px;
+}
+
+/* Auth Register */
+.codex-authbox.register {
+    max-width: 65% !important;
+    width: 65% !important;
+    margin: auto;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 5px;
+    border-top: 5px solid #1a7cbc;
+    border-bottom: 5px solid #1a7cbc;
+    -webkit-box-shadow: 0 0 20px 5px rgba(5, 23, 34, .05);
+    box-shadow: 0 0 20px 5px rgba(5, 23, 34, .05);
+}
+
+
+.codex-authbox.login {
+    min-width: 445px;
+    width: 445px;
+    margin: auto;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 5px;
+    border-top: 5px solid #1a7cbc;
+    border-bottom: 5px solid #1a7cbc;
+    -webkit-box-shadow: 0 0 20px 5px rgba(5, 23, 34, .05);
+    box-shadow: 0 0 20px 5px rgba(5, 23, 34, .05);
+}

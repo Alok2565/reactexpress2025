@@ -1,0 +1,77 @@
+/* SideNavBar.css */
+.sidebar-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    color: #fff;
+    background-color: #111C43;
+}
+
+.sidebar-header a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.menu-item {
+    background-color: #111C43;
+}
+
+.menu-item:hover {
+    background-color: #1E2A63 !important;
+}
+
+.css-16jesut>.ps-menu-button:hover {
+    background-color: #0dcaf0 !important;
+}
+
+.css-1t8x7v1>.ps-menu-button:hover {
+    background-color: #0dcaf0 !important;
+}
+
+.menu-item.active {
+    background-color: #29356F !important;
+}
+
+.css-1tqrhto>.ps-menu-button:hover {
+    background-color: #0dcaf0 !important;
+    color: #f8f9fa;
+}
+
+.submenu-custom {
+    background-color: #111C43;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.submenu-custom:hover {
+    background-color: #111C43;
+}
+
+.submenu-custom.active {
+    background-color: #29356F;
+}
+
+.submenu-item {
+    background-color: #111C43;
+}
+
+.submenu-item:hover {
+    background-color: #1E2A63;
+}
+
+.submenu-item.active {
+    background-color: #29356F !important;
+}
+
+.submenu-link {
+    color: #f8f9fa;
+    text-decoration: none;
+}
+
+.css-ewdv3l ul li :hover {
+    background-color: #0dcaf0 !important;
+    color: #f8f9fa;
+}
