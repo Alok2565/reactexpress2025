@@ -75,3 +75,56 @@
     background-color: #0dcaf0 !important;
     color: #f8f9fa;
 }
+
+/* 
+.sidebar-container {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background-color: #111C43;
+}
+
+.sidebar {
+    width: 80px;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    background-color: #111C43;
+}
+
+.sidebar:hover {
+    width: 250px;
+}
+
+.sidebar .menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.sidebar .menu-item:hover {
+    background-color: #6D78DC;
+
+}
+
+.sidebar .menu-item span {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar:hover .menu-item span {
+    opacity: 1;
+}
+
+.sidebar .submenu-custom {
+    background-color: #242F5C;
+    
+    display: none;
+    padding-left: 20px;
+}
+
+.sidebar .menu-item.active+.submenu-custom {
+    display: block;
+} */

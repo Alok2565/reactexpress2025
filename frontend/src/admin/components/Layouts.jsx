@@ -7,7 +7,8 @@ import "../pages/style/custom.css";
 
 function Layouts() {
     return (
-        <div className="d-flex vh-100 bg-gray">
+        <>
+            {/* <div className="d-flex vh-100 bg-gray">
             <aside className="sidebar">
                 <SideNavBar />
             </aside>
@@ -18,7 +19,21 @@ function Layouts() {
                 </main>
                 <Footer />
             </div>
-        </div>
+        </div> */}
+            <div className="d-flex vh-100 bg-gray">
+                <aside className="sidebar d-flex flex-column" style={{ position: "sticky", top: 0, height: "100vh", overflowY: "auto" }}>
+                    <SideNavBar />
+                </aside>
+                <div className="content d-flex flex-column w-100" style={{ flex: 1, overflowY: "auto" }}>
+                    <Header />
+                    <main className="flex-grow-1" style={{ overflowY: "auto" }}>
+                        <Outlet />
+                    </main>
+                    <Footer />
+                </div>
+            </div>
+
+        </>
     );
 }
 export default Layouts;

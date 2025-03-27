@@ -75,3 +75,28 @@ body {
 /* ul li a {
     text-decoration: none;
 } */
+
+.form-card-sub-tite.text-black {
+    background-color: #bbdefba3;
+    border-radius: 2px;
+}
+
+.step-nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e0ecff;
+    border-radius: 5px;
+}
+
+.step-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.step-item.active {
+    background-color: #14468C;
+    color: white;
+}

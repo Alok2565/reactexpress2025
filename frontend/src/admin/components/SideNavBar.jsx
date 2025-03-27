@@ -23,7 +23,7 @@ function SideNavBar() {
     const userRole = location.pathname.startsWith("/admin")
         ? "admin"
         : location.pathname.startsWith("/imp-exp")
-            ? "icmr"
+            ? "imp-exp"
             : location.pathname.startsWith("/icmr")
                 ? "icmr"
                 : location.pathname.startsWith("/committee")
@@ -71,6 +71,7 @@ function SideNavBar() {
                 style={{ backgroundColor: "#111C43" }}
             >
                 <CDBSidebarHeader prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />} >
+
                     {!collapsed && (
                         <Link to="/" className="sidebar-header text-white text-decoration-none">
                             <img src={admin_side_logo} alt="THBM" style={{ width: '150px', height: "100", backgroundColor: "#fff" }} />
@@ -85,12 +86,11 @@ function SideNavBar() {
 
                 <CDBSidebarContent className="sidebar-content">
                     <Menu>
-                        <MenuItem component={<NavLink to="/admin/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
-                            Dashboard
-                        </MenuItem>
                         {/* Admin Sidebar */}
                         {userRole === "admin" && (
-                            <>
+                            <>      <MenuItem component={<NavLink to="/admin/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
+                                Dashboard
+                            </MenuItem>
 
                                 <SubMenu
                                     icon={<FaUser />}
@@ -137,6 +137,183 @@ function SideNavBar() {
                                     label="Decision"
                                     className="submenu-custom"
                                     open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Decision"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                            </>
+                        )}
+                        {/*User Sidebar IMP EXP*/}
+                        {userRole === "imp-exp" && (
+                            <>
+                                <MenuItem component={<NavLink to="/imp-exp/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
+                                    Dashboard
+                                </MenuItem>
+                                <SubMenu
+                                    icon={<FaUser />}
+                                    label="Profile"
+                                    className="submenu-custom"
+                                    open={openMenu === "profile"}
+                                    onClick={() => handleMenuClick("profile")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/profile" className="submenu-link">Profile Settings</Link>
+                                    </MenuItem>
+                                </SubMenu>
+
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Export Applications"
+                                    className="submenu-custom"
+                                    open={openMenu === "export"}
+                                    onClick={() => handleMenuClick("export")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/add-new" className="submenu-link"><LiaFileExportSolid /> Apply for New NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid />  Applications under review</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid />  Decision on Submitted <br /> &nbsp;&nbsp;&nbsp;Applications</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Draft Applications</Link>
+                                    </MenuItem>
+
+                                </SubMenu>
+                                <MenuItem component={<NavLink to="/admin/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
+                                    Format for Declaration <br />&nbsp;&nbsp;of Recipient
+                                </MenuItem>
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Total NOC Issued"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
                                     onClick={() => handleMenuClick("decision")}
                                 >
                                     <MenuItem className="submenu-item">
@@ -149,8 +326,7 @@ function SideNavBar() {
                             </>
                         )}
 
-
-                        {/* User Sidebar */}
+                        {/* User Sidebar ICMR */}
                         {userRole === "icmr" && (
                             <>
                                 <SubMenu

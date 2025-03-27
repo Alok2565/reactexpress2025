@@ -16,13 +16,15 @@ import Dashboard from './admin/pages/Dashboard';
 import Profile from './admin/pages/Profile';
 import ExporterApplicationList from './admin/pages/ExporterApplicationList';
 import IcmrDashboard from './admin/pages/icmr/IcmrDashboard';
-
+import CommDashboard from './admin/pages/committee/CommDashboard';
+import ImpExpDashboard from './admin/pages/imp-exp/ImpExpDashboard';
+import ApplyNocRequest from './admin/pages/imp-exp/ApplyNocRequest';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route exact path="about-us" element={<About />} />
@@ -36,11 +38,30 @@ function App() {
 
         <Route path="/" element={<Layouts />}>
           <Route index element={<Dashboard />} />
+          {/* Admin Route */}
           <Route exact path="/admin/dashboard" element={<Dashboard />} />
           <Route exact path="/admin/profile" element={<Profile />} />
+          <Route exact path="admin/exporter" element={<ExporterApplicationList />} />
+
+          {/* IMP EXP Route */}
+          <Route exact path="imp-exp/dashboard" element={<ImpExpDashboard />} />
+          <Route exact path="/imp-exp/profile" element={<Profile />} />
+          <Route exact path="/imp-exp/add-new" element={<ApplyNocRequest />} />
           <Route exact path="imp-exp/exporter" element={<ExporterApplicationList />} />
+
+          {/* ICMR Route */}
           <Route exact path="icmr/dashboard" element={<IcmrDashboard />} />
+          <Route exact path="/icmr/profile" element={<Profile />} />
+          <Route exact path="icmr/exporter" element={<ExporterApplicationList />} />
+
+          {/* Committee Route */}
+          <Route exact path="committee/dashboard" element={<CommDashboard />} />
+          <Route exact path="/committee/profile" element={<Profile />} />
+          <Route exact path="committee/exporter" element={<ExporterApplicationList />} />
         </Route>
+
+        {/* Catch-all route for undefined routes */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );
