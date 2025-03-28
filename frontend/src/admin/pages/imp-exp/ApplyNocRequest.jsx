@@ -1,73 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Card, CardBody } from 'react-bootstrap';
 import { FaInfoCircle, FaList, FaCheckCircle, FaLongArrowAltLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-
-const HsCodeOptions = [
-    { value: "30021020", label: "30021020 - Antisera and other blood fractions and immunological products" },
-    { value: "30021091", label: "30021091 - Antisera and other blood fractions and immunological products" },
-    { value: "30021210", label: "30021210 - For diphtheria" },
-    { value: "30021220", label: "30021220 - For tetanus" },
-    { value: "30021230", label: "30021230 - For rabies" },
-    { value: "30021240", label: "30021240 - For snake venom" },
-    { value: "30021290", label: "30021290 - Others" },
-    { value: "30029010", label: "30029010 - Human Blood" }
-];
-
-const HsCodeDescrip = [
-    { value: "30021020", description: "Antisera and other blood fractions and immunological products" },
-    { value: "30021091", description: "Antisera and other blood fractions and immunological products" },
-    { value: "30021210", description: "For diphtheria" },
-    { value: "30021220", description: "For tetanus" },
-    { value: "30021230", description: "For rabies" },
-    { value: "30021240", description: "For snake venom" },
-    { value: "30021290", description: "Others" },
-    { value: "30029010", description: "Human Blood" }
-];
-const nature_of_biomaterialoptions = [
-    { value: "Whole blood", label: "Whole blood" },
-    { value: "Buffy coat", label: "Buffy coat" },
-    { value: "Serum", label: "Serum" },
-    { value: "Plasma", label: "Plasma" },
-    { value: "Urine", label: "Urine" },
-    { value: "Nucleic acid(Extracted DNA)", label: "Nucleic acid(Extracted DNA)" },
-    { value: "Nucleic acid(Extracted RNA)", label: "Nucleic acid(Extracted RNA)" },
-    { value: "Any Tissue/Cells", label: "Any Tissue/Cells" },
-    { value: "Other body fluids", label: "Other body fluids" },
-    { value: "Others", label: "Others" },
-
-];
-
-const where_sample_collectedOption = [
-    { value: "Inpatient hospital facility", label: "Inpatient hospital facility" },
-    { value: "Outpatient hospital facility", label: "Outpatient hospital facility" },
-    { value: "Clinical/ Diagnostic laboratory", label: "Clinical/ Diagnostic laboratory" },
-    { value: "Research laboratory", label: "Research laboratory" },
-    { value: "Others", label: "Others" },
-
-];
-
-const SpecifyPurposeOption = [
-    { value: "Calibration/ Quality assurance", label: "Calibration/ Quality assurance" },
-    { value: "Clinical Diagnostics/ Testing", label: "Clinical Diagnostics/ Testing" },
-    { value: "Others", label: "Others" },
-
-];
-
-const whetherSamplesUsedResearchOption = [
-    { value: "Genomic studies/Gene Variant/SNP analysis", label: "Genomic studies/Gene Variant/SNP analysis" },
-    { value: "Transcriptomics Studies", label: "Transcriptomics Studies" },
-    { value: "Proteomic Studies", label: "Proteomic Studies" },
-    { value: "Metabolomic Studies", label: "Metabolomic Studies" },
-    { value: "Others", label: "Others" },
-
-];
-
-const PurposeofSamplesOption = [
-    { value: "Retesting purposes", label: "Retesting purposes" },
-    { value: "Further Analysis", label: "Further Analysis" },
-
-];
-
+import { HsCodeOptionsDescription, natureOfBiomaterialOptions, whereSampleCollectedOption, selectSpecifyPurposeOption, funcwhetherSamplesUsedResearchOption, funcPurposeofSamplesOption } from '../../modules/ExporterSelectData';
+const { HsCodeOptions, HsCodeDescrip } = HsCodeOptionsDescription();
+const { nature_of_biomaterialoptions } = natureOfBiomaterialOptions();
+const { where_sample_collectedOption } = whereSampleCollectedOption();
+const { SpecifyPurposeOption } = selectSpecifyPurposeOption();
+const { whetherSamplesUsedResearchOption } = funcwhetherSamplesUsedResearchOption();
+const { PurposeofSamplesOption } = funcPurposeofSamplesOption();
 function ApplyNocRequest() {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -100,29 +40,26 @@ function ApplyNocRequest() {
         national_security_angle: "",
         foreign_country_army_military: "",
         biomaterial_micro_organisms_approval: "",
+        ibsc_rcgm_approval_applicable: "",
     });
 
-    const [showInputs, setShowInputs] = useState(false);
+    const [showInputsDeniedExport, setShowInputsDeniedExport] = useState(false);
     const [showInputEndUser, setShowInputEndUser] = useState(false);
     const [showInputsbeing_exported, setShowInputsbeing_exported] = useState(false);
     const [showInputsSamplesEnvisaged, setInputsSamplesEnvisaged] = useState(false);
 
-
-
     const [showTextArea, setShowTextArea] = useState(false);
     const [sample_collectedTextArea, setsample_collectedTextArea] = useState(false);
     const [SpecifyPurposeTextArea, setSpecifyPurposeTextArea] = useState(false);
-
     const [whetherShowSelectInput, setWhetherShowSelectInput] = useState(false);
     const [whethershowTextArea, setWhetherShowTextArea] = useState(false);
     const [showInputsLeftoverSamples, setshowInputsLeftoverSamples] = useState(false);
-
     const [showInputsPurposeofSamples, setshowInputsPurposeofSamples] = useState(false);
     const [showInputsNationalSecurity, setshowInputsNationalSecurity] = useState(false);
     const [showInputsTextForeignCountry, setshowInputsTextForeignCountry] = useState(false);
     const [showInputsTextBiomaterialMicro, setshowInputsTextBiomaterialMicro] = useState(false);
+    const [showInputsTextIbscRcgm, setshowInputsTextIbscRcgm] = useState(false);
 
-    // Load saved data from localStorage
     useEffect(function () {
         const savedData = localStorage.getItem("nocFormData");
         if (savedData) {
@@ -140,7 +77,6 @@ function ApplyNocRequest() {
             };
         });
 
-        // Show textarea for "Nature of Biomaterial"
         if (name === "nature_of_biomaterial") {
             if (["Any Tissue/Cells", "Other body fluids", "Others"].includes(value)) {
                 setShowTextArea(true);
@@ -187,7 +123,12 @@ function ApplyNocRequest() {
                 }));
             }
         }
-
+        if (name === "repeat_samples_envisaged_yesno") {
+            setInputsSamplesEnvisaged(value === "Yes");
+        }
+        if (name === "denied_export_auth_last_3_years_yes_no") {
+            setShowInputsDeniedExport(value === "Yes");
+        }
 
         if (name === "end_user_receiving_party") {
             setShowInputEndUser(value === "Yes");
@@ -213,6 +154,9 @@ function ApplyNocRequest() {
             setshowInputsTextBiomaterialMicro(value === "Yes");
         }
 
+        if (name === "ibsc_rcgm_approval_applicable_yesno") {
+            setshowInputsTextIbscRcgm(value === "Yes");
+        }
 
 
 
@@ -256,9 +200,6 @@ function ApplyNocRequest() {
                 }));
             }
         }
-
-
-
     }
 
     function handleSubmit() {
@@ -306,74 +247,158 @@ function ApplyNocRequest() {
                                 </div>
                             </Col>
                         </Row>
+                        <Form noValidate>
+                            <Row>
 
-                        <Row>
-
-                            <div className="card-body-custom">
-                                {step === 1 && (
-                                    <>
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(1) Sending Party</strong></span>
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                        </Col>
-                                        <CardBody>
-
-                                            <Row>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(i) Importer Exporter Code (IEC)</b></Form.Label>
-                                                    <Form.Control type="text" placeholder="AAICR8954R" name="iec_code"
-                                                        value={formData.iec_code} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(ii) Name of the Applicant</b></Form.Label>
-                                                    <Form.Control type="text" placeholder="RUDANI ENTERPRISES PRIVATE LIMITED" name="name_of_applicant"
-                                                        value={formData.name_of_applicant} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(iii) Designation of the Applicant</b></Form.Label>
-                                                    <Form.Control type="text" placeholder="Developer" name="designation"
-                                                        value={formData.designation} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(iv) Address of the Company/Institution</b></Form.Label>
-                                                    <Form.Control type="text" placeholder="Developer" name="sending_company_add"
-                                                        value={formData.sending_company_add} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Col md="8 py-2">
+                                <div className="card-body-custom">
+                                    {step === 1 && (
+                                        <>
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
                                                     <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(1) Sending Party</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+
+                                                <Row>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(i) Importer Exporter Code (IEC)</b></Form.Label>
+                                                        <Form.Control type="text" placeholder="AAICR8954R" name="iec_code"
+                                                            value={formData.iec_code} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(ii) Name of the Applicant</b></Form.Label>
+                                                        <Form.Control type="text" placeholder="RUDANI ENTERPRISES PRIVATE LIMITED" name="name_of_applicant"
+                                                            value={formData.name_of_applicant} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(iii) Designation of the Applicant</b></Form.Label>
+                                                        <Form.Control type="text" placeholder="Developer" name="designation"
+                                                            value={formData.designation} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(iv) Address of the Company/Institution</b></Form.Label>
+                                                        <Form.Control as="textarea" placeholder="Developer" name="sending_company_add"
+                                                            value={formData.sending_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Col md="8 py-2">
+                                                        <Row>
+                                                            <Form.Label className="form-label">
+                                                                <b>
+                                                                    (v) Whether the applicant/ company/ institution has been denied export authorization in the last 3 years?
+                                                                    <span className="text-danger">*</span>
+                                                                </b>
+                                                            </Form.Label>
+                                                            <Col md="3">
+                                                                <Form.Group>
+                                                                    <Form.Check type="radio" value="Yes" name="denied_export_auth_last_3_years_yes_no" checked={formData.denied_export_auth_last_3_years_yes_no === "Yes"} onChange={handleChange} inline label="Yes" />
+                                                                    <Form.Check type="radio" value="No" name="denied_export_auth_last_3_years_yes_no" checked={formData.denied_export_auth_last_3_years_yes_no === "No"} onChange={handleChange} inline label="No" />
+                                                                </Form.Group>
+                                                            </Col>
+
+                                                            {showInputsDeniedExport && (
+                                                                <>
+                                                                    <Col md="4">
+                                                                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                                                            <Form.Label>
+                                                                                Upload relevant documents, if any
+                                                                                <span className="text-danger">*</span>
+                                                                            </Form.Label>
+                                                                            <Form.Control type="file" name="upload_comp_institute_denied_export" autoComplete="off" />
+                                                                        </Form.Group>
+                                                                    </Col>
+
+                                                                    <Col md="5">
+                                                                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                                                            <Form.Label>
+                                                                                Provide details
+                                                                                <span className="text-danger">*</span>
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                                as="textarea"
+                                                                                name="denied_export_auth_details"
+                                                                                rows={2}
+                                                                                placeholder="Add details"
+                                                                                autoComplete="off"
+                                                                            />
+                                                                        </Form.Group>
+                                                                    </Col>
+                                                                </>
+                                                            )}
+                                                        </Row>
+                                                    </Col>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
+                                                        <Form.Control type="file" name="sending_bg_company_add" value={formData.sending_bg_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                </Row>
+                                            </CardBody>
+
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(2) Receiving Party</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(i) Name of the Recipient<span className="text-danger">*</span></b></Form.Label>
+                                                        <Form.Control type="text" name="recipient_name" value={formData.recipient_name} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(ii) Designation of Recipient<span className="text-danger">*</span></b></Form.Label>
+                                                        <Form.Control type="text" name="recipient_designation" value={formData.recipient_designation} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(iii) Address of the Company/Institution<span className="text-danger">*</span></b></Form.Label>
+                                                        <Form.Control type="text" name="recipient_company_add" value={formData.recipient_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
+                                                        <Form.Control type="file" name="receiving_bg_company_add" value={formData.receiving_bg_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                    </Form.Group>
+                                                </Row>
+                                            </CardBody>
+
+                                            {/* End User Section */}
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(3) End User</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+
+                                            <CardBody>
+                                                <Row>
+
+                                                    <Form.Group as={Col} md="4">
                                                         <Form.Label className="form-label">
                                                             <b>
-                                                                (v) Whether the applicant/ company/ institution has been denied export authorization in the last 3 years?
+                                                                (i) If other than the receiving party
                                                                 <span className="text-danger">*</span>
                                                             </b>
                                                         </Form.Label>
-                                                        <Col md="3">
-                                                            <Form.Group>
-                                                                <Form.Check type="radio" value="Yes" name="export_denied" checked={formData.export_denied === "Yes"} onChange={handleChange} inline label="Yes" />
-                                                                <Form.Check type="radio" value="No" name="export_denied" checked={formData.export_denied === "No"} onChange={handleChange} inline label="No" />
-                                                            </Form.Group>
-                                                        </Col>
-
-                                                        {showInputs && (
-                                                            <>
-                                                                <Col md="4">
-                                                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                                                        <Form.Label>
-                                                                            Upload relevant documents, if any
-                                                                            <span className="text-danger">*</span>
-                                                                        </Form.Label>
-                                                                        <Form.Control type="file" name="upload_comp_institute_denied_export" autoComplete="off" />
-                                                                    </Form.Group>
-                                                                </Col>
-
-                                                                <Col md="5">
+                                                        <Form.Group>
+                                                            <Form.Check type="radio" value="Yes" name="end_user_receiving_party" checked={formData.end_user_receiving_party === "Yes"} onChange={handleChange} label="Yes" />
+                                                            {showInputEndUser && (
+                                                                <>
                                                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                                         <Form.Label>
                                                                             Provide details
@@ -381,647 +406,587 @@ function ApplyNocRequest() {
                                                                         </Form.Label>
                                                                         <Form.Control
                                                                             as="textarea"
-                                                                            name="denied_export_auth_details"
+                                                                            name="end_user_receiving_party"
                                                                             rows={2}
                                                                             placeholder="Add details"
                                                                             autoComplete="off"
                                                                         />
                                                                     </Form.Group>
-                                                                </Col>
-                                                            </>
-                                                        )}
-                                                    </Row>
-                                                </Col>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
-                                                    <Form.Control type="file" name="sending_bg_company_add" value={formData.sending_bg_company_add} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                            </Row>
-                                        </CardBody>
+                                                                </>
+                                                            )}
+                                                            <Form.Check type="radio" value="No" name="end_user_receiving_party" checked={formData.end_user_receiving_party === "No"} onChange={handleChange} label="No" />
+                                                        </Form.Group>
 
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(2) Receiving Party</strong></span>
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                        </Col>
-                                        <CardBody>
-                                            <Row>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(i) Name of the Recipient<span className="text-danger">*</span></b></Form.Label>
-                                                    <Form.Control type="text" name="recipient_name" value={formData.recipient_name} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(ii) Designation of Recipient<span className="text-danger">*</span></b></Form.Label>
-                                                    <Form.Control type="text" name="recipient_designation" value={formData.recipient_designation} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(iii) Address of the Company/Institution<span className="text-danger">*</span></b></Form.Label>
-                                                    <Form.Control type="text" name="recipient_company_add" value={formData.recipient_company_add} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
-                                                    <Form.Control type="file" name="receiving_bg_company_add" value={formData.receiving_bg_company_add} onChange={handleChange} readOnly autoComplete="off" />
-                                                </Form.Group>
-                                            </Row>
-                                        </CardBody>
-
-                                        {/* End User Section */}
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(3) End User</strong></span>
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                        </Col>
-
-                                        <CardBody>
-                                            <Row>
-
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label className="form-label">
-                                                        <b>
-                                                            (i) If other than the receiving party
-                                                            <span className="text-danger">*</span>
-                                                        </b>
-                                                    </Form.Label>
-
-                                                    <Form.Group>
-                                                        <Form.Check type="radio" value="Yes" name="end_user_receiving_party" checked={formData.end_user_receiving_party === "Yes"} onChange={handleChange} label="Yes" />
-                                                        {showInputEndUser && (
-                                                            <>
-                                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="end_user_receiving_party"
-                                                                        rows={2}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off"
-                                                                    />
-                                                                </Form.Group>
-                                                            </>
-                                                        )}
-                                                        <Form.Check type="radio" value="No" name="end_user_receiving_party" checked={formData.end_user_receiving_party === "No"} onChange={handleChange} label="No" />
                                                     </Form.Group>
 
-                                                </Form.Group>
-
-                                                {showInputEndUser && (
-                                                    <>
-                                                        <Form.Group as={Col} md="4">
-                                                            <Form.Label className="form-label"><b>(ii) Name of the End user<span className="text-danger">*</span></b></Form.Label>
-                                                            <Form.Control type="text" name="nameof_end_user" value={formData.nameof_end_user} onChange={handleChange} readOnly autoComplete="off" />
-                                                        </Form.Group>
-
-                                                        <Form.Group as={Col} md="4">
-                                                            <Form.Label className="form-label"><b>(iii) Address of the End user<span className="text-danger">*</span></b></Form.Label>
-                                                            <Form.Control type="text" name="addressof_end_user" value={formData.addressof_end_user} onChange={handleChange} readOnly autoComplete="off" />
-                                                        </Form.Group>
-                                                    </>
-                                                )}
-                                            </Row>
-                                        </CardBody>
-
-
-                                        <div className="d-flex justify-content-between mt-2 m-2">
-                                            <Button variant="primary" onClick={saveAsDraft}>Save as Draft</Button>
-                                            <Button variant="primary" onClick={() => setStep(2)}>Add More Info <FaArrowRight /></Button>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                            <div className="card-body-custom">
-                                {step === 2 && (
-                                    <>
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(1) Details of Biomaterial to be exported</strong></span>
-                                                        </Col>
-                                                    </Col>
+                                                    {showInputEndUser && (
+                                                        <>
+                                                            <Form.Group as={Col} md="4">
+                                                                <Form.Label className="form-label"><b>(ii) Name of the End user<span className="text-danger">*</span></b></Form.Label>
+                                                                <Form.Control type="text" name="nameof_end_user" value={formData.nameof_end_user} onChange={handleChange} readOnly autoComplete="off" />
+                                                            </Form.Group>
+                                                            <Form.Group as={Col} md="4">
+                                                                <Form.Label className="form-label"><b>(iii) Address of the End user<span className="text-danger">*</span></b></Form.Label>
+                                                                <Form.Control type="text" name="addressof_end_user" value={formData.addressof_end_user} onChange={handleChange} readOnly autoComplete="off" />
+                                                            </Form.Group>
+                                                        </>
+                                                    )}
                                                 </Row>
-                                            </Col>
-                                        </Col>
-                                        <CardBody>
-                                            <Row>
-                                                <Col md={4}>
-                                                    <Form.Label>
-                                                        <strong>(i) Harmonized System (HS) Code of Item to be exported
-                                                            <span className="text-danger">*</span>
-                                                        </strong>
-                                                    </Form.Label>
-                                                    <Form.Select
-                                                        aria-label="Default select example"
-                                                        name="hs_code"
-                                                        value={formData.hs_code}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="">Please Select</option>
-                                                        {HsCodeOptions.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-                                                </Col>
+                                            </CardBody>
 
-                                                <Col md={4}>
-                                                    <Form.Group className="mb-3">
+                                            <div className="d-flex justify-content-between mt-2 m-2">
+                                                <Button variant="primary" size="sm" onClick={saveAsDraft}>Save as Draft</Button>
+                                                <Button variant="primary" size="sm" onClick={() => setStep(2)}>Add More Info <FaArrowRight /></Button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                                <div className="card-body-custom">
+                                    {step === 2 && (
+                                        <>
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(1) Details of Biomaterial to be exported</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+                                                <Row>
+                                                    <Col md={4}>
                                                         <Form.Label>
-                                                            <strong>Harmonized System (HS) Code Description
+                                                            <strong>(i) Harmonized System (HS) Code of Item to be exported
                                                                 <span className="text-danger">*</span>
                                                             </strong>
                                                         </Form.Label>
-                                                        <Form.Control
-                                                            type="text"
-                                                            name="hs_code_description"
-                                                            id="hs_code_description"
-                                                            value={formData.hs_code_description}
-                                                            onChange={handleChange}
-                                                        />
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col md={4}>
-                                                    <Form.Label>
-                                                        <strong>(ii) Nature of biomaterial to be exported <span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Select
-                                                        name="nature_of_biomaterial"
-                                                        value={formData.nature_of_biomaterial}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="">Please Select</option>
-                                                        {nature_of_biomaterialoptions.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-                                                    {showTextArea && (
-                                                        <Form.Group className="mb-3 mt-3" controlId="biomaterialDescription">
-                                                            <Form.Control
-                                                                as="textarea"
-                                                                name="biomaterial_description"
-                                                                value={formData.biomaterial_description}
-                                                                onChange={handleChange}
-                                                                rows={2}
-                                                                placeholder="Add Details"
-                                                            />
-                                                        </Form.Group>
-                                                    )}
-                                                </Col>
-                                                <Col md={6}>
-                                                    <Form.Label>
-                                                        <strong>(iii) Where were the samples collected? <span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Select
-                                                        name="where_sample_collected"
-                                                        value={formData.where_sample_collected}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="">Please Select</option>
-                                                        {where_sample_collectedOption.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-                                                    {sample_collectedTextArea && (
-                                                        <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
-                                                            <Form.Control
-                                                                as="textarea"
-                                                                name="sample_collected_description"
-                                                                value={formData.sample_collected_description}
-                                                                onChange={handleChange}
-                                                                rows={2}
-                                                                placeholder="Add Details"
-                                                            />
-                                                        </Form.Group>
-                                                    )}
-                                                </Col>
-                                                <Col md={6}>
-                                                    <Form.Label>
-                                                        <strong>(iv) Has consent been taken from the individuals for the exact purpose for which the samples are being exported? <span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-
-                                                    <Form.Group>
-                                                        <Form.Check type="radio" value="Yes" name="samples_being_exported" checked={formData.samples_being_exported === "Yes"} onChange={handleChange} inline label="Yes" />
-                                                        <Form.Check type="radio" value="No" name="samples_being_exported" checked={formData.samples_being_exported === "No"} onChange={handleChange} inline label="No" />
-                                                        {showInputsbeing_exported && (
-                                                            <>
-                                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="samples_being_exported"
-                                                                        rows={2}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off"
-                                                                    />
-                                                                </Form.Group>
-                                                            </>
-                                                        )}
-                                                    </Form.Group>
-                                                </Col>
-
-                                                <Col md={6}>
-                                                    <Form.Label>
-                                                        <strong>(v) Details of Quantity of samples to be exported<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Row>
-                                                        <Col md={4}>
-                                                            <Form.Group className="mb-3">
-                                                                <Form.Label><strong>Total number of samples<span className="text-danger">*</span></strong></Form.Label>
-                                                                <Form.Control type="text" name="exported_number" id="exported_number"
-                                                                    value={formData.exported_number} onChange={handleChange} />
-                                                            </Form.Group>
-                                                        </Col>
-                                                        <Col md={8}>
-
-                                                            <Form.Label className="text-center w-100"><strong>Volume of each sample<span className="text-danger">*</span></strong></Form.Label>
-                                                            <Row>
-                                                                <Col md={6}>
-                                                                    <Form.Control type="text" name="vol_of_sample_text" id="vol_of_sample_text"
-                                                                        value={formData.vol_of_sample_text} onChange={handleChange} />
-                                                                </Col>
-                                                                <Col md={6}>
-                                                                    <Form.Control type="text" name="exported_volume" id="exported_volume"
-                                                                        value={formData.exported_volume} onChange={handleChange} />
-                                                                </Col>
-                                                            </Row>
-                                                        </Col>
-                                                    </Row>
-                                                </Col>
-                                                <Col md={6}>
-                                                    <Form.Label>
-                                                        <strong>(vi) Whether repeat export of samples is envisaged?<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Group>
-                                                        <Form.Check type="radio" value="Yes" name="repeat_samples_envisaged" checked={formData.repeat_samples_envisaged === "Yes"} onChange={handleChange} label="Yes" />
-                                                        {showInputsSamplesEnvisaged && (
-                                                            <>
-                                                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="repeat_samples_envisaged"
-                                                                        rows={2}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off"
-                                                                    />
-                                                                </Form.Group>
-                                                            </>
-                                                        )}
-                                                        <Form.Check type="radio" value="No" name="repeat_samples_envisaged" checked={formData.repeat_samples_envisaged === "No"} onChange={handleChange} label="No" />
-
-                                                    </Form.Group>
-                                                </Col>
-                                            </Row>
-                                        </CardBody>
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(2) Purpose of export of samples</strong></span>
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                        </Col>
-                                        <CardBody>
-                                            <Row>
-                                                <Form.Group as={Col} md="4">
-                                                    <Form.Label>
-                                                        <strong>(i) Specify purpose/ end use<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-
-                                                    <Form.Select
-                                                        name="specify_purpose_end_use"
-                                                        value={formData.specify_purpose_end_use}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="">Please Select</option>
-                                                        {SpecifyPurposeOption.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-                                                    {SpecifyPurposeTextArea && (
-                                                        <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
-                                                            <Form.Control
-                                                                as="textarea"
-                                                                name="specify_purpose_end_use_description"
-                                                                value={formData.specify_purpose_end_use_description}
-                                                                onChange={handleChange}
-                                                                rows={2}
-                                                                placeholder="Add Details"
-                                                            />
-                                                        </Form.Group>
-                                                    )}
-
-                                                </Form.Group>
-
-                                                <Form.Group as={Col} md="5">
-                                                    <Form.Label className="form-label"><b>(ii) Whether the samples will be used for any research analysis?</b></Form.Label>
-                                                    {/* <Form.Check type="radio" value="Yes" name="whether_samples_used_research_analysis" checked={formData.whether_samples_used_research_analysis === "Yes"} onChange={handleChange} inline label="Yes" />
-                                                    <Form.Check type="radio" value="No" name="whether_samples_used_research_analysis" checked={formData.whether_samples_used_research_analysis === "No"} onChange={handleChange} inline label="No" /> */}
-                                                    <Form.Check
-                                                        type="radio"
-                                                        name="whether_samples_used_research_analysis_yesno"
-                                                        value="Yes"
-                                                        label="Yes"
-                                                        onChange={handleChange}
-                                                        checked={formData.whether_samples_used_research_analysis_yesno === "Yes"}
-                                                        inline />
-                                                    <Form.Check
-                                                        type="radio"
-                                                        name="whether_samples_used_research_analysis_yesno"
-                                                        value="No"
-                                                        label="No"
-                                                        onChange={handleChange}
-                                                        checked={formData.whether_samples_used_research_analysis_yesno === "No"}
-                                                        inline />
-
-                                                    {/* Select Box (Shown when 'Yes' is selected) */}
-                                                    {whetherShowSelectInput && (
                                                         <Form.Select
-                                                            name="whether_samples_used_research_analysis"
+                                                            aria-label="Default select example"
+                                                            name="hs_code"
+                                                            value={formData.hs_code}
                                                             onChange={handleChange}
-                                                            value={formData.whether_samples_used_research_analysis}
                                                         >
                                                             <option value="">Please Select</option>
-                                                            {whetherSamplesUsedResearchOption.map((option) => (
+                                                            {HsCodeOptions.map((option) => (
                                                                 <option key={option.value} value={option.value}>
                                                                     {option.label}
                                                                 </option>
                                                             ))}
                                                         </Form.Select>
-                                                    )}
+                                                    </Col>
 
-                                                    {/* Textarea (Shown when 'Others' is selected) */}
-                                                    {whethershowTextArea && (
-                                                        <Form.Control className="mt-2"
-                                                            as="textarea"
-                                                            name="whether_samples_used_research_analysis_description"
-                                                            placeholder="Add details"
+                                                    <Col md={4}>
+                                                        <Form.Group className="mb-3">
+                                                            <Form.Label>
+                                                                <strong>Harmonized System (HS) Code Description
+                                                                    <span className="text-danger">*</span>
+                                                                </strong>
+                                                            </Form.Label>
+                                                            <Form.Control
+                                                                type="text"
+                                                                name="hs_code_description"
+                                                                id="hs_code_description"
+                                                                value={formData.hs_code_description}
+                                                                onChange={handleChange}
+                                                            />
+                                                        </Form.Group>
+                                                    </Col>
+                                                    <Col md={4}>
+                                                        <Form.Label>
+                                                            <strong>(ii) Nature of biomaterial to be exported <span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Select
+                                                            name="nature_of_biomaterial"
+                                                            value={formData.nature_of_biomaterial}
                                                             onChange={handleChange}
-                                                            value={formData.whether_samples_used_research_analysis_description}
-                                                        />
-                                                    )}
-                                                </Form.Group>
+                                                        >
+                                                            <option value="">Please Select</option>
+                                                            {nature_of_biomaterialoptions.map((option) => (
+                                                                <option key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </option>
+                                                            ))}
+                                                        </Form.Select>
+                                                        {showTextArea && (
+                                                            <Form.Group className="mb-3 mt-3" controlId="biomaterialDescription">
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="biomaterial_description"
+                                                                    value={formData.biomaterial_description}
+                                                                    onChange={handleChange}
+                                                                    rows={2}
+                                                                    placeholder="Add Details"
+                                                                />
+                                                            </Form.Group>
+                                                        )}
+                                                    </Col>
+                                                    <Col md={6}>
+                                                        <Form.Label>
+                                                            <strong>(iii) Where were the samples collected? <span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Select
+                                                            name="where_sample_collected"
+                                                            value={formData.where_sample_collected}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Please Select</option>
+                                                            {where_sample_collectedOption.map((option) => (
+                                                                <option key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </option>
+                                                            ))}
+                                                        </Form.Select>
+                                                        {sample_collectedTextArea && (
+                                                            <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="sample_collected_description"
+                                                                    value={formData.sample_collected_description}
+                                                                    onChange={handleChange}
+                                                                    rows={2}
+                                                                    placeholder="Add Details"
+                                                                />
+                                                            </Form.Group>
+                                                        )}
+                                                    </Col>
+                                                    <Col md={6}>
+                                                        <Form.Label>
+                                                            <strong>(iv) Has consent been taken from the individuals for the exact purpose for which the samples are being exported? <span className="text-danger">*</span></strong>
+                                                        </Form.Label>
 
-                                                <Form.Group as={Col} md="3">
-                                                    <Form.Label>
-                                                        <strong>(iii) Give details of the planned analysis<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Control type="file" name="details_planned_analysis" value={formData.details_planned_analysis} onChange={handleChange} autoComplete="off" />
+                                                        <Form.Group>
+                                                            <Form.Check type="radio" value="Yes" name="samples_being_exported" checked={formData.samples_being_exported === "Yes"} onChange={handleChange} inline label="Yes" />
+                                                            <Form.Check type="radio" value="No" name="samples_being_exported" checked={formData.samples_being_exported === "No"} onChange={handleChange} inline label="No" />
+                                                            {showInputsbeing_exported && (
+                                                                <>
+                                                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                                                        <Form.Label>
+                                                                            Provide details
+                                                                            <span className="text-danger">*</span>
+                                                                        </Form.Label>
+                                                                        <Form.Control
+                                                                            as="textarea"
+                                                                            name="samples_being_exported"
+                                                                            rows={2}
+                                                                            placeholder="Add details"
+                                                                            autoComplete="off"
+                                                                        />
+                                                                    </Form.Group>
+                                                                </>
+                                                            )}
+                                                        </Form.Group>
+                                                    </Col>
 
-                                                </Form.Group>
+                                                    <Col md={6}>
+                                                        <Form.Label>
+                                                            <strong>(v) Details of Quantity of samples to be exported<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Row>
+                                                            <Col md={4}>
+                                                                <Form.Group className="mb-3">
+                                                                    <Form.Label><strong>Total number of samples<span className="text-danger">*</span></strong></Form.Label>
+                                                                    <Form.Control type="text" name="exported_number" id="exported_number"
+                                                                        value={formData.exported_number} onChange={handleChange} />
+                                                                </Form.Group>
+                                                            </Col>
+                                                            <Col md={8}>
 
-                                            </Row>
-                                        </CardBody>
+                                                                <Form.Label className="text-center w-100"><strong>Volume of each sample<span className="text-danger">*</span></strong></Form.Label>
+                                                                <Row>
+                                                                    <Col md={6}>
+                                                                        <Form.Control type="text" name="vol_of_sample_text" id="vol_of_sample_text"
+                                                                            value={formData.vol_of_sample_text} onChange={handleChange} />
+                                                                    </Col>
+                                                                    <Col md={6}>
+                                                                        <Form.Control type="text" name="exported_volume" id="exported_volume"
+                                                                            value={formData.exported_volume} onChange={handleChange} />
+                                                                    </Col>
+                                                                </Row>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>
+                                                    <Col md={6}>
+                                                        <Form.Label>
+                                                            <strong>(vi) Whether repeat export of samples is envisaged?<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Group>
+                                                            <Form.Check type="radio" value="Yes" name="repeat_samples_envisaged_yesno" checked={formData.repeat_samples_envisaged_yesno === "Yes"} onChange={handleChange} label="Yes" />
+                                                            {showInputsSamplesEnvisaged && (
+                                                                <>
+                                                                    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                                                        <Form.Label>
+                                                                            Provide details
+                                                                            <span className="text-danger">*</span>
+                                                                        </Form.Label>
+                                                                        <Form.Control
+                                                                            as="textarea"
+                                                                            name="repeat_samples_envisaged"
+                                                                            rows={2}
+                                                                            placeholder="Add details"
+                                                                            autoComplete="off"
+                                                                        />
+                                                                    </Form.Group>
+                                                                </>
+                                                            )}
+                                                            <Form.Check type="radio" value="No" name="repeat_samples_envisaged_yesno" checked={formData.repeat_samples_envisaged_yesno === "No"} onChange={handleChange} label="No" />
 
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(3) Storage of samples/Leftover samples **</strong></span>
-                                                        </Col>
+                                                        </Form.Group>
                                                     </Col>
                                                 </Row>
+                                            </CardBody>
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(2) Purpose of export of samples</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
                                             </Col>
-                                        </Col>
-                                        <CardBody>
-                                            <Row>
-                                                <Form.Group as={Col} md="6">
-                                                    <Form.Label>
-                                                        <strong>(i) Will leftover samples be stored?<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Check type="radio" value="Yes" name="leftover_samples_store_yes_no" checked={formData.leftover_samples_store_yes_no === "Yes"} onChange={handleChange} label="Yes" />
-                                                    {showInputsLeftoverSamples && (
-                                                        <>
-                                                            <Form.Control
-                                                                as="textarea"
-                                                                name="leftover_samples_store"
-                                                                rows={2}
-                                                                placeholder="Add details"
-                                                                autoComplete="off" />
-                                                        </>
-                                                    )}
-                                                    <Form.Check type="radio" value="No" name="leftover_samples_store_yes_no" checked={formData.leftover_samples_store_yes_no === "No"} onChange={handleChange} label="No" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="6">
-                                                    <Form.Label>
-                                                        <strong>(ii) Purpose of samples storage<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Select
-                                                        name="purposeof_sample_store"
-                                                        value={formData.purposeof_sample_store}
-                                                        onChange={handleChange}
-                                                    >
-                                                        <option value="">Please Select</option>
-                                                        {PurposeofSamplesOption.map((option) => (
-                                                            <option key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-                                                    {showInputsPurposeofSamples && (
-                                                        <>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group as={Col} md="4">
+                                                        <Form.Label>
+                                                            <strong>(i) Specify purpose/ end use<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+
+                                                        <Form.Select
+                                                            name="specify_purpose_end_use"
+                                                            value={formData.specify_purpose_end_use}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Please Select</option>
+                                                            {SpecifyPurposeOption.map((option) => (
+                                                                <option key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </option>
+                                                            ))}
+                                                        </Form.Select>
+                                                        {SpecifyPurposeTextArea && (
+                                                            <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="specify_purpose_end_use_description"
+                                                                    value={formData.specify_purpose_end_use_description}
+                                                                    onChange={handleChange}
+                                                                    rows={2}
+                                                                    placeholder="Add Details"
+                                                                />
+                                                            </Form.Group>
+                                                        )}
+
+                                                    </Form.Group>
+
+                                                    <Form.Group as={Col} md="5">
+                                                        <Form.Label className="form-label"><b>(ii) Whether the samples will be used for any research analysis?</b></Form.Label>
+                                                        {/* <Form.Check type="radio" value="Yes" name="whether_samples_used_research_analysis" checked={formData.whether_samples_used_research_analysis === "Yes"} onChange={handleChange} inline label="Yes" />
+                                                    <Form.Check type="radio" value="No" name="whether_samples_used_research_analysis" checked={formData.whether_samples_used_research_analysis === "No"} onChange={handleChange} inline label="No" /> */}
+                                                        <Form.Check
+                                                            type="radio"
+                                                            name="whether_samples_used_research_analysis_yesno"
+                                                            value="Yes"
+                                                            label="Yes"
+                                                            onChange={handleChange}
+                                                            checked={formData.whether_samples_used_research_analysis_yesno === "Yes"}
+                                                            inline />
+                                                        <Form.Check
+                                                            type="radio"
+                                                            name="whether_samples_used_research_analysis_yesno"
+                                                            value="No"
+                                                            label="No"
+                                                            onChange={handleChange}
+                                                            checked={formData.whether_samples_used_research_analysis_yesno === "No"}
+                                                            inline />
+
+                                                        {/* Select Box (Shown when 'Yes' is selected) */}
+                                                        {whetherShowSelectInput && (
+                                                            <Form.Select
+                                                                name="whether_samples_used_research_analysis"
+                                                                onChange={handleChange}
+                                                                value={formData.whether_samples_used_research_analysis}
+                                                            >
+                                                                <option value="">Please Select</option>
+                                                                {whetherSamplesUsedResearchOption.map((option) => (
+                                                                    <option key={option.value} value={option.value}>
+                                                                        {option.label}
+                                                                    </option>
+                                                                ))}
+                                                            </Form.Select>
+                                                        )}
+
+                                                        {/* Textarea (Shown when 'Others' is selected) */}
+                                                        {whethershowTextArea && (
                                                             <Form.Control className="mt-2"
                                                                 as="textarea"
-                                                                name="purposeof_sample_store_description"
-                                                                rows={2}
+                                                                name="whether_samples_used_research_analysis_description"
                                                                 placeholder="Add details"
-                                                                autoComplete="off" />
-                                                        </>
-                                                    )}
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="6">
-                                                    <Form.Label>
-                                                        <strong>(iii) Duration of the samples storage<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Control type="text" name="duration_sample_store"
-                                                        value={formData.duration_sample_store} onChange={handleChange} autoComplete="off" />
-                                                </Form.Group>
-                                                <Form.Group as={Col} md="6">
-                                                    <Form.Label>
-                                                        <strong>(iv) Facility where samples will be stored<span className="text-danger">*</span></strong>
-                                                    </Form.Label>
-                                                    <Form.Control type="text" name="facilitywhere_samplestore"
-                                                        value={formData.facilitywhere_samplestore} onChange={handleChange} autoComplete="off" />
-                                                </Form.Group>
-                                            </Row>
-                                        </CardBody>
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(4) National security concerns</strong></span>
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                        </Col>
-                                        <Row>
-                                            {/* <Form.Group as={Col} md="6">
-                                                <Form.Label>
-                                                    <strong>(i) Whether the company/institution/department where the material is being exported has any adverse reporting or has figured adversely from a national security angle?<span className="text-danger">*</span></strong>
-                                                </Form.Label>
-                                                <Form.Check type="radio" name="national_security_angle_yes_no"
-                                                    value="Yes" label="Yes" onChange={handleChange}
-                                                    checked={formData.national_security_angle_yes_no === "Yes"}
-                                                    inline />
-                                                <Form.Check type="radio" name="national_security_angle_yes_no"
-                                                    value="Yes" label="Yes" onChange={handleChange}
-                                                    checked={formData.whether_samples_used_research_analysis_yesno === "No"}
-                                                    inline />
-                                                {showInputsNationalSecurity && (
-                                                    <>
-                                                        <Form.Control className="mt-2"
-                                                            as="textarea"
-                                                            name="national_security_angle"
-                                                            rows={2}
-                                                            placeholder="Add details"
-                                                            autoComplete="off" />
-                                                    </>
-                                                )}
-                                            </Form.Group> */}
-                                            <Form.Group as={Col} md="6">
-                                                <Form.Label>
-                                                    <strong>(i) Whether the company/institution/department where the material is being exported has any adverse reporting or has figured adversely from a national security angle?<span className="text-danger">*</span></strong>
-                                                </Form.Label>
-                                                <Form.Check type="radio" value="Yes" name="national_security_angle_yes_no" checked={formData.national_security_angle_yes_no === "Yes"} onChange={handleChange} label="Yes" />
-                                                {showInputsNationalSecurity && (
-                                                    <>
-                                                        <Form.Control
-                                                            as="textarea"
-                                                            name="national_security_angle"
-                                                            rows={2}
-                                                            placeholder="Add details"
-                                                            autoComplete="off" />
-                                                    </>
-                                                )}
-                                                <Form.Check type="radio" value="No" name="national_security_angle_yes_no" checked={formData.national_security_angle_yes_no === "No"} onChange={handleChange} label="No" />
-                                            </Form.Group>
-                                            <Form.Group as={Col} md="6">
-                                                <Form.Label>
-                                                    <strong>(ii) Whether the company/institution/department where the material is being exported is a subsidiary of a foreign country's army/military?<span className="text-danger">*</span></strong>
-                                                </Form.Label>
-                                                <Form.Check type="radio" value="Yes" name="foreign_country_army_military_yes_no" checked={formData.foreign_country_army_military_yes_no === "Yes"} onChange={handleChange} label="Yes" />
-                                                {showInputsTextForeignCountry && (
-                                                    <>
-                                                        <Form.Control
-                                                            as="textarea"
-                                                            name="foreign_country_army_military"
-                                                            rows={2}
-                                                            placeholder="Add details"
-                                                            autoComplete="off" />
-                                                    </>
-                                                )}
-                                                <Form.Check type="radio" value="No" name="foreign_country_army_military_yes_no" checked={formData.foreign_country_army_military_yes_no === "No"} onChange={handleChange} label="No" />
+                                                                onChange={handleChange}
+                                                                value={formData.whether_samples_used_research_analysis_description}
+                                                            />
+                                                        )}
+                                                    </Form.Group>
 
-                                            </Form.Group>
-                                            <Form.Group as={Col} md="12">
-                                                <Form.Label>
-                                                    <strong>(iii) If the Biomaterial contains micro-organisms listed in appendix 3 category 2 of list of SCOMET items, has approval been obtained from DGFT?<span className="text-danger">*</span></strong>
-                                                </Form.Label>
-                                                <Form.Check type="radio" value="Yes" name="biomaterial_approval_yesno" checked={formData.biomaterial_approval_yesno === "Yes"} onChange={handleChange} label="Yes" />
-                                                <Col md={6}>
-                                                    {showInputsTextBiomaterialMicro && (
-                                                        <>
-                                                            <Form.Control type="file"
-                                                                name="biomaterial_micro_organisms_approval" id="biomaterial_micro_organisms_approval"
-                                                                autoComplete="off" />
-                                                        </>
-                                                    )}
+                                                    <Form.Group as={Col} md="3">
+                                                        <Form.Label>
+                                                            <strong>(iii) Give details of the planned analysis<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Control type="file" name="details_planned_analysis" value={formData.details_planned_analysis} onChange={handleChange} autoComplete="off" />
+
+                                                    </Form.Group>
+
+                                                </Row>
+                                            </CardBody>
+
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(3) Storage of samples/Leftover samples **</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
                                                 </Col>
-                                                <Form.Check type="radio" value="No" name="biomaterial_approval_yesno" checked={formData.biomaterial_approval_yesno === "No"} onChange={handleChange} label="No" />
-
-                                            </Form.Group>
-                                        </Row>
-                                        <CardBody>
-                                            <Row>
-
-                                            </Row>
-                                        </CardBody>
-                                        <Col xl={12} className="d-flex justify-content-between mt-2 m-2">
-                                            <Button variant="warning" onClick={() => setStep(1)}><FaArrowLeft /> Back to Previous</Button>
-                                            <div className="save-btn float-right text-end">
-                                                <Button variant="primary" onClick={saveAsDraft}>Save as Draft</Button>
-                                                <Button variant="primary" onClick={() => setStep(3)} className="ms-2">Add More Info <FaArrowRight /></Button>
-                                            </div>
-                                        </Col>
-                                    </>
-                                )}
-
-                            </div>
-                            <div className="card-body-custom">
-                                {step === 3 && (
-                                    <>
-                                        <Col>
-                                            <Col className="form-card-sub-tite text-black">
-                                                <Row>
-                                                    <Col as={Col} md="12">
-                                                        <Col className="sub-title p-1">
-                                                            <span className="text-center p-1"><strong>(i) Declaration by the person requesting export/storage of samples (Sender)</strong></span>
-                                                        </Col>
-                                                    </Col>
-                                                </Row>
                                             </Col>
-                                        </Col>
-                                        <CardBody>
-                                            <Form.Group className="mb-3">
-                                                <Form.Label>Address</Form.Label>
-                                                <Form.Control type="text" placeholder="Enter address" name="address"
-                                                    value={formData.address} onChange={handleChange} />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3">
-                                                <Form.Label>Password</Form.Label>
-                                                <Form.Control type="password" placeholder="Password" name="password"
-                                                    value={formData.password} onChange={handleChange} />
-                                            </Form.Group>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group as={Col} md="6">
+                                                        <Form.Label>
+                                                            <strong>(i) Will leftover samples be stored?<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Check type="radio" value="Yes" name="leftover_samples_store_yes_no" checked={formData.leftover_samples_store_yes_no === "Yes"} onChange={handleChange} label="Yes" />
+                                                        {showInputsLeftoverSamples && (
+                                                            <>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="leftover_samples_store"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
+                                                            </>
+                                                        )}
+                                                        <Form.Check type="radio" value="No" name="leftover_samples_store_yes_no" checked={formData.leftover_samples_store_yes_no === "No"} onChange={handleChange} label="No" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="6">
+                                                        <Form.Label>
+                                                            <strong>(ii) Purpose of samples storage<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Select
+                                                            name="purposeof_sample_store"
+                                                            value={formData.purposeof_sample_store}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Please Select</option>
+                                                            {PurposeofSamplesOption.map((option) => (
+                                                                <option key={option.value} value={option.value}>
+                                                                    {option.label}
+                                                                </option>
+                                                            ))}
+                                                        </Form.Select>
+                                                        {showInputsPurposeofSamples && (
+                                                            <>
+                                                                <Form.Control className="mt-2"
+                                                                    as="textarea"
+                                                                    name="purposeof_sample_store_description"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
+                                                            </>
+                                                        )}
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="6">
+                                                        <Form.Label>
+                                                            <strong>(iii) Duration of the samples storage<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Control type="text" name="duration_sample_store"
+                                                            value={formData.duration_sample_store} onChange={handleChange} autoComplete="off" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="6">
+                                                        <Form.Label>
+                                                            <strong>(iv) Facility where samples will be stored<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Control type="text" name="facilitywhere_samplestore"
+                                                            value={formData.facilitywhere_samplestore} onChange={handleChange} autoComplete="off" />
+                                                    </Form.Group>
+                                                </Row>
+                                            </CardBody>
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(4) National security concerns</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group as={Col} md="6">
+                                                        <Form.Label>
+                                                            <strong>(i) Whether the company/institution/department where the material is being exported has any adverse reporting or has figured adversely from a national security angle?<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Check type="radio" value="Yes" name="national_security_angle_yes_no" checked={formData.national_security_angle_yes_no === "Yes"} onChange={handleChange} label="Yes" />
+                                                        {showInputsNationalSecurity && (
+                                                            <>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="national_security_angle"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
+                                                            </>
+                                                        )}
+                                                        <Form.Check type="radio" value="No" name="national_security_angle_yes_no" checked={formData.national_security_angle_yes_no === "No"} onChange={handleChange} label="No" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="6">
+                                                        <Form.Label>
+                                                            <strong>(ii) Whether the company/institution/department where the material is being exported is a subsidiary of a foreign country's army/military?<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Check type="radio" value="Yes" name="foreign_country_army_military_yes_no" checked={formData.foreign_country_army_military_yes_no === "Yes"} onChange={handleChange} label="Yes" />
+                                                        {showInputsTextForeignCountry && (
+                                                            <>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="foreign_country_army_military"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
+                                                            </>
+                                                        )}
+                                                        <Form.Check type="radio" value="No" name="foreign_country_army_military_yes_no" checked={formData.foreign_country_army_military_yes_no === "No"} onChange={handleChange} label="No" />
+                                                    </Form.Group>
+                                                    <Form.Group as={Col} md="12">
+                                                        <Form.Label>
+                                                            <strong>(iii) If the Biomaterial contains micro-organisms listed in appendix 3 category 2 of list of SCOMET items, has approval been obtained from DGFT?<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Check type="radio" value="Yes" name="biomaterial_approval_yesno" checked={formData.biomaterial_approval_yesno === "Yes"} onChange={handleChange} label="Yes" />
+                                                        <Col md={6}>
+                                                            {showInputsTextBiomaterialMicro && (
+                                                                <>
+                                                                    <Form.Control type="file"
+                                                                        name="biomaterial_micro_organisms_approval" id="biomaterial_micro_organisms_approval"
+                                                                        autoComplete="off" />
+                                                                </>
+                                                            )}
+                                                        </Col>
+                                                        <Form.Check type="radio" value="No" name="biomaterial_approval_yesno" checked={formData.biomaterial_approval_yesno === "No"} onChange={handleChange} label="No" />
+                                                    </Form.Group>
+                                                </Row>
+                                            </CardBody>
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(5) IBSC/RCGM approval, as applicable ***</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group as={Col} md="12">
+                                                        <Form.Label>
+                                                            <strong>(i) For the export of hazardous micro organisms/genetically engineered organisms or cells has IBSC/RCGM approval been obtained?<span className="text-danger">*</span></strong>
+                                                        </Form.Label>
+                                                        <Form.Check type="radio" value="Yes" name="ibsc_rcgm_approval_applicable_yesno" checked={formData.ibsc_rcgm_approval_applicable_yesno === "Yes"} onChange={handleChange} label="Yes" />
+                                                        <Col md={6}>
+                                                            {showInputsTextIbscRcgm && (
+                                                                <>
+                                                                    <Form.Control type="file"
+                                                                        name="ibsc_rcgm_approval_applicable" id="ibsc_rcgm_approval_applicable"
+                                                                        autoComplete="off" />
+                                                                </>
+                                                            )}
+                                                        </Col>
+                                                        <Form.Check type="radio" value="No" name="ibsc_rcgm_approval_applicable_yesno" checked={formData.ibsc_rcgm_approval_applicable_yesno === "No"} onChange={handleChange} label="No" />
+                                                    </Form.Group>
+                                                </Row>
+                                            </CardBody>
+                                            <Col xl={12} className="d-flex justify-content-between mt-2 m-2">
+                                                <Button variant="warning" size="sm" onClick={() => setStep(1)}><FaArrowLeft /> Back to Previous</Button>
+                                                <div className="save-btn float-right text-end">
+                                                    <Button variant="primary" size="sm" onClick={saveAsDraft}>Save as Draft</Button>
+                                                    <Button variant="primary" size="sm" onClick={() => setStep(3)} className="ms-2">Add More Info <FaArrowRight /></Button>
+                                                </div>
+                                            </Col>
+                                        </>
+                                    )}
 
-                                        </CardBody>
-                                        <Col xl={12} className="d-flex justify-content-between mt-2">
-                                            <Button variant="warning" className="m-2" onClick={() => setStep(2)}><FaArrowLeft /> Back to Previous</Button>
-                                            <div className="save-btn float-right text-end">
-                                                <Button variant="primary" className="m-2" onClick={saveAsDraft}>Save as Draft</Button>
-                                                <Button variant="primary" className="m-2" onClick={handleSubmit}>Submit</Button>
-                                            </div>
-                                        </Col>
-                                    </>
-                                )}
-                            </div>
-                        </Row>
+                                </div>
+                                <div className="card-body-custom">
+                                    {step === 3 && (
+                                        <>
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(i) Declaration by the person requesting export/storage of samples (Sender)</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label><span className="d-flex"><Form.Check type="checkbox" aria-label="checkbox 1" /> <span class="text-danger">*</span>&nbsp;I certify that the information provided in this request form is true and correct to the best of my knowledge, and I hereby declare that the samples referred to herein will be utilized for the purpose of
+                                                            <br /> </span><Form.Control type="text" placeholder="Only fetch data populated" name="icertify"
+                                                                value={formData.icertify} onChange={handleChange} readOnly /> only, the samples will not be used for any other purposes.
+                                                        </Form.Label>
+
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Password</Form.Label>
+                                                        <Form.Control type="password" placeholder="Password" name="password"
+                                                            value={formData.password} onChange={handleChange} />
+                                                    </Form.Group>
+
+                                                </Row>
+                                            </CardBody>
+
+                                            <Col>
+                                                <Col className="form-card-sub-tite text-black">
+                                                    <Row>
+                                                        <Col as={Col} md="12">
+                                                            <Col className="sub-title p-1">
+                                                                <span className="text-center p-1"><strong>(ii) Copy of Commercial contract/Proforma invoice</strong></span>
+                                                            </Col>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                            </Col>
+                                            <CardBody>
+                                                <Row>
+                                                    <Form.Group as={Col} md="12">
+                                                        <span className="d-flex"><Form.Check type="checkbox" aria-label="checkbox 1" /> <span class="text-danger">*</span>&nbsp;Certified copy of commercial contract/Proforma invoice is enclosed. Further I undertake to comply FEMA regulations and other guidelines issued by RBI regarding foreign transactions.</span>
+                                                    </Form.Group>
+                                                </Row>
+                                            </CardBody>
+                                            <Col xl={12} className="d-flex justify-content-between mt-2">
+                                                <Button variant="warning" size="sm" className="m-2" onClick={() => setStep(2)}><FaArrowLeft /> Back to Previous</Button>
+                                                <div className="save-btn float-right text-end">
+                                                    <Button variant="primary" size="sm" className="m-2" onClick={saveAsDraft}>Save as Draft</Button>
+                                                    <Button variant="primary" size="sm" className="m-2" onClick={handleSubmit}>Submit</Button>
+                                                </div>
+                                            </Col>
+                                        </>
+                                    )}
+                                </div>
+                            </Row>
+                        </Form>
                     </Card>
                 </Container>
-            </div>
+            </div >
         </>
     );
 }
