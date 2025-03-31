@@ -89,5 +89,13 @@ body {
     border-top: 5px solid #1a7cbc;
     border-bottom: 5px solid #1a7cbc;
     -webkit-box-shadow: 0 0 20px 5px rgba(5, 23, 34, .05);
-    box-shadow: 0 0 20px 5px rgba(5, 23, 34, .05);
+    box-shadow: 0 0 20px 5px rgba(29, 37, 41, 0.05);
+}
+.btn-primary {
+    background-color: #14468C !important;
+    border-color: #14468C;
+}
+.text-bg-primary {
+    background-color: #14468C !important;
+    border-color: #14468C;
 }

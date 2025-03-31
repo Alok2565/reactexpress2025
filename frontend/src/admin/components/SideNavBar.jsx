@@ -3,12 +3,12 @@ import {
     CDBSidebar,
     CDBSidebarContent,
     CDBSidebarHeader,
-    CDBSidebarMenu
+
 } from 'cdbreact';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { AiFillDashboard } from "react-icons/ai";
+import { AiFillDashboard, AiOutlineMenu } from "react-icons/ai";
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { FaUser, FaFileExport, FaBars, FaFileDownload, FaChartArea } from 'react-icons/fa';
+import { FaUser, FaFileExport, FaBars, FaFileDownload, FaChartArea,FaSlidersH,FaUsers,FaPager } from 'react-icons/fa';
 import { LiaFileExportSolid } from "react-icons/lia";
 import "../pages/style/sidenav.css";
 import admin_side_logo from "../../assets/images/dhrlogo.png";
@@ -116,7 +116,7 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaFileExport />}
+                                    icon={<FaSlidersH />}
                                     label="Home Banner Slider"
                                     className="submenu-custom"
                                     open={openMenu === "home_slider"}
@@ -130,7 +130,7 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaFileExport />}
+                                    icon={<FaUsers />}
                                     label="Users"
                                     className="submenu-custom"
                                     open={openMenu === "users"}
@@ -144,7 +144,7 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaFileExport />}
+                                    icon={<FaUsers />}
                                     label="Roles"
                                     className="submenu-custom"
                                     open={openMenu === "roles"}
@@ -158,7 +158,7 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaFileExport />}
+                                    icon={<FaPager />}
                                     label="Pages"
                                     className="submenu-custom"
                                     open={openMenu === "pages"}
@@ -172,7 +172,7 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaFileExport />}
+                                    icon={<AiOutlineMenu />}
                                     label="Main Menus"
                                     className="submenu-custom"
                                     open={openMenu === "main_menu"}
