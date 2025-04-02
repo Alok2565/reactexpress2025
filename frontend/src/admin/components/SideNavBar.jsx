@@ -8,8 +8,9 @@ import {
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AiFillDashboard, AiOutlineMenu } from "react-icons/ai";
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { FaUser, FaFileExport, FaBars, FaFileDownload, FaChartArea,FaSlidersH,FaUsers,FaPager } from 'react-icons/fa';
-import { LiaFileExportSolid } from "react-icons/lia";
+import { FaUser, FaFileExport, FaBars, FaFileDownload, FaChartArea,FaSlidersH,FaUsers,FaPager,FaFileSignature } from 'react-icons/fa';
+import { LiaFileExportSolid,LiaFileImportSolid } from "react-icons/lia";
+import { MdDocumentScanner } from "react-icons/md";
 import "../pages/style/sidenav.css";
 import admin_side_logo from "../../assets/images/dhrlogo.png";
 
@@ -189,7 +190,7 @@ function SideNavBar() {
                                     <span className="menu-text">Format for Declaration <br /> of Recipient</span>
                                 </MenuItem>
                                 <SubMenu
-                                    icon={<FaFileExport />}
+                                    icon={<MdDocumentScanner />}
                                     label="Document Master"
                                     className="submenu-custom"
                                     open={openMenu === "doc_master"}
@@ -203,7 +204,7 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaChartArea />}
+                                    icon={<LiaFileExportSolid />}
                                     label="Exporter Applications"
                                     className="submenu-custom"
                                     open={openMenu === "exporter"}
@@ -216,68 +217,68 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaChartArea />}
+                                    icon={<LiaFileImportSolid />}
                                     label="Importer Applications"
                                     className="submenu-custom"
                                     open={openMenu === "importer"}
                                     onClick={() => handleMenuClick("importer")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Importer Applications</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileImportSolid/> All Importer Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Apply New NOC Request</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileImportSolid /> Apply New NOC Request</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaChartArea />}
+                                    icon={<FaFileSignature />}
                                     label="Nature of Biomaterial"
                                     className="submenu-custom"
                                     open={openMenu === "nature"}
                                     onClick={() => handleMenuClick("nature")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Narural Biomaterials</Link>
+                                        <Link to="#" className="submenu-link"><FaFileSignature /> All Narural Biomaterials</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New Narural Biomaterial</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New Narural Biomaterial</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaChartArea />}
+                                    icon={<FaFileSignature />}
                                     label="PurposeOf End Use"
                                     className="submenu-custom"
                                     open={openMenu === "end_use"}
                                     onClick={() => handleMenuClick("end_use")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All PurposeOf End Uses</Link>
+                                        <Link to="#" className="submenu-link"><FaFileSignature  /> All PurposeOf End Uses</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add PurposeOf End Uses</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add PurposeOf End Uses</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaChartArea />}
+                                    icon={<FaFileSignature/>}
                                     label="PurposeOf Sample Storage"
                                     className="submenu-custom"
                                     open={openMenu === "sample_storage"}
                                     onClick={() => handleMenuClick("sample_storage")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All PurposeOf Sample Storage</Link>
+                                        <Link to="#" className="submenu-link"><FaFileSignature /> All PurposeOf Sample Storage</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New PurposeOf Sample Storage</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New PurposeOf Sample Storage</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaChartArea />}
+                                    icon={<FaFileSignature />}
                                     label="Samples Exported Volume"
                                     className="submenu-custom"
                                     open={openMenu === "exported_volumn"}
                                     onClick={() => handleMenuClick("exported_volumn")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Samples Exported Volume</Link>
+                                        <Link to="#" className="submenu-link"><FaFileSignature /> All Samples Exported Volume</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New Samples Exported Volume</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New Samples Exported Volume</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu

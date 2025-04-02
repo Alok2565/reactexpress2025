@@ -19,10 +19,20 @@ function ApplyNocRequest() {
         iec_code: "",
         upload_comp_institute_denied_export: "",
         denied_export_auth_details: "",
+        upload_comp_instof_sending:"",
+        nameof_recipient:"",
+        designationof_recipient:"",
+        company_instof_recipient:"",
+        upload_comp_instof_recipient:"",
+        end_user_receiving_party_desc:"",
+        nameof_end_user:"",
+        addressof_end_user:"",
         hs_code: "",
         hs_code_description: "",
         nature_of_biomaterial: "",
         nature_of_biomaterial_details: "",
+        where_sample_collected: "",
+        where_sample_collected_desc: "",
         whether_samples_used_research_analysis_description: "",
         certifythat: "",
     });
@@ -77,7 +87,7 @@ function ApplyNocRequest() {
         if (name === "denied_export_auth_last_3_years_yes_no") {
             setShowInputsDeniedExport(value === "Yes");
         }
-        if (name === "end_user_receiving_party") {
+        if (name === "end_user_receiving_party_yesno") {
             setShowInputEndUser(value === "Yes");
         }
         if (name === "nature_of_biomaterial") {
@@ -331,7 +341,10 @@ function ApplyNocRequest() {
                                                     </Col>
                                                     <Form.Group as={Col} md="4 mt-3">
                                                         <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
-                                                        <Form.Control type="file" name="sending_bg_company_add" value={formData.sending_bg_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                        <Form.Control type="file" name="upload_comp_instof_sending" value={formData.upload_comp_instof_sending} onChange={handleChange} autoComplete="off" />
+                                                        {errors.upload_comp_instof_sending && (
+                                                                    <p style={{ color: "red" }}>{errors.upload_comp_instof_sending}</p>
+                                                                )}
                                                     </Form.Group>
                                                 </Row>
                                             </CardBody>
@@ -348,19 +361,31 @@ function ApplyNocRequest() {
                                                 <Row>
                                                     <Form.Group as={Col} md="4">
                                                         <Form.Label className="form-label"><b>(i) Name of the Recipient<span className="text-danger">*</span></b></Form.Label>
-                                                        <Form.Control type="text" name="recipient_name" value={formData.recipient_name} onChange={handleChange} readOnly autoComplete="off" />
+                                                        <Form.Control type="text" name="nameof_recipient" value={formData.nameof_recipient} onChange={handleChange} autoComplete="off" />
+                                                        {errors.nameof_recipient && (
+                                                                    <p style={{ color: "red" }}>{errors.nameof_recipient}</p>
+                                                                )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="4">
                                                         <Form.Label className="form-label"><b>(ii) Designation of Recipient<span className="text-danger">*</span></b></Form.Label>
-                                                        <Form.Control type="text" name="recipient_designation" value={formData.recipient_designation} onChange={handleChange} readOnly autoComplete="off" />
+                                                        <Form.Control type="text" name="designationof_recipient" value={formData.designationof_recipient} onChange={handleChange} autoComplete="off" />
+                                                        {errors.designationof_recipient && (
+                                                                    <p style={{ color: "red" }}>{errors.designationof_recipient}</p>
+                                                                )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="4">
                                                         <Form.Label className="form-label"><b>(iii) Address of the Company/Institution<span className="text-danger">*</span></b></Form.Label>
-                                                        <Form.Control type="text" name="recipient_company_add" value={formData.recipient_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                        <Form.Control type="text" name="company_instof_recipient" value={formData.company_instof_recipient} onChange={handleChange} autoComplete="off" />
+                                                        {errors.company_instof_recipient && (
+                                                                    <p style={{ color: "red" }}>{errors.company_instof_recipient}</p>
+                                                                )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="4 mt-3">
                                                         <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
-                                                        <Form.Control type="file" name="receiving_bg_company_add" value={formData.receiving_bg_company_add} onChange={handleChange} readOnly autoComplete="off" />
+                                                        <Form.Control type="file" name="upload_comp_instof_recipient" value={formData.upload_comp_instof_recipient} onChange={handleChange} autoComplete="off" />
+                                                        {errors.upload_comp_instof_recipient && (
+                                                                    <p style={{ color: "red" }}>{errors.upload_comp_instof_recipient}</p>
+                                                                )}
                                                     </Form.Group>
                                                 </Row>
                                             </CardBody>
@@ -383,7 +408,7 @@ function ApplyNocRequest() {
                                                             </b>
                                                         </Form.Label>
                                                         <Form.Group>
-                                                            <Form.Check type="radio" value="Yes" name="end_user_receiving_party" checked={formData.end_user_receiving_party === "Yes"} onChange={handleChange} label="Yes" />
+                                                            <Form.Check type="radio" value="Yes" name="end_user_receiving_party_yesno" checked={formData.end_user_receiving_party_yesno === "Yes"} onChange={handleChange} label="Yes" />
                                                             {showInputEndUser && (
                                                                 <>
                                                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -393,17 +418,22 @@ function ApplyNocRequest() {
                                                                         </Form.Label>
                                                                         <Form.Control
                                                                             as="textarea"
-                                                                            name="end_user_receiving_party"
+                                                                            name="end_user_receiving_party_desc"
                                                                             rows={2}
                                                                             placeholder="Add details"
                                                                             autoComplete="off"
                                                                         />
+                                                                        {errors.end_user_receiving_party_desc && (
+                                                                    <p style={{ color: "red" }}>{errors.end_user_receiving_party_desc}</p>
+                                                                )}
                                                                     </Form.Group>
                                                                 </>
                                                             )}
-                                                            <Form.Check type="radio" value="No" name="end_user_receiving_party" checked={formData.end_user_receiving_party === "No"} onChange={handleChange} label="No" />
+                                                            <Form.Check type="radio" value="No" name="end_user_receiving_party_yesno" checked={formData.end_user_receiving_party_yesno === "No"} onChange={handleChange} label="No" />
                                                         </Form.Group>
-
+                                                        {errors.end_user_receiving_party_yesno && (
+                                                                    <p style={{ color: "red" }}>{errors.end_user_receiving_party_yesno}</p>
+                                                                )}
                                                     </Form.Group>
 
                                                     {showInputEndUser && (
@@ -411,13 +441,20 @@ function ApplyNocRequest() {
                                                             <Form.Group as={Col} md="4">
                                                                 <Form.Label className="form-label"><b>(ii) Name of the End user<span className="text-danger">*</span></b></Form.Label>
                                                                 <Form.Control type="text" name="nameof_end_user" value={formData.nameof_end_user} onChange={handleChange} readOnly autoComplete="off" />
+                                                                {errors.nameof_end_user && (
+                                                                    <p style={{ color: "red" }}>{errors.nameof_end_user}</p>
+                                                                )}
                                                             </Form.Group>
                                                             <Form.Group as={Col} md="4">
                                                                 <Form.Label className="form-label"><b>(iii) Address of the End user<span className="text-danger">*</span></b></Form.Label>
                                                                 <Form.Control type="text" name="addressof_end_user" value={formData.addressof_end_user} onChange={handleChange} readOnly autoComplete="off" />
+                                                                {errors.addressof_end_user && (
+                                                                    <p style={{ color: "red" }}>{errors.addressof_end_user}</p>
+                                                                )}
                                                             </Form.Group>
                                                         </>
                                                     )}
+                                                    
                                                 </Row>
                                                 <div className="d-flex justify-content-between mt-2 m-2">
                                                     <Button variant="primary" size="md" onClick={saveAsDraft}>Save as Draft</Button>
@@ -540,14 +577,20 @@ function ApplyNocRequest() {
                                                             <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
                                                                 <Form.Control
                                                                     as="textarea"
-                                                                    name="sample_collected_description"
-                                                                    value={formData.sample_collected_description}
+                                                                    name="where_sample_collected_desc"
+                                                                    value={formData.where_sample_collected_desc}
                                                                     onChange={handleChange}
                                                                     rows={2}
                                                                     placeholder="Add Details"
                                                                 />
+                                                                {errors.where_sample_collected_desc && <p style={{ color: "red" }}>{
+                                                            errors.where_sample_collected_desc
+                                                        }</p>}
                                                             </Form.Group>
                                                         )}
+                                                        {errors.where_sample_collected && <p style={{ color: "red" }}>{
+                                                            errors.where_sample_collected
+                                                        }</p>}
                                                     </Col>
                                                     <Col md={6}>
                                                         <Form.Label>
