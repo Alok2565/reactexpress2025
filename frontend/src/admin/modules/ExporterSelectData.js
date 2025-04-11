@@ -88,3 +88,13 @@ export function funcPurposeofSamplesOption() {
         ]
     };
 }
+export function quantityofSampleExportedOptions() {
+    return {
+        quantityofSampleExported: [
+            { value: "ML", label: "ML" },
+            { value: "L", label: "L" },
+            { value: "μL", label: "μL" },
+
+        ]
+    };
+}

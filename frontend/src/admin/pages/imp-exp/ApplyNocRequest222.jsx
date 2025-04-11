@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CDBBtn } from "cdbreact";
 import { Container, Row, Col, Button, Form, Card, CardBody, Modal } from 'react-bootstrap';
 import { FaInfoCircle, FaList, FaCheckCircle, FaLongArrowAltLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { HsCodeOptionsDescription, natureOfBiomaterialOptions, whereSampleCollectedOption, selectSpecifyPurposeOption, funcwhetherSamplesUsedResearchOption, funcPurposeofSamplesOption, quantityofSampleExportedOptions } from '../../modules/ExporterSelectData';
+import { HsCodeOptionsDescription, natureOfBiomaterialOptions, whereSampleCollectedOption, selectSpecifyPurposeOption, funcwhetherSamplesUsedResearchOption, funcPurposeofSamplesOption } from '../../modules/ExporterSelectData';
 import ValidationNocRequest from "./ValidationNocRequest";
 
 const { HsCodeOptions, HsCodeDescrip } = HsCodeOptionsDescription();
@@ -12,7 +12,6 @@ const { where_sample_collectedOption } = whereSampleCollectedOption();
 const { SpecifyPurposeOption } = selectSpecifyPurposeOption();
 const { whetherSamplesUsedResearchOption } = funcwhetherSamplesUsedResearchOption();
 const { PurposeofSamplesOption } = funcPurposeofSamplesOption();
-const { quantityofSampleExported } = quantityofSampleExportedOptions();
 
 function ApplyNocRequest() {
     const [step, setStep] = useState(1);
@@ -20,37 +19,18 @@ function ApplyNocRequest() {
         iec_code: "",
         upload_comp_institute_denied_export: "",
         denied_export_auth_details: "",
-        upload_comp_instof_sending: "",
+        upload_sending_bg_company_add: "",
         nameof_recipient: "",
         designationof_recipient: "",
-        company_instof_recipient: "",
-        upload_comp_instof_recipient: "",
-        end_user_receiving_party_desc: "",
-        nameof_end_user: "",
-        addressof_end_user: "",
+        company_addressof_recipient: "",
+        uploadbg_company_addressof_recipient: "",
+        end_user_receiving_party_yesno: "",
+        end_user_receiving_party_description: "",
         hs_code: "",
         hs_code_description: "",
         nature_of_biomaterial: "",
         nature_of_biomaterial_details: "",
-        where_sample_collected: "",
-        where_sample_collected_desc: "",
         whether_samples_used_research_analysis_description: "",
-        samples_being_exported_desc: "",
-        qtyof_exported_number: "",
-        volumnof_sample_desc: "",
-        qtyof_exported_volume: "",
-        repeat_samples_envisaged_desc: "",
-        specify_purpose_end_use: "",
-        upload_purposeof_planned_analysis: "",
-        leftover_samples_store_desc: "",
-        purposeof_sample_store: "",
-        purposeof_sample_store_desc: "",
-        duration_sample_store: "",
-        facilitywhere_samplestore: "",
-        national_security_angle_desc: "",
-        foreign_country_army_military_desc: "",
-        upload_biomaterial_organisms_approval: "",
-        ibsc_rcgm_approval_applicable_desc: "",
         certifythat: "",
     });
     const [errors, setErrors] = useState({});
@@ -129,7 +109,7 @@ function ApplyNocRequest() {
                 }));
             }
         }
-        if (name === "samples_being_exported_yes_no") {
+        if (name === "samples_being_exported") {
             setShowInputsbeing_exported(value === "Yes");
         }
         if (name === "repeat_samples_envisaged_yesno") {
@@ -144,7 +124,7 @@ function ApplyNocRequest() {
                 setWhetherShowTextArea(false);
                 setFormData((prevData) => ({
                     ...prevData,
-                    whether_samples_used_research_analysis_desc: "",
+                    whether_samples_used_research_analysis_description: "",
                 }));
             }
         }
@@ -157,7 +137,7 @@ function ApplyNocRequest() {
                 setWhetherShowTextArea(false);
                 setFormData((prevData) => ({
                     ...prevData,
-                    whether_samples_used_research_analysis_desc: "",
+                    whether_samples_used_research_analysis_description: "",
                 }));
             }
         }
@@ -168,7 +148,7 @@ function ApplyNocRequest() {
                 setSpecifyPurposeTextArea(false);
                 setFormData((prevData) => ({
                     ...prevData,
-                    specify_purpose_end_use_desc: "",
+                    specify_purpose_end_use_description: "",
                 }));
             }
         }
@@ -182,7 +162,7 @@ function ApplyNocRequest() {
                 setshowInputsPurposeofSamples(false);
                 setFormData((prevData) => ({
                     ...prevData,
-                    purposeof_sample_store_desc: "",
+                    purposeof_sample_store_description: "",
                 }));
             }
         }
@@ -301,8 +281,8 @@ function ApplyNocRequest() {
                                                             value={formData.sending_company_add} onChange={handleChange} readOnly autoComplete="off" />
                                                     </Form.Group>
                                                     <Col md="8 py-2">
-                                                        <Form.Group className="mt-3">
-                                                            <Row>
+                                                        <Row>
+                                                            <Form.Group className="mt-3">
                                                                 <Form.Label className="form-label">
                                                                     <b>
                                                                         (v) Whether the applicant/ company/ institution has been denied export authorization in the last 3 years?
@@ -315,6 +295,7 @@ function ApplyNocRequest() {
                                                                         <Form.Check type="radio" value="No" name="denied_export_auth_last_3_years_yes_no" checked={formData.denied_export_auth_last_3_years_yes_no === "No"} onChange={handleChange} inline label="No" />
                                                                     </Form.Group>
                                                                 </Col>
+
                                                                 {showInputsDeniedExport && (
                                                                     <>
                                                                         <Col md="4">
@@ -353,14 +334,13 @@ function ApplyNocRequest() {
                                                                 {errors.denied_export_auth_last_3_years_yes_no && (
                                                                     <p style={{ color: "red" }}>{errors.denied_export_auth_last_3_years_yes_no}</p>
                                                                 )}
-                                                            </Row>
-                                                        </Form.Group>
+                                                            </Form.Group>          </Row>
                                                     </Col>
                                                     <Form.Group as={Col} md="4 mt-3">
                                                         <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
-                                                        <Form.Control type="file" name="upload_comp_instof_sending" value={formData.upload_comp_instof_sending} onChange={handleChange} autoComplete="off" />
-                                                        {errors.upload_comp_instof_sending && (
-                                                            <p style={{ color: "red" }}>{errors.upload_comp_instof_sending}</p>
+                                                        <Form.Control type="file" name="upload_sending_bg_company_add" value={formData.upload_sending_bg_company_add} onChange={handleChange} autoComplete="off" />
+                                                        {errors.upload_sending_bg_company_add && (
+                                                            <p style={{ color: "red" }}>{errors.upload_sending_bg_company_add}</p>
                                                         )}
                                                     </Form.Group>
                                                 </Row>
@@ -392,16 +372,16 @@ function ApplyNocRequest() {
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="4">
                                                         <Form.Label className="form-label"><b>(iii) Address of the Company/Institution<span className="text-danger">*</span></b></Form.Label>
-                                                        <Form.Control type="text" name="company_instof_recipient" value={formData.company_instof_recipient} onChange={handleChange} autoComplete="off" />
-                                                        {errors.company_instof_recipient && (
-                                                            <p style={{ color: "red" }}>{errors.company_instof_recipient}</p>
+                                                        <Form.Control type="text" name="company_addressof_recipient" value={formData.company_addressof_recipient} onChange={handleChange} autoComplete="off" />
+                                                        {errors.company_addressof_recipient && (
+                                                            <p style={{ color: "red" }}>{errors.company_addressof_recipient}</p>
                                                         )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="4 mt-3">
                                                         <Form.Label className="form-label"><b>(vi) Background of Company/Institute</b></Form.Label>
-                                                        <Form.Control type="file" name="upload_comp_instof_recipient" value={formData.upload_comp_instof_recipient} onChange={handleChange} autoComplete="off" />
-                                                        {errors.upload_comp_instof_recipient && (
-                                                            <p style={{ color: "red" }}>{errors.upload_comp_instof_recipient}</p>
+                                                        <Form.Control type="file" name="uploadbg_company_addressof_recipient" value={formData.uploadbg_company_addressof_recipient} onChange={handleChange} autoComplete="off" />
+                                                        {errors.uploadbg_company_addressof_recipient && (
+                                                            <p style={{ color: "red" }}>{errors.uploadbg_company_addressof_recipient}</p>
                                                         )}
                                                     </Form.Group>
                                                 </Row>
@@ -435,43 +415,37 @@ function ApplyNocRequest() {
                                                                         </Form.Label>
                                                                         <Form.Control
                                                                             as="textarea"
-                                                                            name="end_user_receiving_party_desc"
+                                                                            name="end_user_receiving_party_description"
                                                                             rows={2}
                                                                             placeholder="Add details"
                                                                             autoComplete="off"
                                                                         />
-                                                                        {errors.end_user_receiving_party_desc && (
-                                                                            <p style={{ color: "red" }}>{errors.end_user_receiving_party_desc}</p>
+                                                                        {errors.end_user_receiving_party_description && (
+                                                                            <p style={{ color: "red" }}>{errors.end_user_receiving_party_description}</p>
                                                                         )}
                                                                     </Form.Group>
                                                                 </>
                                                             )}
                                                             <Form.Check type="radio" value="No" name="end_user_receiving_party_yesno" checked={formData.end_user_receiving_party_yesno === "No"} onChange={handleChange} label="No" />
+                                                            {errors.end_user_receiving_party_yesno && (
+                                                                <p style={{ color: "red" }}>{errors.end_user_receiving_party_yesno}</p>
+                                                            )}
                                                         </Form.Group>
-                                                        {errors.end_user_receiving_party_yesno && (
-                                                            <p style={{ color: "red" }}>{errors.end_user_receiving_party_yesno}</p>
-                                                        )}
+
                                                     </Form.Group>
 
                                                     {showInputEndUser && (
                                                         <>
                                                             <Form.Group as={Col} md="4">
                                                                 <Form.Label className="form-label"><b>(ii) Name of the End user<span className="text-danger">*</span></b></Form.Label>
-                                                                <Form.Control type="text" name="nameof_end_user" value={formData.nameof_end_user} onChange={handleChange} readOnly autoComplete="off" />
-                                                                {errors.nameof_end_user && (
-                                                                    <p style={{ color: "red" }}>{errors.nameof_end_user}</p>
-                                                                )}
+                                                                <Form.Control type="text" name="nameof_end_user" value={formData.nameof_end_user} onChange={handleChange} autoComplete="off" />
                                                             </Form.Group>
                                                             <Form.Group as={Col} md="4">
                                                                 <Form.Label className="form-label"><b>(iii) Address of the End user<span className="text-danger">*</span></b></Form.Label>
-                                                                <Form.Control type="text" name="addressof_end_user" value={formData.addressof_end_user} onChange={handleChange} readOnly autoComplete="off" />
-                                                                {errors.addressof_end_user && (
-                                                                    <p style={{ color: "red" }}>{errors.addressof_end_user}</p>
-                                                                )}
+                                                                <Form.Control type="text" name="addressof_end_user" value={formData.addressof_end_user} onChange={handleChange} autoComplete="off" />
                                                             </Form.Group>
                                                         </>
                                                     )}
-
                                                 </Row>
                                                 <div className="d-flex justify-content-between mt-2 m-2">
                                                     <Button variant="primary" size="md" onClick={saveAsDraft}>Save as Draft</Button>
@@ -555,25 +529,19 @@ function ApplyNocRequest() {
 
                                                             </Form.Select>
                                                             {showTextAreaNature && (
-                                                                <>
-                                                                    <Form.Group className="mb-3 mt-3" controlId="biomaterialDescription">
-                                                                        <Form.Label>
-                                                                            Provide details
-                                                                            <span className="text-danger">*</span>
-                                                                        </Form.Label>
-                                                                        <Form.Control
-                                                                            as="textarea"
-                                                                            name="nature_of_biomaterial_details"
-                                                                            value={formData.nature_of_biomaterial_details}
-                                                                            onChange={handleChange}
-                                                                            rows={2}
-                                                                            placeholder="Add Details"
-                                                                        />
-                                                                        {errors.nature_of_biomaterial_details && <p style={{ color: "red" }}>{
-                                                                            errors.nature_of_biomaterial_details
-                                                                        }</p>}
-                                                                    </Form.Group>
-                                                                </>
+                                                                <Form.Group className="mb-3 mt-3" controlId="biomaterialDescription">
+                                                                    <Form.Control
+                                                                        as="textarea"
+                                                                        name="nature_of_biomaterial_details"
+                                                                        value={formData.nature_of_biomaterial_details}
+                                                                        onChange={handleChange}
+                                                                        rows={2}
+                                                                        placeholder="Add Details"
+                                                                    />
+                                                                    {errors.nature_of_biomaterial_details && <p style={{ color: "red" }}>{
+                                                                        errors.nature_of_biomaterial_details
+                                                                    }</p>}
+                                                                </Form.Group>
                                                             )}
                                                         </Form.Group>
                                                         {errors.nature_of_biomaterial && <p style={{ color: "red" }}>{
@@ -597,30 +565,17 @@ function ApplyNocRequest() {
                                                             ))}
                                                         </Form.Select>
                                                         {sample_collectedTextArea && (
-                                                            <>
-                                                                <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="where_sample_collected_desc"
-                                                                        value={formData.where_sample_collected_desc}
-                                                                        onChange={handleChange}
-                                                                        rows={2}
-                                                                        placeholder="Add Details"
-                                                                    />
-                                                                    {errors.where_sample_collected_desc && <p style={{ color: "red" }}>{
-                                                                        errors.where_sample_collected_desc
-                                                                    }</p>}
-                                                                </Form.Group>
-                                                            </>
-
+                                                            <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="sample_collected_description"
+                                                                    value={formData.sample_collected_description}
+                                                                    onChange={handleChange}
+                                                                    rows={2}
+                                                                    placeholder="Add Details"
+                                                                />
+                                                            </Form.Group>
                                                         )}
-                                                        {errors.where_sample_collected && <p style={{ color: "red" }}>{
-                                                            errors.where_sample_collected
-                                                        }</p>}
                                                     </Col>
                                                     <Col md={6}>
                                                         <Form.Label>
@@ -628,8 +583,8 @@ function ApplyNocRequest() {
                                                         </Form.Label>
 
                                                         <Form.Group>
-                                                            <Form.Check type="radio" value="Yes" name="samples_being_exported_yes_no" checked={formData.samples_being_exported_yes_no === "Yes"} onChange={handleChange} inline label="Yes" />
-                                                            <Form.Check type="radio" value="No" name="samples_being_exported_yes_no" checked={formData.samples_being_exported_yes_no === "No"} onChange={handleChange} inline label="No" />
+                                                            <Form.Check type="radio" value="Yes" name="samples_being_exported" checked={formData.samples_being_exported === "Yes"} onChange={handleChange} inline label="Yes" />
+                                                            <Form.Check type="radio" value="No" name="samples_being_exported" checked={formData.samples_being_exported === "No"} onChange={handleChange} inline label="No" />
                                                             {showInputsbeing_exported && (
                                                                 <>
                                                                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -639,22 +594,14 @@ function ApplyNocRequest() {
                                                                         </Form.Label>
                                                                         <Form.Control
                                                                             as="textarea"
-                                                                            name="samples_being_exported_desc"
+                                                                            name="samples_being_exported"
                                                                             rows={2}
-                                                                            value={formData.samples_being_exported_desc}
-                                                                            onChange={handleChange}
                                                                             placeholder="Add details"
                                                                             autoComplete="off"
                                                                         />
-                                                                        {errors.samples_being_exported_desc && <p style={{ color: "red" }}>{
-                                                                            errors.samples_being_exported_desc
-                                                                        }</p>}
                                                                     </Form.Group>
                                                                 </>
                                                             )}
-                                                            {errors.samples_being_exported_yes_no && <p style={{ color: "red" }}>{
-                                                                errors.samples_being_exported_yes_no
-                                                            }</p>}
                                                         </Form.Group>
                                                     </Col>
                                                     <Col md={6}>
@@ -665,11 +612,8 @@ function ApplyNocRequest() {
                                                             <Col md={4}>
                                                                 <Form.Group className="mb-3">
                                                                     <Form.Label><strong>Total number of samples<span className="text-danger">*</span></strong></Form.Label>
-                                                                    <Form.Control type="text" name="qtyof_exported_number" id="qtyof_exported_number"
-                                                                        value={formData.qtyof_exported_number} onChange={handleChange} />
-                                                                    {errors.qtyof_exported_number && <p style={{ color: "red" }}>{
-                                                                        errors.qtyof_exported_number
-                                                                    }</p>}
+                                                                    <Form.Control type="text" name="exported_number" id="exported_number"
+                                                                        value={formData.exported_number} onChange={handleChange} />
                                                                 </Form.Group>
                                                             </Col>
                                                             <Col md={8}>
@@ -677,32 +621,13 @@ function ApplyNocRequest() {
                                                                 <Form.Label className="text-center w-100"><strong>Volume of each sample<span className="text-danger">*</span></strong></Form.Label>
                                                                 <Row>
                                                                     <Col md={6}>
-                                                                        <Form.Control type="text" name="volumnof_sample_desc" id="volumnof_sample_desc"
-                                                                            value={formData.volumnof_sample_desc} onChange={handleChange} />
-                                                                        {errors.volumnof_sample_desc && <p style={{ color: "red" }}>{
-                                                                            errors.volumnof_sample_desc
-                                                                        }</p>}
+                                                                        <Form.Control type="text" name="vol_of_sample_text" id="vol_of_sample_text"
+                                                                            value={formData.vol_of_sample_text} onChange={handleChange} />
                                                                     </Col>
-
                                                                     <Col md={6}>
-                                                                        <Form.Select
-                                                                            name="qtyof_exported_volume"
-                                                                            value={formData.qtyof_exported_volume}
-                                                                            onChange={handleChange}
-                                                                        >
-                                                                            <option value="">Please Select</option>
-                                                                            {quantityofSampleExported.map((option) => (
-                                                                                <option key={option.value} value={option.value}>
-                                                                                    {option.label}
-                                                                                </option>
-                                                                            ))}
-
-                                                                        </Form.Select>
-                                                                        {errors.qtyof_exported_volume && <p style={{ color: "red" }}>{
-                                                                            errors.qtyof_exported_volume
-                                                                        }</p>}
+                                                                        <Form.Control type="text" name="exported_volume" id="exported_volume"
+                                                                            value={formData.exported_volume} onChange={handleChange} />
                                                                     </Col>
-
                                                                 </Row>
                                                             </Col>
                                                         </Row>
@@ -722,23 +647,16 @@ function ApplyNocRequest() {
                                                                         </Form.Label>
                                                                         <Form.Control
                                                                             as="textarea"
-                                                                            name="repeat_samples_envisaged_desc"
+                                                                            name="repeat_samples_envisaged"
                                                                             rows={2}
-                                                                            value={formData.repeat_samples_envisaged_desc}
-                                                                            onChange={handleChange}
                                                                             placeholder="Add details"
                                                                             autoComplete="off"
                                                                         />
-                                                                        {errors.repeat_samples_envisaged_desc && <p style={{ color: "red" }}>{
-                                                                            errors.repeat_samples_envisaged_desc
-                                                                        }</p>}
                                                                     </Form.Group>
                                                                 </>
                                                             )}
                                                             <Form.Check type="radio" value="No" name="repeat_samples_envisaged_yesno" checked={formData.repeat_samples_envisaged_yesno === "No"} onChange={handleChange} label="No" />
-                                                            {errors.repeat_samples_envisaged_yesno && <p style={{ color: "red" }}>{
-                                                                errors.repeat_samples_envisaged_yesno
-                                                            }</p>}
+
                                                         </Form.Group>
                                                     </Col>
                                                 </Row>
@@ -770,33 +688,22 @@ function ApplyNocRequest() {
                                                                     {option.label}
                                                                 </option>
                                                             ))}
-
                                                         </Form.Select>
                                                         {SpecifyPurposeTextArea && (
-                                                            <>
-                                                                <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="specify_purpose_end_use_desc"
-                                                                        value={formData.specify_purpose_end_use_desc}
-                                                                        onChange={handleChange}
-                                                                        rows={2}
-                                                                        placeholder="Add Details"
-                                                                    />
-                                                                    {errors.specify_purpose_end_use_desc && <p style={{ color: "red" }}>{
-                                                                        errors.specify_purpose_end_use_desc
-                                                                    }</p>}
-                                                                </Form.Group>
-                                                            </>
+                                                            <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="specify_purpose_end_use_description"
+                                                                    value={formData.specify_purpose_end_use_description}
+                                                                    onChange={handleChange}
+                                                                    rows={2}
+                                                                    placeholder="Add Details"
+                                                                />
+                                                            </Form.Group>
                                                         )}
-                                                        {errors.specify_purpose_end_use && <p style={{ color: "red" }}>{
-                                                            errors.specify_purpose_end_use
-                                                        }</p>}
+
                                                     </Form.Group>
+
                                                     <Form.Group as={Col} md="5">
                                                         <Form.Label className="form-label">
                                                             <strong>(ii) Whether the samples will be used for any research analysis? <span className="text-danger">*</span></strong>
@@ -821,59 +728,44 @@ function ApplyNocRequest() {
                                                                 inline
                                                             />
                                                         </div>
-                                                        {errors.whether_samples_used_research_analysis_yesno && (
-                                                            <p className="text-danger">{errors.whether_samples_used_research_analysis_yesno}</p>
-                                                        )}
 
-
+                                                        {/* Select Box (Shown when 'Yes' is selected) */}
                                                         {whetherShowSelectInput && (
-                                                            <>
-                                                                <Form.Select
-                                                                    name="whether_samples_used_research_analysis"
-                                                                    onChange={handleChange}
-                                                                    value={formData.whether_samples_used_research_analysis}
-                                                                >
-                                                                    <option value="">Please Select</option>
-                                                                    {whetherSamplesUsedResearchOption.map((option) => (
-                                                                        <option key={option.value} value={option.value}>
-                                                                            {option.label}
-                                                                        </option>
-                                                                    ))}
-                                                                </Form.Select>
-                                                                {errors.whether_samples_used_research_analysis && (
-                                                                    <p className="text-danger">{errors.whether_samples_used_research_analysis}</p>
-                                                                )}
-                                                            </>
+                                                            <Form.Select
+                                                                name="whether_samples_used_research_analysis"
+                                                                onChange={handleChange}
+                                                                value={formData.whether_samples_used_research_analysis}
+                                                            >
+                                                                <option value="">Please Select</option>
+                                                                {whetherSamplesUsedResearchOption.map((option) => (
+                                                                    <option key={option.value} value={option.value}>
+                                                                        {option.label}
+                                                                    </option>
+                                                                ))}
+                                                            </Form.Select>
                                                         )}
 
+                                                        {/* Textarea (Shown when 'Others' is selected) */}
                                                         {whethershowTextArea && (
-                                                            <Form.Group className="mb-2">
-                                                                <Form.Label>
-                                                                    Provide details
-                                                                    <span className="text-danger">*</span>
-                                                                </Form.Label>
-                                                                <Form.Control
-                                                                    as="textarea"
-                                                                    name="whether_samples_used_research_analysis_desc"
-                                                                    placeholder="Add details"
-                                                                    onChange={handleChange}
-                                                                    value={formData.whether_samples_used_research_analysis_desc}
-                                                                />
-                                                                {errors.whether_samples_used_research_analysis_desc && (
-                                                                    <p className="text-danger">{errors.whether_samples_used_research_analysis_desc}</p>
-                                                                )}
-                                                            </Form.Group>
+                                                            <Form.Control
+                                                                className="mt-2"
+                                                                as="textarea"
+                                                                name="whether_samples_used_research_analysis_description"
+                                                                placeholder="Add details"
+                                                                onChange={handleChange}
+                                                                value={formData.whether_samples_used_research_analysis_description}
+                                                            />
                                                         )}
                                                     </Form.Group>
+
+
 
                                                     <Form.Group as={Col} md="3">
                                                         <Form.Label>
                                                             <strong>(iii) Give details of the planned analysis<span className="text-danger">*</span></strong>
                                                         </Form.Label>
-                                                        <Form.Control type="file" name="upload_purposeof_planned_analysis" value={formData.upload_purposeof_planned_analysis} onChange={handleChange} autoComplete="off" />
-                                                        {errors.upload_purposeof_planned_analysis && (
-                                                            <p className="text-danger">{errors.upload_purposeof_planned_analysis}</p>
-                                                        )}
+                                                        <Form.Control type="file" name="details_planned_analysis" value={formData.details_planned_analysis} onChange={handleChange} autoComplete="off" />
+
                                                     </Form.Group>
                                                 </Row>
                                             </CardBody>
@@ -895,30 +787,15 @@ function ApplyNocRequest() {
                                                         <Form.Check type="radio" value="Yes" name="leftover_samples_store_yes_no" checked={formData.leftover_samples_store_yes_no === "Yes"} onChange={handleChange} label="Yes" />
                                                         {showInputsLeftoverSamples && (
                                                             <>
-                                                                <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="leftover_samples_store_desc"
-                                                                        rows={2}
-                                                                        value={formData.leftover_samples_store_desc}
-                                                                        onChange={handleChange}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off" />
-
-                                                                    {errors.leftover_samples_store_desc && (
-                                                                        <p className="text-danger">{errors.leftover_samples_store_desc}</p>
-                                                                    )}
-                                                                </Form.Group>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="leftover_samples_store"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
                                                             </>
                                                         )}
                                                         <Form.Check type="radio" value="No" name="leftover_samples_store_yes_no" checked={formData.leftover_samples_store_yes_no === "No"} onChange={handleChange} label="No" />
-                                                        {errors.leftover_samples_store_yes_no && (
-                                                            <p className="text-danger">{errors.leftover_samples_store_yes_no}</p>
-                                                        )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="6">
                                                         <Form.Label>
@@ -938,25 +815,13 @@ function ApplyNocRequest() {
                                                         </Form.Select>
                                                         {showInputsPurposeofSamples && (
                                                             <>
-                                                                <Form.Group className="mb-3" controlId="sampleCollectedDescription">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="purposeof_sample_store_desc"
-                                                                        rows={2}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off" />
-                                                                    {errors.purposeof_sample_store_desc && (
-                                                                        <p className="text-danger">{errors.purposeof_sample_store_desc}</p>
-                                                                    )}
-                                                                </Form.Group>
+                                                                <Form.Control className="mt-2"
+                                                                    as="textarea"
+                                                                    name="purposeof_sample_store_description"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
                                                             </>
-                                                        )}
-                                                        {errors.purposeof_sample_store && (
-                                                            <p className="text-danger">{errors.purposeof_sample_store}</p>
                                                         )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="6">
@@ -965,9 +830,6 @@ function ApplyNocRequest() {
                                                         </Form.Label>
                                                         <Form.Control type="text" name="duration_sample_store"
                                                             value={formData.duration_sample_store} onChange={handleChange} autoComplete="off" />
-                                                        {errors.duration_sample_store && (
-                                                            <p className="text-danger">{errors.duration_sample_store}</p>
-                                                        )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="6">
                                                         <Form.Label>
@@ -975,9 +837,6 @@ function ApplyNocRequest() {
                                                         </Form.Label>
                                                         <Form.Control type="text" name="facilitywhere_samplestore"
                                                             value={formData.facilitywhere_samplestore} onChange={handleChange} autoComplete="off" />
-                                                        {errors.facilitywhere_samplestore && (
-                                                            <p className="text-danger">{errors.facilitywhere_samplestore}</p>
-                                                        )}
                                                     </Form.Group>
                                                 </Row>
                                             </CardBody>
@@ -1000,27 +859,15 @@ function ApplyNocRequest() {
                                                         <Form.Check type="radio" value="Yes" name="national_security_angle_yes_no" checked={formData.national_security_angle_yes_no === "Yes"} onChange={handleChange} label="Yes" />
                                                         {showInputsNationalSecurity && (
                                                             <>
-                                                                <Form.Group className="mb-3 mt-3" controlId="sampleCollectedDescription">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="national_security_angle_desc"
-                                                                        rows={2}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off" />
-                                                                    {errors.national_security_angle_desc && (
-                                                                        <p className="text-danger">{errors.national_security_angle_desc}</p>
-                                                                    )}
-                                                                </Form.Group>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="national_security_angle"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
                                                             </>
                                                         )}
                                                         <Form.Check type="radio" value="No" name="national_security_angle_yes_no" checked={formData.national_security_angle_yes_no === "No"} onChange={handleChange} label="No" />
-                                                        {errors.national_security_angle_yes_no && (
-                                                            <p className="text-danger">{errors.national_security_angle_yes_no}</p>
-                                                        )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="6">
                                                         <Form.Label>
@@ -1029,27 +876,15 @@ function ApplyNocRequest() {
                                                         <Form.Check type="radio" value="Yes" name="foreign_country_army_military_yes_no" checked={formData.foreign_country_army_military_yes_no === "Yes"} onChange={handleChange} label="Yes" />
                                                         {showInputsTextForeignCountry && (
                                                             <>
-                                                                <Form.Group className="mb-3" controlId="sampleCollectedDescription">
-                                                                    <Form.Label>
-                                                                        Provide details
-                                                                        <span className="text-danger">*</span>
-                                                                    </Form.Label>
-                                                                    <Form.Control
-                                                                        as="textarea"
-                                                                        name="foreign_country_army_military_desc"
-                                                                        rows={2}
-                                                                        placeholder="Add details"
-                                                                        autoComplete="off" />
-                                                                    {errors.foreign_country_army_military_desc && (
-                                                                        <p className="text-danger">{errors.foreign_country_army_military_desc}</p>
-                                                                    )}
-                                                                </Form.Group>
+                                                                <Form.Control
+                                                                    as="textarea"
+                                                                    name="foreign_country_army_military"
+                                                                    rows={2}
+                                                                    placeholder="Add details"
+                                                                    autoComplete="off" />
                                                             </>
                                                         )}
                                                         <Form.Check type="radio" value="No" name="foreign_country_army_military_yes_no" checked={formData.foreign_country_army_military_yes_no === "No"} onChange={handleChange} label="No" />
-                                                        {errors.foreign_country_army_military_yes_no && (
-                                                            <p className="text-danger">{errors.foreign_country_army_military_yes_no}</p>
-                                                        )}
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="12">
                                                         <Form.Label>
@@ -1060,21 +895,12 @@ function ApplyNocRequest() {
                                                             {showInputsTextBiomaterialMicro && (
                                                                 <>
                                                                     <Form.Control type="file"
-                                                                        name="upload_biomaterial_organisms_approval" id="upload_biomaterial_organisms_approval"
-                                                                        value={formData.upload_biomaterial_organisms_approval}
-                                                                        onChange={handleChange}
+                                                                        name="biomaterial_micro_organisms_approval" id="biomaterial_micro_organisms_approval"
                                                                         autoComplete="off" />
-                                                                    {errors.upload_biomaterial_organisms_approval && (
-                                                                        <p className="text-danger">{errors.upload_biomaterial_organisms_approval}</p>
-                                                                    )}
                                                                 </>
                                                             )}
-
                                                         </Col>
                                                         <Form.Check type="radio" value="No" name="biomaterial_approval_yesno" checked={formData.biomaterial_approval_yesno === "No"} onChange={handleChange} label="No" />
-                                                        {errors.biomaterial_approval_yesno && (
-                                                            <p className="text-danger">{errors.biomaterial_approval_yesno}</p>
-                                                        )}
                                                     </Form.Group>
                                                 </Row>
                                             </CardBody>
@@ -1098,18 +924,12 @@ function ApplyNocRequest() {
                                                             {showInputsTextIbscRcgm && (
                                                                 <>
                                                                     <Form.Control type="file"
-                                                                        name="ibsc_rcgm_approval_applicable_desc" id="ibsc_rcgm_approval_applicable_dec"
+                                                                        name="ibsc_rcgm_approval_applicable" id="ibsc_rcgm_approval_applicable"
                                                                         autoComplete="off" />
-                                                                    {errors.ibsc_rcgm_approval_applicable_desc && (
-                                                                        <p className="text-danger">{errors.ibsc_rcgm_approval_applicable_desc}</p>
-                                                                    )}
                                                                 </>
                                                             )}
                                                         </Col>
                                                         <Form.Check type="radio" value="No" name="ibsc_rcgm_approval_applicable_yesno" checked={formData.ibsc_rcgm_approval_applicable_yesno === "No"} onChange={handleChange} label="No" />
-                                                        {errors.ibsc_rcgm_approval_applicable_yesno && (
-                                                            <p className="text-danger">{errors.ibsc_rcgm_approval_applicable_yesno}</p>
-                                                        )}
                                                     </Form.Group>
                                                 </Row>
                                                 <Col xl={12} className="d-flex justify-content-between mt-3">
@@ -1236,7 +1056,7 @@ function ApplyNocRequest() {
                         </Modal.Footer>
                     </Modal>
                 </Container>
-            </div >
+            </div>
 
         </>
     );
