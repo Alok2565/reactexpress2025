@@ -104,3 +104,36 @@ body {
 .form-label {
     font-size: 14px;
 }
+/* override default sort icon styles in CDBDataTable */
+th .fa-sort,
+th .fa-sort-up,
+th .fa-sort-down {
+  font-size: 16px !important;
+  color: #444 !important;
+  margin-left: 8px;
+}
+
+th:hover .fa-sort {
+  color: #14468C !important;
+}
+
+th .fa-sort,
+th .fa-sort-up,
+th .fa-sort-down {
+  border: 1px solid red;
+  padding: 2px;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.custom-dropdown-menu {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+  .text-bg-primary{
+    background-color: #14468C !important;
+  }
+
+  .dropdown-menu {
+	--bs-dropdown-padding-y: 0rem; 
+}

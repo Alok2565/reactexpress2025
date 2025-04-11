@@ -368,7 +368,7 @@ function SideNavBar() {
 
                                 <SubMenu
                                     icon={<FaFileExport />}
-                                    label="Export Applications"
+                                    label="Exporter Applications"
                                     className="submenu-custom"
                                     open={openMenu === "export"}
                                     onClick={() => handleMenuClick("export")}
@@ -377,18 +377,42 @@ function SideNavBar() {
                                         <Link to="/imp-exp/add-new" className="submenu-link"><LiaFileExportSolid /> Apply for New NOC</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid />  Applications under review</Link>
+                                        <Link to="/imp-exp/exporters" className="submenu-link"><LiaFileExportSolid />  Applications under review</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
                                         <Link to="#" className="submenu-link"><LiaFileExportSolid />  Decision on Submitted <br /> &nbsp;&nbsp;&nbsp;Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                        <Link to="/imp-exp/rejct-applications" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
                                         <Link to="#" className="submenu-link"><LiaFileExportSolid /> Draft Applications</Link>
                                     </MenuItem>
 
+                                </SubMenu>
+                                
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Importer Applications"
+                                    className="submenu-custom"
+                                    open={openMenu === "import"}
+                                    onClick={() => handleMenuClick("import")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporters" className="submenu-link"><LiaFileExportSolid /> Fresh Applications<br /> &nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Archive Applications <br />&nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/rejct-applications" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Applications With <br />&nbsp;&nbsp;&nbsp;Committee Members</Link>
+                                    </MenuItem>
+                                    {/* <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC Issued</Link>
+                                    </MenuItem> */}
                                 </SubMenu>
                                 <MenuItem component={<NavLink to="/admin/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
                                     Format for Declaration <br />&nbsp;&nbsp;of Recipient
@@ -404,7 +428,7 @@ function SideNavBar() {
                                         <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                        <Link to="/imp-exp/exporters" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
                                     </MenuItem>
                                 </SubMenu>
                             </>
@@ -427,26 +451,49 @@ function SideNavBar() {
 
                                 <SubMenu
                                     icon={<FaFileExport />}
-                                    label="Export Applications"
+                                    label="Exporter Applications"
                                     className="submenu-custom"
                                     open={openMenu === "export"}
                                     onClick={() => handleMenuClick("export")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Fresh Applications<br /> Received</Link>
+                                        <Link to="/icmr/exporters" className="submenu-link"><LiaFileExportSolid /> Fresh Applications<br /> &nbsp;&nbsp;&nbsp;Received</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Archive Applications <br />Received</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Archive Applications <br />&nbsp;&nbsp;&nbsp;Received</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                        <Link to="/icmr/rejct-applications" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Applications With <br />Committee Members</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Applications With <br />&nbsp;&nbsp;&nbsp;Committee Members</Link>
                                     </MenuItem>
-                                    <MenuItem className="submenu-item">
+                                    {/* <MenuItem className="submenu-item">
                                         <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC Issued</Link>
+                                    </MenuItem> */}
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Importer Applications"
+                                    className="submenu-custom"
+                                    open={openMenu === "import"}
+                                    onClick={() => handleMenuClick("import")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/icmr/exporters" className="submenu-link"><LiaFileExportSolid /> Fresh Applications<br /> &nbsp;&nbsp;&nbsp;Received</Link>
                                     </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Archive Applications <br />&nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/icmr/rejct-applications" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Applications With <br />&nbsp;&nbsp;&nbsp;Committee Members</Link>
+                                    </MenuItem>
+                                    {/* <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC Issued</Link>
+                                    </MenuItem> */}
                                 </SubMenu>
 
                                 <SubMenu
