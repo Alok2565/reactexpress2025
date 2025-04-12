@@ -262,7 +262,7 @@ function ApplyNocRequest() {
                                 </div>
                             </Col>
                         </Row>
-                        <Form noValidate>
+                        <Form noValidate method="post"  encType="multipart/form-data">
                             <Row>
                                 <div className="card-body-custom">
                                     {step === 1 && (

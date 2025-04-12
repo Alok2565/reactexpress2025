@@ -22,7 +22,6 @@ import PageNotFound from './pages/PageNotFound';
 import ExporterAppList from './admin/applications/ExporterAppList';
 import RejectExpAppList from './admin/applications/RejectExpAppList';
 
-
 function App() {
   return (
     <BrowserRouter>

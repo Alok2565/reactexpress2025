@@ -14,7 +14,7 @@ function IcmrDashboard() {
                 <Container fluid>
                     <h4 className="mb-3">Exporter Dashboard</h4>
                     <div className="tbm-dash-card">
-                        <div className="row">
+                        {/* <div className="row">
                             <div className="col-12">
                                 <div className="page-title-box">
                                     <div className="page-title-right"><button className="btn btn-primary float-end mb-2" style={{ backgroundColor: "#14468C", border: "#14468C" }}>
@@ -24,7 +24,7 @@ function IcmrDashboard() {
 
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="card">
                             <div className="card-body">
                                 <div className="row g-3">
