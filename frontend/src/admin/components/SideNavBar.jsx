@@ -138,10 +138,10 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("users")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Users</Link>
+                                        <Link to="/admin/users" className="submenu-link"><LiaFileExportSolid /> All Users</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New User</Link>
+                                        <Link to="/admin/add-user" className="submenu-link"><LiaFileExportSolid /> Add New User</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
@@ -152,10 +152,10 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("roles")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Roles</Link>
+                                        <Link to="/admin/roles" className="submenu-link"><LiaFileExportSolid /> All Roles</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New Role</Link>
+                                        <Link to="/admin/add-role" className="submenu-link"><LiaFileExportSolid /> Add New Role</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu

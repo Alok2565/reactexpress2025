@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fontsource/poppins": "^5.1.1",
+    "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "cdbreact": "^1.5.19",
     "cra-template": "1.2.0",

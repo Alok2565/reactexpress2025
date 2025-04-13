@@ -12,7 +12,7 @@ function Dashboard() {
 
             <div className="page-content py-2">
                 <Container fluid>
-                    <h4 className="mb-3">Exporter Dashboard</h4>
+                    <h4 className="mb-3">Dashboard</h4>
                     <div className="tbm-dash-card">
                         <div className="row">
                             <div className="col-12">

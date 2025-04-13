@@ -20,7 +20,12 @@ import ImpExpDashboard from './admin/pages/imp-exp/ImpExpDashboard';
 import ApplyNocRequest from './admin/pages/imp-exp/ApplyNocRequest';
 import PageNotFound from './pages/PageNotFound';
 import ExporterAppList from './admin/applications/ExporterAppList';
-import RejectExpAppList from './admin/applications/RejectExpAppList';
+import RejectExpAppList from './admin/applications/RejectExpAppList'
+import AddRole from './admin/pages/admins/AddRole';
+import Roles from './admin/pages/admins/Roles';
+import Users from './admin/pages/admins/Users';
+import AddUser from './admin/pages/admins/AddUser';
+import EditUser from './admin/pages/admins/EditUser';
 
 function App() {
   return (
@@ -43,6 +48,11 @@ function App() {
           {/* Admin Route */}
           <Route exact path="/admin/dashboard" element={<Dashboard />} />
           <Route exact path="/admin/profile" element={<Profile />} />
+          <Route exact path="/admin/roles" element={<Roles />} />
+          <Route exact path="/admin/add-role" element={<AddRole />} />
+          <Route exact path="/admin/users" element={<Users />} />
+          <Route exact path="/admin/add-user" element={<AddUser />} />
+          <Route path="/admin/edit-user/:id" element={<EditUser />} />
 
           {/* IMP EXP Route */}
           <Route exact path="imp-exp/dashboard" element={<ImpExpDashboard />} />
