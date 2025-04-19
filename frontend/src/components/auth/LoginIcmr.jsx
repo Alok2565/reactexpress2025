@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { Container, Col } from 'react-bootstrap'
-import Form from 'react-bootstrap/Form';
+import { Container, Col, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import authLogo from "../../assets/images/auth_icmr_logo.png";
-import Button from "react-bootstrap/Button";
 import CaptchaComponent from '../CaptchaComponent';
 
 

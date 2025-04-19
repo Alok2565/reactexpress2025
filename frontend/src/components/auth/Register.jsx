@@ -9,16 +9,18 @@ import { Link } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa";
 import authLogo from "../../assets/images/auth_icmr_logo.png";
 import CaptchaComponent from "../CaptchaComponent";
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
+    const navigate = useNavigate();
     const [verified, setVerified] = useState(false);
     const [validated, setValidated] = useState(false);
-    const [iecCode, setIecCode] = useState("");
+    const [iec_code, setiec_code] = useState("");
     const [isIecSubmitted, setIsIecSubmitted] = useState(false);
 
     const handleIecSubmit = (event) => {
         event.preventDefault();
-        if (iecCode.length === 10) {
+        if (iec_code.length === 10) {
             setIsIecSubmitted(true);
         }
     };
@@ -33,7 +35,7 @@ function Register() {
     };
 
     // const handleReset = () => {
-    //     setIecCode("");
+    //     setiec_code("");
     //     setIsIecSubmitted(false);
     //     setValidated(false);
     // };
@@ -49,9 +51,50 @@ function Register() {
     const [mobile_number, setMobileNumber] = useState();
     const [email, setemail] = useState();
 
+    // function RegisterData() {
+    //     console.log("Name:-" + name, "name_ofCPerson:-" + name_ofCPerson, "designation:-" + designation, "address:-" + address, "address2:-" + address2, "city:-" + city, "state:-" + state, "pincode:-" + pincode, "mobile_number:-" + mobile_number, "email:-" + email);
+    // }
     function RegisterData() {
-        console.log("Name:-" + name, "name_ofCPerson:-" + name_ofCPerson, "designation:-" + designation, "address:-" + address, "address2:-" + address2, "city:-" + city, "state:-" + state, "pincode:-" + pincode, "mobile_number:-" + mobile_number, "email:-" + email);
+        const data = {
+            iec_code,
+            name,
+            name_ofCPerson,
+            designation,
+            address,
+            address2,
+            city,
+            state,
+            pincode,
+            mobile_number,
+            email
+        };
+    
+        fetch("http://localhost:5000/api/importers-exporters", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(async (response) => {
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || "Failed to register");
+            }
+            return response.json();
+        })
+        .then((result) => {
+            // alert("Registration successful!");
+            navigate('/admin/impexp-holders?success=Registering successfully');
+            //console.log("Response from server:", result);
+            // Optionally clear form fields here
+        })
+        .catch((error) => {
+            alert("Registration failed: " + error.message);
+           // console.error("Error during registration:", error);
+        });
     }
+    
 
     return (
         <Container>
@@ -86,15 +129,15 @@ function Register() {
                                             required
                                             type="text"
                                             placeholder="IEC Code"
-                                            value={iecCode}
-                                            onChange={(e) => setIecCode(e.target.value)}
+                                            value={iec_code}
+                                            onChange={(e) => setiec_code(e.target.value)}
                                             maxLength={10} />
                                     </Form.Group>
                                     <Col className="col-md-12">
                                         <Form.Group className="py-2 d-flex">
                                             <button
                                                 id="show_record"
-                                                disabled={iecCode.length !== 10}
+                                                disabled={iec_code.length !== 10}
                                                 className="btn btn-primary btn-md m-1 show_hide_btn px-4 font-bold"
                                                 type="submit"
                                             >
@@ -104,7 +147,7 @@ function Register() {
                                                 id="reset_data"
                                                 className="btn btn-primary btn-md m-1 show_hide_btn px-4 font-bold"
                                                 type="reset"
-                                                onClick={() => setIecCode("")}
+                                                onClick={() => setiec_code("")}
                                             >
                                                 Reset
                                             </button>

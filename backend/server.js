@@ -1,46 +1,43 @@
-const express = require('express');
-const connectDB = require('./config/DbConncetion');
-const cors = require('cors');
-require('dotenv').config();
-
-const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Connect DB
-connectDB();
-// Routes
-app.use('/api/roles', require('./routes/RoleRoutes'));
-app.use('/api/users', require('./routes/UserRoutes'));
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
 // const express = require('express');
-// const cors = require('cors');
-// const mongoose = require('mongoose');
-// require('dotenv').config();
-
 // const app = express();
-// const PORT = process.env.PORT || 5000;
+// require('dotenv').config();
+// const connectDB = require('./config/DbConnect');
+// const cors = require('cors');
 
-// // Middleware
+// const roleRoutes = require('./routes/RoleRoutes');
+// const userRoutes = require('./routes/UserRoutes');
+
+// connectDB();
 // app.use(cors());
 // app.use(express.json());
 
 // // Routes
-// app.use('/api/add-role', require('./routes/RoleRoutes'));
+// // app.use('/api/roles', require('./routes/RoleRoutes'));
+// // app.use('/api/users', require('./routes/UserRoutes'));
+// app.use('/api/roles', roleRoutes);
+// app.use('/api/users', userRoutes);
+// app.use('/api/auth', require('./routes/LoginRoutes'));
 
-// // DB Connection
-// mongoose.connect(process.env.MONGODB_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// }).then(() => {
-//   console.log('MongoDB connected');
-//   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// }).catch((err) => {
-//   console.error('DB connection error:', err.message);
-// });
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/DbConnect");
+const cors = require("cors");
+
+dotenv.config();
+connectDB();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use("/api/roles", require("./routes/roleRoutes"));
+app.use("/api/users", require("./routes/UserRoutes"));
+//app.use("/api/login", require("./routes/loginRoutes"));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

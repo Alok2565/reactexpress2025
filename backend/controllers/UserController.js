@@ -1,50 +1,60 @@
-const User = require('../models/User');
+const User = require("../models/User");
+const UserLogin = require("../models/UserLogin");
+const logger = require("../utils/logger");
 
 exports.createUser = async (req, resp) => {
   try {
-    const { name, username, email, role_id, status } = req.body;
-    const user = new User({ name, username, email, role_id, status });
+    const userData = {
+      ...req.body,
+      ip_address: req.body.ip_address || req.ip,
+    };
+    const user = new User(userData);
     await user.save();
-    resp.status(201).json(user);
+    // const populatedUser = await User.findById(user._id).populate("role_id");
+    // resp.status(201).json(populatedUser);
+
+    const user_login = new UserLogin({
+      user_id: user._id,
+      email: req.body.email,
+      ip_address: req.body.ip_address || req.ip // fallback to request IP
+    });
+    await user_login.save();
+    const populatedUser = await User.findById(user._id).populate("role_id");
+
+    logger.info(
+      `User and login created successfully: ${JSON.stringify({
+        user_id: user._id,
+        email: req.body.email,
+        role_id: user.role_id,
+        ip_address: user.ip_address,
+        status: 201
+      })}`,
+      { code: '201' }
+    );
+
+    resp.status(201).json({
+      message: "User and login created successfully",
+      user: populatedUser,
+      login: user_login
+    });
   } catch (err) {
-    resp.status(400).json({ error: err.message });
+    console.error('Error creating user and login:', err);
+    logger.error(
+      `Failed to create user and login: ${JSON.stringify({
+        error: err.message,
+        body: req.body,
+        ip_address: req.ip
+      })}`,
+      { code: '500' }
+    );
+    resp.status(500).json({ message: err.message });
   }
 };
 
-exports.getUsers = async (req, resp) => {
+exports.getAllUsers = async (req, resp) => {
   try {
-    const users = await User.find().populate('role_id', 'role_name');
-    resp.json(users);
-  } catch (err) {
-    resp.status(500).json({ error: err.message });
-  }
-};
-
-exports.getUserById = async (req, resp) => {
-  try {
-    const user = await User.findById(req.params.id).populate('role_id');
-    if (!user) return resp.status(404).json({ error: 'User not found' });
-    resp.json(user);
-  } catch (err) {
-    resp.status(500).json({ error: err.message });
-  }
-};
-
-exports.updateUser = async (req, resp) => {
-  try {
-    const updated = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updated) return resp.status(404).json({ error: 'User not found' });
-    resp.json(updated);
-  } catch (err) {
-    resp.status(500).json({ error: err.message });
-  }
-};
-
-exports.deleteUser = async (req, resp) => {
-  try {
-    const deleted = await User.findByIdAndDelete(req.params.id);
-    if (!deleted) return resp.status(404).json({ error: 'User not found' });
-    resp.json({ message: 'User deleted' });
+    const users = await User.find().populate("role_id").sort({ createdAt: -1 });
+    resp.status(200).json(users);
   } catch (err) {
     resp.status(500).json({ error: err.message });
   }

@@ -138,10 +138,10 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("users")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/admin/users" className="submenu-link"><LiaFileExportSolid /> All Users</Link>
+                                        <Link to="admin/users" className="submenu-link"><LiaFileExportSolid /> All Users</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/admin/add-user" className="submenu-link"><LiaFileExportSolid /> Add New User</Link>
+                                        <Link to="/admin/user/add" className="submenu-link"><LiaFileExportSolid /> Add New User</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
@@ -155,9 +155,24 @@ function SideNavBar() {
                                         <Link to="/admin/roles" className="submenu-link"><LiaFileExportSolid /> All Roles</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/admin/add-role" className="submenu-link"><LiaFileExportSolid /> Add New Role</Link>
+                                        <Link to="/admin/role/add" className="submenu-link"><LiaFileExportSolid /> Add New Role</Link>
                                     </MenuItem>
                                 </SubMenu>
+                                <SubMenu
+                                    icon={<FaUsers />}
+                                    label="Importer Exporter Holder"
+                                    className="submenu-custom"
+                                    open={openMenu === "impexp"}
+                                    onClick={() => handleMenuClick("impexp")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="admin/impexp-holders" className="submenu-link"><LiaFileExportSolid /> All ImpExp Holders</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/add-impexp-holder" className="submenu-link"><LiaFileExportSolid /> Add New Importer/exporter</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                
                                 <SubMenu
                                     icon={<FaPager />}
                                     label="Pages"

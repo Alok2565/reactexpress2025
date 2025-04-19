@@ -21,11 +21,21 @@ import ApplyNocRequest from './admin/pages/imp-exp/ApplyNocRequest';
 import PageNotFound from './pages/PageNotFound';
 import ExporterAppList from './admin/applications/ExporterAppList';
 import RejectExpAppList from './admin/applications/RejectExpAppList'
-import AddRole from './admin/pages/admins/AddRole';
-import Roles from './admin/pages/admins/Roles';
-import Users from './admin/pages/admins/Users';
-import AddUser from './admin/pages/admins/AddUser';
-import EditUser from './admin/pages/admins/EditUser';
+// import AddRole from './admin/pages/admins/AddRole';
+// import Roles from './admin/pages/admins/Roles';
+// import Users from './admin/pages/admins/Users';
+// import AddUser from './admin/pages/admins/AddUser';
+// import EditUser from './admin/pages/admins/EditUser';
+import ImpExpHolderLists from './components/auth/ImpExpHolderLists';
+import Login from './admin/components/admins/Login';
+import Roles from './admin/components/admins/Roles';
+import AddRole from './admin/components/admins/AddRole';
+import LoginForm from './components/LoginForm';
+import RoleForm from './components/RoleForm';
+import UserForm from './components/UserForm';
+import EditRole from './admin/components/admins/EditRole';
+import AddUser from './admin/components/admins/AddUser';
+import Users from './admin/components/admins/Users';
 
 function App() {
   return (
@@ -47,12 +57,16 @@ function App() {
 
           {/* Admin Route */}
           <Route exact path="/admin/dashboard" element={<Dashboard />} />
-          <Route exact path="/admin/profile" element={<Profile />} />
-          <Route exact path="/admin/roles" element={<Roles />} />
-          <Route exact path="/admin/add-role" element={<AddRole />} />
-          <Route exact path="/admin/users" element={<Users />} />
-          <Route exact path="/admin/add-user" element={<AddUser />} />
-          <Route path="/admin/edit-user/:id" element={<EditUser />} />
+          <Route exact path="/admin/profile/" element={<Profile />} />
+          <Route exact path="/admin/roles/" element={<Roles />} />
+          <Route exact path="/admin/role/add" element={<AddRole />} />
+          <Route path="/admin/role/edit/:id" element={<EditRole />} />
+          <Route exact path="/admin/users/" element={<Users />} />
+          <Route exact path="/admin/user/add/" element={<AddUser />} /> 
+          {/* <Route path="/admin/edit-user/:id" element={<EditUser />} /> */}
+          <Route exact path="/admin/impexp-holders" element={<ImpExpHolderLists/>} />
+          {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
+          
 
           {/* IMP EXP Route */}
           <Route exact path="imp-exp/dashboard" element={<ImpExpDashboard />} />
@@ -74,6 +88,9 @@ function App() {
 
         {/* Catch-all route for undefined routes */}
         <Route path="*" element={<PageNotFound />} />
+        {/* <Route exact path="/user/role" element={<RoleForm/>} />
+        <Route exact path="/user/register" element={<UserForm/>} />
+        <Route exact path="/user/login" element={<LoginForm/>} /> */}
       </Routes>
     </BrowserRouter>
   );

@@ -16,7 +16,6 @@ function LoginCommittee() {
     const LogiData = () => {
         console.log("Email:-" + email, "Password:-" + password);
     }
-
     return (
         <>
             <div>
