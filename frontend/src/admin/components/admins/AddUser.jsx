@@ -255,7 +255,7 @@ function AddUser() {
             await axios.post("http://localhost:5000/api/users", newUser);
             navigate("/admin/users?success=User%20has%20been%20created%20successfully");
         } catch (error) {
-            console.error("User creation failed:", error.response?.data);
+            //console.error("User creation failed:", error.response?.data);
             alert("Error: " + (error.response?.data?.message || "Unknown error"));
         } finally {
             setLoading(false);

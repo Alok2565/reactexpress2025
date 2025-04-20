@@ -138,7 +138,7 @@ function EditRole() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/roles/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/roles/update/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -36,6 +36,7 @@ import UserForm from './components/UserForm';
 import EditRole from './admin/components/admins/EditRole';
 import AddUser from './admin/components/admins/AddUser';
 import Users from './admin/components/admins/Users';
+import EditUser from './admin/components/admins/EditUser';
 
 function App() {
   return (
@@ -63,7 +64,7 @@ function App() {
           <Route path="/admin/role/edit/:id" element={<EditRole />} />
           <Route exact path="/admin/users/" element={<Users />} />
           <Route exact path="/admin/user/add/" element={<AddUser />} /> 
-          {/* <Route path="/admin/edit-user/:id" element={<EditUser />} /> */}
+          <Route path="/admin/user/edit/:id" element={<EditUser />} />
           <Route exact path="/admin/impexp-holders" element={<ImpExpHolderLists/>} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
           
