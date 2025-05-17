@@ -36,7 +36,8 @@ app.use(express.json());
 // Routes
 app.use("/api/roles", require("./routes/roleRoutes"));
 app.use("/api/users", require("./routes/UserRoutes"));
-//app.use("/api/login", require("./routes/loginRoutes"));
+app.use("/api", require("./routes/loginRoutes"));
+app.use("/api/password-setup", require("./routes/passwordRoutes"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

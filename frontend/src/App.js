@@ -37,6 +37,8 @@ import EditRole from './admin/components/admins/EditRole';
 import AddUser from './admin/components/admins/AddUser';
 import Users from './admin/components/admins/Users';
 import EditUser from './admin/components/admins/EditUser';
+import AllUsersPasswordGenerate from './components/auth/AllUsersPasswordGenerate';
+import AdminLogin from './components/auth/AdminLogin';
 
 function App() {
   return (
@@ -47,10 +49,15 @@ function App() {
           <Route exact path="about-us" element={<About />} />
           <Route exact path="contact-us" element={<Contact />} />
           <Route exact path="user-manual" element={<UserManual />} />
+          <Route exact path="admin/login" element={<AdminLogin />} />
           <Route exact path="/imp-exp/register" element={<Register />} />
           <Route exact path="/imp-exp/login" element={<LoginImpExp />} />
           <Route exact path="/icmr/login" element={<LoginIcmr />} />
           <Route exact path="/committee/login" element={<LoginCommittee />} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
         </Route>
 
         <Route path="/" element={<Layouts />}>
@@ -67,6 +74,7 @@ function App() {
           <Route path="/admin/user/edit/:id" element={<EditUser />} />
           <Route exact path="/admin/impexp-holders" element={<ImpExpHolderLists/>} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
+          
           
 
           {/* IMP EXP Route */}
@@ -92,6 +100,7 @@ function App() {
         {/* <Route exact path="/user/role" element={<RoleForm/>} />
         <Route exact path="/user/register" element={<UserForm/>} />
         <Route exact path="/user/login" element={<LoginForm/>} /> */}
+       
       </Routes>
     </BrowserRouter>
   );

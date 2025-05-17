@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { saveToken, getRoleFromToken } from '../../../utils/Auth';
+// import { saveToken, getRoleFromToken } from '../../../utils/Auth';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -11,23 +11,23 @@ function Login() {
   const loginHandle = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password
-      });
+    // try {
+    //   const res = await axios.post('http://localhost:5000/api/auth/login', {
+    //     email,
+    //     password
+    //   });
 
-      saveToken(res.data.token);
-      const role = getRoleFromToken();
+    //   // saveToken(res.data.token);
+    //   // const role = getRoleFromToken();
 
-      if (role === 'admin') {
-        navigate('/admin-dashboard');
-      } else if(role === 'impexp') {
-        navigate('/imp-exp/dashboard');
-      }
-    } catch (err) {
-      alert('Login failed');
-    }
+    //   if (role === 'admin') {
+    //     navigate('/admin-dashboard');
+    //   } else if(role === 'impexp') {
+    //     navigate('/imp-exp/dashboard');
+    //   }
+    // } catch (err) {
+    //   alert('Login failed');
+    // }
   };
   return (
     <>

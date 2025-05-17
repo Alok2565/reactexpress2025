@@ -1,18 +1,13 @@
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 
-export function saveToken(token) {
-  localStorage.setItem('authToken', token);
-}
+export const getToken = () => localStorage.getItem("token");
 
-export function getRoleFromToken() {
-  const token = localStorage.getItem('authToken');
-  if (!token) return null;
-
+export const getCurrentUser = () => {
   try {
-    const decoded = jwtDecode(token);
-    return decoded.role;
-  } catch (err) {
-    console.error('Invalid token:', err);
+    const token = getToken();
+    if (!token) return null;
+    return jwtDecode(token);
+  } catch {
     return null;
   }
-}
+};

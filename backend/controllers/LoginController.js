@@ -1,30 +1,47 @@
-const UserLogin = require('../models/UserLogin');
-const User = require('../models/User');
-const Role = require('../models/Role');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const UserLogin = require("../models/UserLogin");
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-exports.login = async (req, res) => {
+exports.registerLogin = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
+    const { email, password, user_id } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const login = await UserLogin.findOne({ username }).populate({
-      path: 'user_id',
-      populate: { path: 'role_id' }
+    const login = new UserLogin({
+      email,
+      password: hashedPassword,
+      user_id
     });
 
-    if (!login || login.password !== hashedPassword) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    const token = jwt.sign({
-      userId: login.user_id._id,
-      role: login.user_id.role_id.name
-    }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.json({ token, role: login.user_id.role_id.name });
+    await login.save();
+    res.status(201).json({ message: "User login created" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const login = await UserLogin.findOne({ email }).populate("user_id");
+
+    if (!login) return res.status(404).json({ error: "User not found" });
+
+    const isMatch = await bcrypt.compare(password, login.password);
+    if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
+
+    const token = jwt.sign(
+      {
+        id: login.user_id._id,
+        role: login.user_id.role_id
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ token, user: login.user_id });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };

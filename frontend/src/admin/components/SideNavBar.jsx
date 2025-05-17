@@ -25,10 +25,10 @@ function SideNavBar() {
         : location.pathname.startsWith("/imp-exp")
             ? "imp-exp"
             : location.pathname.startsWith("/icmr")
-                ? "icmr"
-                : location.pathname.startsWith("/committee")
-                    ? "committee"
-                    : "guest";
+            ? "icmr"
+            : location.pathname.startsWith("/committee")
+            ? "committee"
+                : "guest";
 
     // Handle Window Resize
     useEffect(() => {

@@ -1,8 +1,10 @@
+const { get } = require("http");
 const User = require("../models/User");
 const UserLogin = require("../models/UserLogin");
 const logger = require("../utils/logger");
-
+const crypto = require("crypto");
 exports.createUser = async (req, resp) => {
+  const APP_BASE_URL = process.env.APP_BASE_URL || "http://localhost:3000/";
   try {
     const userData = {
       ...req.body,
@@ -20,13 +22,20 @@ exports.createUser = async (req, resp) => {
     });
     await user_login.save();
     const populatedUser = await User.findById(user._id).populate("role_id");
+    
 
+    const roleName = populatedUser.role_id.role_slug;
+//console.log(roleName);
+     const token = crypto.randomBytes(32).toString("hex");
+     const passwordSetupLink = `${APP_BASE_URL}${roleName}/pasword-generate?token=${token}&email=${encodeURIComponent(req.body.email)}`;
+    //  const passwordSetupLink = `${APP_BASE_URL}${user.role_id}/pasword-generate?token=${token}&email=${encodeURIComponent(req.body.email)}`;
     logger.info(
       `User and login created successfully: ${JSON.stringify({
         user_id: user._id,
         email: req.body.email,
         role_id: user.role_id,
         ip_address: user.ip_address,
+        password_link: passwordSetupLink,
         status: 201,
       })}`,
       { code: "201" }
@@ -36,6 +45,7 @@ exports.createUser = async (req, resp) => {
       message: "User and login created successfully",
       user: populatedUser,
       login: user_login,
+      password_link: passwordSetupLink,
     });
   } catch (err) {
     console.error("Error creating user and login:", err);
