@@ -1,63 +1,66 @@
-// // import { useState } from "react";
-// // import axios from "axios";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-// // const LoginForm = () => {
-// //   const [form, setForm] = useState({ email: "", password: "" });
+const LoginForm = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-// //   const handleSubmit = async e => {
-// //     e.preventDefault();
-// //     const res = await axios.post("http://localhost:5000/api/login", form);
-// //     alert("Logged in with token: " + res.data.token);
-// //   };
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-// //   return (
-// //     <form onSubmit={handleSubmit}>
-// //       <input name="email" onChange={e => setForm({ ...form, email: e.target.value })} placeholder="Email" />
-// //       <input type="password" name="password" onChange={e => setForm({ ...form, password: e.target.value })} placeholder="Password" />
-// //       <button type="submit">Login</button>
-// //     </form>
-// //   );
-// // };
+        try {
+            const response = await axios.post("http://localhost:5000/api/login", {
+                email,
+                password,
+            });
 
-// // export default LoginForm;
-// import { useState } from "react";
-// import axios from "axios";
-// import jwtDecode from "jwt-decode";
-// import { useNavigate } from "react-router-dom";
+            const { token, user } = response.data;
 
-// const LoginForm = () => {
-//   const [form, setForm] = useState({ email: "", password: "" });
-//   const navigate = useNavigate();
+            // Save token and role to localStorage
+            localStorage.setItem("token", token);
+            localStorage.setItem("role", user.role);
+            localStorage.setItem("email", user.email);
 
-//   const handleSubmit = async e => {
-//     e.preventDefault();
-//     try {
-//       const res = await axios.post("http://localhost:5000/api/login", form);
-//       const token = res.data.token;
-//       localStorage.setItem("token", token);
+            // Redirect based on role
+            if (user.role === "admin") {
+                navigate("/admin/dashboard");
+            } else if (user.role === "icmr") {
+                navigate("/icmr/dashboard");
+            } else if (user.role === "committee") {
+                navigate("/committee/dashboard");
+            } else if (user.role === "imp-exp") {
+                navigate("/imp-exp/dashboard");
+            } else {
+                navigate("/login"); // fallback
+            }
 
-//       const decoded = jwtDecode(token);
-//       const role_id = decoded.role;
+        } catch (err) {
+            console.error("Login failed:", err);
+            alert("Invalid credentials");
+        }
+    };
 
-//       // Redirect based on roleId
-//       if (role_id === "adminRoleObjectIdHere") {
-//         navigate("/admin/dashboard");
-//       } else {
-//         navigate("/icmr/dashboard");
-//       }
-//     } catch (err) {
-//       alert("Login failed");
-//     }
-//   };
+    return (
+        <form>
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+            />
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+            />
+            <button onClick={handleLogin} type="submit">Login</button>
+        </form>
+    );
+};
 
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <input name="email" onChange={e => setForm({ ...form, email: e.target.value })} placeholder="Email" />
-//       <input type="password" name="password" onChange={e => setForm({ ...form, password: e.target.value })} placeholder="Password" />
-//       <button type="submit">Login</button>
-//     </form>
-//   );
-// };
-
-// export default LoginForm;
-
+export default LoginForm;

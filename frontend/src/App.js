@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import HomePage from './pages/HomePage';
 import About from './pages/About';
 import Layout from './components/Layout';
@@ -39,6 +38,8 @@ import Users from './admin/components/admins/Users';
 import EditUser from './admin/components/admins/EditUser';
 import AllUsersPasswordGenerate from './components/auth/AllUsersPasswordGenerate';
 import AdminLogin from './components/auth/AdminLogin';
+import ProtectedRoute from './components/ProtectedRoute';
+
 
 function App() {
   return (
@@ -54,14 +55,13 @@ function App() {
           <Route exact path="/imp-exp/login" element={<LoginImpExp />} />
           <Route exact path="/icmr/login" element={<LoginIcmr />} />
           <Route exact path="/committee/login" element={<LoginCommittee />} />
-          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
-          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
-          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
-          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate/>} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
+          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
         </Route>
 
         <Route path="/" element={<Layouts />}>
-          <Route index element={<Dashboard />} />
 
           {/* Admin Route */}
           <Route exact path="/admin/dashboard" element={<Dashboard />} />
@@ -70,39 +70,42 @@ function App() {
           <Route exact path="/admin/role/add" element={<AddRole />} />
           <Route path="/admin/role/edit/:id" element={<EditRole />} />
           <Route exact path="/admin/users/" element={<Users />} />
-          <Route exact path="/admin/user/add/" element={<AddUser />} /> 
+          <Route exact path="/admin/user/add/" element={<AddUser />} />
           <Route path="/admin/user/edit/:id" element={<EditUser />} />
-          <Route exact path="/admin/impexp-holders" element={<ImpExpHolderLists/>} />
+          <Route exact path="/admin/impexp-holders" element={<ImpExpHolderLists />} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
-          
-          
+
+
 
           {/* IMP EXP Route */}
-          <Route exact path="imp-exp/dashboard" element={<ImpExpDashboard />} />
-          <Route exact path="/imp-exp/profile" element={<Profile />} />
-          <Route exact path="/imp-exp/add-new" element={<ApplyNocRequest />} />
-          <Route exact path="imp-exp/exporters" element={<ExporterAppList/>} />
-          <Route exact path="imp-exp/rejct-applications" element={<RejectExpAppList/>} />
+          <Route exact path="imp-exp/dashboard" element={<ProtectedRoute><ImpExpDashboard /></ProtectedRoute>} />
+          <Route exact path="/imp-exp/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route exact path="/imp-exp/add-new" element={<ProtectedRoute><ApplyNocRequest /></ProtectedRoute>} />
+          <Route exact path="imp-exp/exporters" element={<ProtectedRoute><ExporterAppList /></ProtectedRoute>} />
+          <Route exact path="imp-exp/rejct-applications" element={<ProtectedRoute><RejectExpAppList /></ProtectedRoute>} />
 
           {/* ICMR Route */}
-          <Route exact path="icmr/dashboard" element={<IcmrDashboard />} />
-          <Route exact path="/icmr/profile" element={<Profile />} />
-          <Route exact path="icmr/exporters" element={<ExporterAppList/>} />
-          <Route exact path="icmr/rejct-applications" element={<RejectExpAppList/>} />
+
+          <Route exact path="icmr/dashboard" element={<ProtectedRoute><IcmrDashboard /></ProtectedRoute>} />
+          <Route exact path="/icmr/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route exact path="icmr/exporters" element={<ProtectedRoute><ExporterAppList /></ProtectedRoute>} />
+          <Route exact path="icmr/rejct-applications" element={<ProtectedRoute><RejectExpAppList /></ProtectedRoute>} />
 
           {/* Committee Route */}
-          <Route exact path="committee/dashboard" element={<CommDashboard />} />
-          <Route exact path="/committee/profile" element={<Profile />} />
-        </Route>
+          <Route exact path="committee/dashboard" element={<ProtectedRoute><CommDashboard /></ProtectedRoute>} />
+          <Route exact path="/committee/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route exact path="committee/exporters" element={<ProtectedRoute><ExporterAppList /></ProtectedRoute>} />
+          < Route exact path="committee/rejct-applications" element={< ProtectedRoute > <RejectExpAppList /></ProtectedRoute >} />
+        </Route >
 
         {/* Catch-all route for undefined routes */}
-        <Route path="*" element={<PageNotFound />} />
+        < Route path="*" element={< PageNotFound />} />
         {/* <Route exact path="/user/role" element={<RoleForm/>} />
-        <Route exact path="/user/register" element={<UserForm/>} />
-        <Route exact path="/user/login" element={<LoginForm/>} /> */}
-       
-      </Routes>
-    </BrowserRouter>
+        <Route exact path="/user/register" element={<UserForm/>} />*/}
+        <Route exact path="/user/login" element={<LoginForm />} />
+
+      </Routes >
+    </BrowserRouter >
   );
 }
 

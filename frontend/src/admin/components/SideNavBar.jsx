@@ -8,11 +8,12 @@ import {
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AiFillDashboard, AiOutlineMenu } from "react-icons/ai";
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { FaUser, FaFileExport, FaBars, FaFileDownload, FaChartArea,FaSlidersH,FaUsers,FaPager,FaFileSignature } from 'react-icons/fa';
-import { LiaFileExportSolid,LiaFileImportSolid } from "react-icons/lia";
+import { FaUser, FaFileExport, FaBars, FaFileDownload, FaChartArea, FaSlidersH, FaUsers, FaPager, FaFileSignature } from 'react-icons/fa';
+import { LiaFileExportSolid, LiaFileImportSolid } from "react-icons/lia";
 import { MdDocumentScanner } from "react-icons/md";
 import "../pages/style/sidenav.css";
 import admin_side_logo from "../../assets/images/dhrlogo.png";
+import axios from "axios";
 
 function SideNavBar() {
     const [openMenu, setOpenMenu] = useState(null);
@@ -20,15 +21,38 @@ function SideNavBar() {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const location = useLocation(); // 🔹 Get current URL
 
-    const userRole = location.pathname.startsWith("/admin")
-        ? "admin"
-        : location.pathname.startsWith("/imp-exp")
-            ? "imp-exp"
-            : location.pathname.startsWith("/icmr")
-            ? "icmr"
-            : location.pathname.startsWith("/committee")
-            ? "committee"
-                : "guest";
+    const [roles, setRoles] = useState([]);
+    const fetchRoles = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/api/roles");
+            setRoles(response.data);
+        } catch (err) {
+            console.error("Error fetching roles:", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchRoles();
+    }, []);
+
+    // const getUserRoleFromPath = (path) => {
+    //     if (path.startsWith("/admin")) return "admin";
+    //     if (path.startsWith("/imp-exp")) return "imp-exp";
+    //     if (path.startsWith("/icmr")) return "icmr";
+    //     if (path.startsWith("/committee")) return "committee";
+    //     return "guest";
+    // };
+
+    const getUserRoleFromPath = (path) => {
+        for (const role of roles) {
+            if (path.startsWith(`/${role.role_slug}`)) {
+                return role.role_slug;
+            }
+        }
+        return "guest";
+    };
+
+    const userRole = getUserRoleFromPath(location.pathname);
 
     // Handle Window Resize
     useEffect(() => {
@@ -70,41 +94,30 @@ function SideNavBar() {
                 collapsed={collapsed}
                 style={{ backgroundColor: "#111C43" }}
             >
-                {/* <CDBSidebarHeader prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />} >
 
-                    {!collapsed && (
-                        <Link to="/" className="sidebar-header text-white text-decoration-none">
-                            <img src={admin_side_logo} alt="THBM" style={{ width: '150px', height: "100", backgroundColor: "#fff" }} />
-                        </Link>
-                    )}
-                    {collapsed && (
-                        <Link to="/" className="sidebar-header text-white text-decoration-none">
-                            <img src={admin_side_logo} alt="THBM" style={{ width: '150px', height: "100", backgroundColor: "#fff" }} />
-                        </Link>
-                    )}
-                </CDBSidebarHeader> */}
-                <CDBSidebarHeader 
-    prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />} 
-    style={{ position: 'sticky', top: 0, backgroundColor: '#111C43', zIndex: 1000 }}
->
-    <Link to="/" className="sidebar-header text-white text-decoration-none">
-        <img 
-            src={admin_side_logo} 
-            alt="THBM" 
-            style={{ width: '150px', backgroundColor: "#fff" }} 
-        />
-    </Link>
-</CDBSidebarHeader>
+                <CDBSidebarHeader
+                    prefix={<FaBars onClick={toggleSidebar} style={{ cursor: 'pointer', backgroundColor: "#111C43" }} />}
+                    style={{ position: 'sticky', top: 0, backgroundColor: '#111C43', zIndex: 1000 }}
+                >
+                    <Link to="/" className="sidebar-header text-white text-decoration-none">
+                        <img
+                            src={admin_side_logo}
+                            alt="THBM"
+                            style={{ width: '150px', backgroundColor: "#fff" }}
+                        />
+                    </Link>
+                </CDBSidebarHeader>
 
 
                 <CDBSidebarContent className="sidebar-content">
                     <Menu>
                         {/* Admin Sidebar */}
-                        {userRole === "admin" && (
-                            <>      <MenuItem component={<NavLink to="/admin/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
-                                Dashboard
-                            </MenuItem>
 
+                        {userRole === "admin" && (
+                            <>
+                                <MenuItem component={<NavLink to="/admin/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
+                                    Dashboard
+                                </MenuItem>
                                 <SubMenu
                                     icon={<FaUser />}
                                     label="Profile"
@@ -172,7 +185,7 @@ function SideNavBar() {
                                         <Link to="/admin/add-impexp-holder" className="submenu-link"><LiaFileExportSolid /> Add New Importer/exporter</Link>
                                     </MenuItem>
                                 </SubMenu>
-                                
+
                                 <SubMenu
                                     icon={<FaPager />}
                                     label="Pages"
@@ -181,7 +194,7 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("pages")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Pages</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> sdfsAll Pages</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
                                         <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New Page</Link>
@@ -238,7 +251,7 @@ function SideNavBar() {
                                     open={openMenu === "importer"}
                                     onClick={() => handleMenuClick("importer")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileImportSolid/> All Importer Applications</Link>
+                                        <Link to="#" className="submenu-link"><LiaFileImportSolid /> All Importer Applications</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
                                         <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileImportSolid /> Apply New NOC Request</Link>
@@ -264,14 +277,14 @@ function SideNavBar() {
                                     open={openMenu === "end_use"}
                                     onClick={() => handleMenuClick("end_use")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><FaFileSignature  /> All PurposeOf End Uses</Link>
+                                        <Link to="#" className="submenu-link"><FaFileSignature /> All PurposeOf End Uses</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
                                         <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add PurposeOf End Uses</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
-                                    icon={<FaFileSignature/>}
+                                    icon={<FaFileSignature />}
                                     label="PurposeOf Sample Storage"
                                     className="submenu-custom"
                                     open={openMenu === "sample_storage"}
@@ -405,7 +418,7 @@ function SideNavBar() {
                                     </MenuItem>
 
                                 </SubMenu>
-                                
+
                                 <SubMenu
                                     icon={<FaFileExport />}
                                     label="Importer Applications"
@@ -452,6 +465,9 @@ function SideNavBar() {
                         {/* User Sidebar ICMR */}
                         {userRole === "icmr" && (
                             <>
+                                <MenuItem component={<NavLink to="/icmr/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
+                                    Dashboard
+                                </MenuItem>
                                 <SubMenu
                                     icon={<FaUser />}
                                     label="Profile"
@@ -460,7 +476,7 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("profile")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/admin/profile" className="submenu-link">Profile Settings</Link>
+                                        <Link to="/icmr/profile" className="submenu-link">Profile Settings</Link>
                                     </MenuItem>
                                 </SubMenu>
 

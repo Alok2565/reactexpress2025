@@ -50,18 +50,6 @@ function LoginImpExp() {
                                 </Form.Label>
                                 <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                             </Form.Group>
-                            {/* <Form.Group>
-                                <div className="d-flex flex-column align-items-center bg-base-100">
-                                    {!verified ? (
-                                        <CaptchaComponent onVerify={() => setVerified(true)} />
-                                    ) : (
-                                        <div className="p-3 bg-green-100 rounded-lg text-center">
-                                            <h2 className="text-lg font-bold text-green-700">✅ Verified!</h2>
-                                            <p>You can now submit the form.</p>
-                                        </div>
-                                    )}
-                                </div>
-                            </Form.Group> */}
                             <Form.Group>
                                 <div className="d-flex flex-column align-items-center bg-base-100">
                                     {!verified ? (

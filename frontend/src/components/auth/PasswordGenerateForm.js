@@ -159,7 +159,7 @@
 
 // export default PasswordGenerateForm;
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
