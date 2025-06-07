@@ -3,40 +3,39 @@ import { Container, Col } from 'react-bootstrap'
 import { CiViewList } from "react-icons/ci";
 import { FaEdit, FaListAlt } from "react-icons/fa";
 import { RiDraftFill } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TiArrowRightThick } from "react-icons/ti";
 import axios from "axios";
-
-
 
 function IcmrDashboard() {
     const [data, setData] = useState("");
     const [error, setError] = useState("");
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchDashboardData = async () => {
             const token = localStorage.getItem("token");
 
             if (!token) {
-                window.location.href = "/unauthorized"; // not logged in
+                //window.location.href = "/unauthorized"; // not logged in
+                navigate('/unauthorized')
                 return;
             }
 
-            try {
-                const res = await axios.get("http://localhost:5000/api/icmr/dashboard", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+            // try {
+            //     const res = await axios.get("http://localhost:5000/api/icmr/dashboard", {
+            //         headers: {
+            //             Authorization: `Bearer ${token}`
+            //         }
+            //     });
 
-                setData(res.data.message);
-            } catch (err) {
-                if (err.response?.status === 401 || err.response?.status === 403) {
-                    window.location.href = "/unauthorized"; // not authorized
-                } else {
-                    setError("Something went wrong");
-                }
-            }
+            //     setData(res.data.message);
+            // } catch (err) {
+            //     if (err.response?.status === 401 || err.response?.status === 403) {
+            //         navigate('/unauthorized') // not authorized
+            //     } else {
+            //         setError("Something went wrong");
+            //     }
+            // }
         };
 
         fetchDashboardData();

@@ -37,6 +37,7 @@ import AddUser from './admin/components/admins/AddUser';
 import Users from './admin/components/admins/Users';
 import EditUser from './admin/components/admins/EditUser';
 import AllUsersPasswordGenerate from './components/auth/AllUsersPasswordGenerate';
+import ImpExpPdwComponent from './components/auth/ImpExpPdwComponent';
 import AdminLogin from './components/auth/AdminLogin';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -58,21 +59,21 @@ function App() {
           <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
           <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
           <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
-          <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
+          <Route exact path="/:role_slug/impexp-pasword-generate" element={<ImpExpPdwComponent />} />
         </Route>
 
         <Route path="/" element={<Layouts />}>
 
           {/* Admin Route */}
-          <Route exact path="/admin/dashboard" element={<Dashboard />} />
-          <Route exact path="/admin/profile/" element={<Profile />} />
-          <Route exact path="/admin/roles/" element={<Roles />} />
-          <Route exact path="/admin/role/add" element={<AddRole />} />
-          <Route path="/admin/role/edit/:id" element={<EditRole />} />
-          <Route exact path="/admin/users/" element={<Users />} />
-          <Route exact path="/admin/user/add/" element={<AddUser />} />
-          <Route path="/admin/user/edit/:id" element={<EditUser />} />
-          <Route exact path="/admin/impexp-holders" element={<ImpExpHolderLists />} />
+          <Route exact path="/admin/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route exact path="/admin/profile/" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route exact path="/admin/roles/" element={<ProtectedRoute><Roles /></ProtectedRoute>} />
+          <Route exact path="/admin/role/add" element={<ProtectedRoute><AddRole /></ProtectedRoute>} />
+          <Route path="/admin/role/edit/:id" element={<ProtectedRoute><EditRole /></ProtectedRoute>} />
+          <Route exact path="/admin/users/" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+          <Route exact path="/admin/user/add/" element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
+          <Route path="/admin/user/edit/:id" element={<ProtectedRoute><EditUser /></ProtectedRoute>} />
+          <Route exact path="/admin/impexp-holders" element={<ProtectedRoute><ImpExpHolderLists /></ProtectedRoute>} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
 
 

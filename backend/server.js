@@ -29,6 +29,7 @@ const bodyParser = require("body-parser");
 dotenv.config();
 connectDB();
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -38,11 +39,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/roles", require("./routes/roleRoutes"));
 app.use("/api/users", require("./routes/UserRoutes"));
 app.use("/api/login", require("./routes/loginRoutes"));
+
+app.use("/api/impexp_login", require("./routes/impexpLoginRoutes"));
+app.use("/api/impexp", require("./routes/ImpExpDashboardRoutes"));
+
+
 app.use("/api/password-setup", require("./routes/passwordRoutes"));
+app.use("/api/impexp-password-setup", require("./routes/impexpPasswordRoutes"));
+
 
 
 app.use("/api/committee", require("./routes/committeeRoutes"));
 app.use("/api/icmr", require("./routes/icmrRoutes"));
+app.use("/api/admin", require("./routes/adminDashboardRoutes"));
+
+app.use("/api/importers-exporters", require("./routes/ImpExpRoutes"));
+
 
 // app.get('/logout', (req, res) => {
 //     req.session.destroy(err => {

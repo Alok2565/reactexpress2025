@@ -1,72 +1,128 @@
-import React, { useState } from 'react'
-import { Container, Col } from 'react-bootstrap'
-import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Container, Col, Form, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import authLogo from "../../assets/images/auth_icmr_logo.png";
-import Button from "react-bootstrap/Button";
-import CaptchaComponent from '../CaptchaComponent';
-
+import CaptchaComponent from "../CaptchaComponent";
 
 function LoginImpExp() {
-    const [verified, setVerified] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [iec_code, setIecCode] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    const [iec_code, setIecCode] = useState("");
-    const [password, setPassword] = useState("");
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role === "imp-exp") {
+      navigate("/imp-exp/dashboard");
+    }
+  }, [navigate]);
 
-    const LogiData = () => {
-        console.log("IEC CODE" + iec_code, "Password" + password);
+  const LogiData = async (e) => {
+    e.preventDefault();
+
+    if (!iec_code || !password) {
+      alert("Please fill in all fields");
+      return;
     }
 
-    return (
-        <>
-            <div>
-                <Container>
-                    <Col className="codex-authbox login mt-4 mb-4">
-                        <Col className="auth-header p-2">
-                            <Col className="d-flex justify-content-center align-items-center">
-                                <Link to="#">
-                                    <img
-                                        className="img-fluid light-logo"
-                                        src={authLogo}
-                                        width="100%"
-                                        style={{ maxWidth: "400px" }}
-                                        alt="logo"
-                                    />
-                                </Link>
-                            </Col>
-                            <h5 className="justify-content-between text-center mb-3" style={{ fontWeight: "600" }}>
-                                Login for Importer Exporter
-                            </h5>
-                        </Col>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="formGroupEmail">
-                                <Form.Label>Importer-Exporter code (IEC)</Form.Label>
-                                <Form.Control type="text" value={iec_code} onChange={(e) => setIecCode(e.target.value)} placeholder="IEC Code" maxLength={10} />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formGroupPassword">
-                                <Form.Label className="d-flex justify-content-between">
-                                    Password
-                                    <Link to="" className="float-end text-end" style={{ textDecoration: "none", fontSize: "17px" }}>Reset Password</Link>
-                                </Form.Label>
-                                <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group>
-                                <div className="d-flex flex-column align-items-center bg-base-100">
-                                    {!verified ? (
-                                        <CaptchaComponent onVerify={() => setVerified(true)} />
-                                    ) : null}
-                                </div>
-                            </Form.Group>
-                            <Col className="d-grid gap-2">
-                                <Button onClick={LogiData} className="btn btn-primary" type="button" style={{ fontSize: "20px;", fontWeight: "700", letterSpacing: "0.1em" }} disabled={!verified}>Login</Button>
-                                <h6 class="mt-3" style={{ color: "rgb(72, 76, 81)", textDecoration: "none" }}>Don't have an account? <Link class="text-primary" to="#" style={{ textDecoration: "none", fontWeight: "600" }}>Register Here</Link></h6>
-                            </Col>
-                        </Form>
-                    </Col>
-                </Container>
-            </div>
-        </>
-    )
+    try {
+      const response = await axios.post("http://localhost:5000/api/impexp_login", {
+        iec_code,
+        password,
+      });
+
+      const { token, impexp_user } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", impexp_user.role);
+      localStorage.setItem("iec_code", impexp_user.iec_code);
+      localStorage.setItem("name", impexp_user.name);
+      localStorage.setItem("designation", impexp_user.designation);
+
+      if (impexp_user.role === "imp-exp") {
+        navigate("/imp-exp/dashboard");
+      } else {
+        navigate("/unauthorized");
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
+
+      if (err.response && err.response.data && err.response.data.message) {
+        alert(err.response.data.message);
+      } else {
+        alert("Login failed due to server error.");
+      }
+    }
+  };
+
+  return (
+    <Container>
+      <Col className="codex-authbox login mt-4 mb-4">
+        <Col className="auth-header p-2">
+          <Col className="d-flex justify-content-center align-items-center">
+            <Link to="#">
+              <img src={authLogo} width="100%" style={{ maxWidth: "400px" }} alt="logo" />
+            </Link>
+          </Col>
+          <h5 className="text-center mb-3" style={{ fontWeight: "600" }}>
+            Login for Importer Exporter
+          </h5>
+        </Col>
+
+        <Form onSubmit={LogiData}>
+          <Form.Group className="mb-3">
+            <Form.Label>Importer-Exporter Code (IEC)</Form.Label>
+            <Form.Control
+              type="text"
+              value={iec_code}
+              onChange={(e) => setIecCode(e.target.value)}
+              placeholder="IEC Code"
+              maxLength={10}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label className="d-flex justify-content-between">
+              Password
+              <Link to="#" style={{ textDecoration: "none", fontSize: "17px" }}>
+                Reset Password
+              </Link>
+            </Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </Form.Group>
+
+          {!verified && (
+            <Form.Group className="mb-3 d-flex justify-content-center">
+              <CaptchaComponent onVerify={() => setVerified(true)} />
+            </Form.Group>
+          )}
+
+          <Col className="d-grid gap-2">
+            <Button
+              className="btn btn-primary"
+              type="submit"
+              style={{ fontSize: "20px", fontWeight: "700" }}
+              disabled={!verified}
+            >
+              Login
+            </Button>
+            <h6 className="mt-3" style={{ color: "rgb(72, 76, 81)" }}>
+              Don't have an account?{" "}
+              <Link className="text-primary" to="#" style={{ fontWeight: "600" }}>
+                Register Here
+              </Link>
+            </h6>
+          </Col>
+        </Form>
+      </Col>
+    </Container>
+  );
 }
 
-export default LoginImpExp
+export default LoginImpExp;

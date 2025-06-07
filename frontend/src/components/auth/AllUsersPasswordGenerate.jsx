@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { Button, Container, Row, Col, Form, InputGroup } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col} from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import authLogo from "../../assets/images/auth_icmr_logo.png";
 import PasswordGenerateForm from './PasswordGenerateForm';
@@ -10,29 +10,27 @@ function AllUsersPasswordGenerate() {
 
   const userRole = location.pathname.startsWith("/admin")
     ? "admin"
-    : location.pathname.startsWith("/imp-exp")
-    ? "imp-exp"
     : location.pathname.startsWith("/icmr")
     ? "icmr"
     : location.pathname.startsWith("/committee")
     ? "committee"
     : "guest";
 
+  const [users, setUsers] = useState([]);
 
-    const [users, setUsers] = useState([]);
-    
-      const fetchUserData = async () => {
-        try {
-          const response = await axios.get('http://localhost:5000/api/users/');
-          setUsers(response.data);
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-    
-      useEffect(() => {
-        fetchUserData();
-      }, []);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/users/');
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <div className="page-content py-3">
       <Container fluid>
@@ -55,23 +53,14 @@ function AllUsersPasswordGenerate() {
 
               {userRole === 'admin' && (
                 <>
-                <ul>
-        {users.map(user => (
-          <li key={user._id}>{user.name}</li> // Adjust based on actual data structure
-        ))}
-      </ul>
                   <h5 className="text-center mb-3" style={{ fontWeight: "600" }}>
                     Password generation for Super Admin
                   </h5>
-                  <PasswordGenerateForm />
-                </>
-              )}
-
-              {userRole === 'imp-exp' && (
-                <>
-                  <h5 className="text-center mb-3" style={{ fontWeight: "600" }}>
-                    Password generation for Importer/Exporter Users
-                  </h5>
+                  <ul>
+                    {users.map((user) => (
+                      <li key={user._id}>{user.name}</li>
+                    ))}
+                  </ul>
                   <PasswordGenerateForm />
                 </>
               )}

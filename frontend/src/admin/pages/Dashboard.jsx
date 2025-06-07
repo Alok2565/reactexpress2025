@@ -1,12 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Col } from 'react-bootstrap'
 import { CiViewList } from "react-icons/ci";
 import { FaEdit, FaListAlt } from "react-icons/fa";
 import { RiDraftFill } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TiArrowRightThick } from "react-icons/ti";
+import axios from "axios";
 
 function Dashboard() {
+    const [data, setData] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                navigate('/unauthorized')
+                ///window.location.href = "/unauthorized"; // not logged in
+                //navigate("admin/login")
+                return;
+            }
+
+            try {
+                const res = await axios.get("http://localhost:5000/api/admin/dashboard", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setData(res.data.message);
+            } catch (err) {
+                if (err.response?.status === 401 || err.response?.status === 403) {
+                    navigate('/unauthorized') // not authorized
+                } else {
+                    setError("Something went wrong");
+                }
+            }
+        };
+
+        fetchDashboardData();
+    }, []);
     return (
         <>
 

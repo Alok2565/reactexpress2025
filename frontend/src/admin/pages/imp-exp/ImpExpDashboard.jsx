@@ -1,18 +1,83 @@
-import React from 'react'
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+
+// function ImpExpDashboard() {
+//   const [message, setMessage] = useState("");
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (!token) {
+//       navigate("imp-exp/login");
+//       return;
+//     }
+
+//     axios
+//       .get("http://localhost:5000/api/impexp/dashboard", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       })
+//       .then((res) => {
+//         setMessage(res.data.message);
+//       })
+//       .catch((err) => {
+//         console.error("Access denied:", err);
+//         navigate("/unauthorized");
+//       });
+//   }, [navigate]);
+
+//   return (
+//     <div className="container mt-5">
+//       <h2>{message}</h2>
+
+//     </div>
+//   );
+// }
+
+// export default ImpExpDashboard;
+import React, { useEffect, useState } from "react";
 import { Container, Col } from 'react-bootstrap'
 import { CiViewList } from "react-icons/ci";
 import { FaEdit, FaListAlt } from "react-icons/fa";
 import { RiDraftFill } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { TiArrowRightThick } from "react-icons/ti";
+import axios from "axios";
 
 function ImpExpDashboard() {
+      const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("imp-exp/login");
+      return;
+    }
+
+    axios
+      .get("http://localhost:5000/api/impexp/dashboard", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setMessage(res.data.message);
+      })
+      .catch((err) => {
+        console.error("Access denied:", err);
+        navigate("/unauthorized");
+      });
+  }, [navigate]);
     return (
         <>
             <div className="page-content py-2">
                 <Container fluid>
                     <h4 className="mb-3">Exporter Dashboard</h4>
                     <div className="tbm-dash-card">
+                        <h2>{message}</h2>
                         <div className="row">
                             <div className="col-12">
                                 <div className="page-title-box">
@@ -152,4 +217,5 @@ function ImpExpDashboard() {
 }
 
 export default ImpExpDashboard
+
 

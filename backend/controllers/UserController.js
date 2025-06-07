@@ -21,11 +21,11 @@ exports.createUser = async (req, resp) => {
       ip_address: req.body.ip_address || req.ip, // fallback to request IP
     });
     await user_login.save();
-    const populatedUser = await User.findById(user._id).populate("role_id");
     
-
+    const populatedUser = await User.findById(user._id).populate("role_id");
     const roleName = populatedUser.role_id.role_slug;
 //console.log(roleName);
+
      const token = crypto.randomBytes(32).toString("hex");
      const passwordSetupLink = `${APP_BASE_URL}${roleName}/pasword-generate?token=${token}&email=${encodeURIComponent(req.body.email)}`;
     //  const passwordSetupLink = `${APP_BASE_URL}${user.role_id}/pasword-generate?token=${token}&email=${encodeURIComponent(req.body.email)}`;

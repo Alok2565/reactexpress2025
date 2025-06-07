@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { setPassword } = require("../controllers/PasswordController");
+const { setPassword} = require("../controllers/PasswordController");
 
 router.post("/", setPassword);
 

@@ -1,88 +1,4 @@
-// import React, { useState, useEffect } from 'react';
-// import { Container, Nav, NavDropdown } from 'react-bootstrap';
-// import { isSession, Link, useNavigate } from 'react-router-dom';
-// import { FaUserCircle, FaUserTie, FaLock } from "react-icons/fa";
-// import { IoLogOut } from "react-icons/io5";
-// import "../pages/style/custom.css";
-// import axios from 'axios'
 
-// function Header() {
-//     const [roles, setRoles] = useState([]);
-//     const navigate = useNavigate()
-//     const handleLogout = async () => {
-//         try {
-//             const response = await axios.get('http://localhost:5000/api/roles');
-//             const rolesData = response.data;
-//             setRoles(rolesData);
-
-//             localStorage.removeItem("token");
-//             localStorage.removeItem("user");
-
-//             // Check role_slug from fetched roles
-//             const userRole = rolesData.role_slug;
-//             if (userRole === 'admin') {
-//                 navigate("/admin/login");
-//             } else if (userRole === 'icmr') {
-//                 navigate("/icmr/login");
-//             } else if (userRole === 'committee') {
-//                 navigate("/committee/login");
-//             } else if (userRole === 'imp-exp') {
-//                 navigate("/imp-exp/login");
-//             }
-
-//         } catch (err) {
-//             console.error('Error during logout process:', err);
-//         }
-//     };
-//     //  const handleLogout = () => {
-//     //     localStorage.removeItem("token");
-//     //     localStorage.removeItem("user");
-//     //     navigate("icmr/login");
-//     // };
-//     return (
-//         <>
-//             <section className="admin-header d-flex justify-content-between align-items-center">
-//                 <Container fluid className="d-flex">
-//                     <header className="p-3 flex-grow-1">
-//                         <div className="project-heading text-center">
-//                             <h4 className="title-head" style={{ color: "#000000", fontWeight: "600" }}>Transfer of Human Biological Material (THBM)</h4>
-//                         </div>
-//                     </header>
-//                     <div className="header-right d-flex align-items-center">
-//                         <Nav className="bg-light">
-//                             <NavDropdown className="text-dark"
-//                                 title={
-//                                     <span className="d-flex align-items-center gap-5 text-dark">Welcome
-//                                         <span className="d-flex align-items-center gap-2">
-//                                             <span className="d-none d-md-inline text-dark">Admin</span>
-//                                             <FaUserCircle size={28} className="me-2 text-dark" />
-
-//                                         </span>
-//                                     </span>
-//                                 }
-//                                 id="user-dropdown"
-//                                 align="end"
-//                             >
-//                                 <NavDropdown.Item as={Link} to="admin/profile" className="w-100 py-3">
-//                                     <span><FaUserTie />  Profile</span>
-//                                 </NavDropdown.Item>
-//                                 <NavDropdown.Item as={Link} to="#">
-//                                     <span><FaLock />  Chnage Password</span>
-//                                 </NavDropdown.Item>
-
-//                                 <NavDropdown.Divider />
-//                                 <NavDropdown.Item>
-//                                     <span onClick={handleLogout}><IoLogOut /> Logout</span>
-//                                 </NavDropdown.Item>
-//                             </NavDropdown>
-//                         </Nav>
-//                     </div>
-//                 </Container>
-//             </section>
-//         </>
-//     );
-// }
-// export default Header;
 import React, { useState, useEffect } from 'react';
 import { Container, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -154,23 +70,25 @@ function Header() {
                             className="text-dark"
                             title={
                                 <span className="d-flex align-items-center gap-5 text-dark">
-                                    Welcome
-                                    <span className="d-flex align-items-center gap-2">
-                                        <span className="d-none d-md-inline text-dark">
-                                            {user?.name || 'Loading...'}
-                                        </span>
-                                        <FaUserCircle size={28} className="me-2 text-dark" />
+                                Welcome
+                                <span className="d-flex align-items-center gap-2">
+                                    <span className="d-none d-md-inline text-dark">
+                                    <h5 className="my-0 fw-normal text-success">
+                                        {user?.name || 'Loading...'}
+                                    </h5>
+                                    <h6 className="my-0 fw-normal text-dark">
+                                        {user?.designation || 'Loading...'}
+                                    </h6>
                                     </span>
-                                    <span className="d-flex align-items-center gap-2">
-                                        <span className="d-none d-md-inline text-dark">
-                                            {user?.designation || 'Loading...'}
-                                        </span>
+                                    <span className="account-user-avatar">
+                                    <FaUserCircle size={28} className="me-2 text-dark" />
                                     </span>
+                                </span>
                                 </span>
                             }
                             id="user-dropdown"
                             align="end"
-                        >
+                            >
                             <NavDropdown.Item as={Link} to="/admin/profile" className="w-100 py-3">
                                 <FaUserTie className="me-2" /> Profile
                             </NavDropdown.Item>

@@ -37,3 +37,28 @@ exports.setPassword = async (req, res) => {
     return res.status(500).json({ message: "Internal server error." });
   }
 };
+
+/* ------------------------------------------------- *
+ * 2. Importer / Exporter users (IEC code)           *
+ * ------------------------------------------------- */
+exports.setImpexpPassword = async (req, res) => {
+  const { iec_code, token, password } = req.body;
+
+  if (![iec_code, token, password].every(v => typeof v === "string" && v.trim())) {
+    return res.status(400).json({ message: "Missing required fields." });
+  }
+  try {
+    const userLogin = await UserLogin.findOne({ iec_code });
+    if (!userLogin) return res.status(404).json({ message: "User login not found." });
+
+    userLogin.password       = crypto.createHash("sha256").update(password).digest("hex");
+    userLogin.remember_token = crypto.randomBytes(32).toString("hex");
+    userLogin.ip_address     = req.ip || req.headers["x-forwarded-for"] || null;
+
+    await userLogin.save();
+    res.status(200).json({ message: "Password set successfully." });
+  } catch (err) {
+    console.error("Error setImpexpPassword:", err);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};

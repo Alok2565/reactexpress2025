@@ -361,7 +361,6 @@ function AddUser() {
                                 <Form.Select
                                     value={role_id}
                                     onChange={(e) => setRoleId(e.target.value)}
-                                    required
                                 >
                                     <option value="">Select Role</option>
                                     {roles.map((role) => (
