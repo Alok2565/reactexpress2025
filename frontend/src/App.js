@@ -26,12 +26,12 @@ import RejectExpAppList from './admin/applications/RejectExpAppList'
 // import AddUser from './admin/pages/admins/AddUser';
 // import EditUser from './admin/pages/admins/EditUser';
 import ImpExpHolderLists from './components/auth/ImpExpHolderLists';
-import Login from './admin/components/admins/Login';
+// import Login from './admin/components/admins/Login';
 import Roles from './admin/components/admins/Roles';
 import AddRole from './admin/components/admins/AddRole';
 import LoginForm from './components/LoginForm';
-import RoleForm from './components/RoleForm';
-import UserForm from './components/UserForm';
+// import RoleForm from './components/RoleForm';
+// import UserForm from './components/UserForm';
 import EditRole from './admin/components/admins/EditRole';
 import AddUser from './admin/components/admins/AddUser';
 import Users from './admin/components/admins/Users';
@@ -40,6 +40,18 @@ import AllUsersPasswordGenerate from './components/auth/AllUsersPasswordGenerate
 import ImpExpPdwComponent from './components/auth/ImpExpPdwComponent';
 import AdminLogin from './components/auth/AdminLogin';
 import ProtectedRoute from './components/ProtectedRoute';
+import AddNatureofBiomaterial from './admin/components/admins/AddNatureofBiomaterial';
+import ListNatureofBiomaterials from './admin/components/admins/ListNatureofBiomaterials';
+import EditNaturalofBiomaterial from './admin/components/admins/EditNaturalofBiomaterial';
+import ListHsCodeItems from './admin/components/admins/ListHsCodeItems';
+import AddHsCodeItem from './admin/components/admins/AddHsCodeItem';
+import EditHsCodeItem from './admin/components/admins/EditHsCodeItem';
+import EditSampleCollected from './admin/components/admins/EditSampleCollected';
+import AddSampleCollected from './admin/components/admins/AddSampleCollected';
+import ListSamplesCollected from './admin/components/admins/ListSamplesCollected';
+import ListQuantityofSamples from './admin/components/admins/ListQuantityofSamples';
+import AddQuantityofSample from './admin/components/admins/AddQuantityofSample';
+import EditQuantityofSample from './admin/components/admins/EditQuantityofSample';
 
 
 function App() {
@@ -73,6 +85,23 @@ function App() {
           <Route exact path="/admin/users/" element={<ProtectedRoute><Users /></ProtectedRoute>} />
           <Route exact path="/admin/user/add/" element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
           <Route path="/admin/user/edit/:id" element={<ProtectedRoute><EditUser /></ProtectedRoute>} />
+
+          <Route exact path="/admin/hscode-items" element={<ProtectedRoute><ListHsCodeItems /></ProtectedRoute>} />
+          <Route exact path="/admin/hscode-item/add_new" element={<ProtectedRoute><AddHsCodeItem /></ProtectedRoute>} />
+          <Route path="/admin/hscode-item/edit/:id" element={<ProtectedRoute><EditHsCodeItem /></ProtectedRoute>} />
+
+          <Route exact path="/admin/naturalof-biomaterials" element={<ProtectedRoute><ListNatureofBiomaterials /></ProtectedRoute>} />
+          <Route exact path="/admin/naturalof-biomaterial/add_new" element={<ProtectedRoute><AddNatureofBiomaterial /></ProtectedRoute>} />
+          <Route path="/admin/naturalof-biomaterial/edit/:id" element={<ProtectedRoute><EditNaturalofBiomaterial /></ProtectedRoute>} />
+
+          <Route exact path="/admin/samples-collected" element={<ProtectedRoute><ListSamplesCollected /></ProtectedRoute>} />
+          <Route exact path="/admin/sample-collected/add_new" element={<ProtectedRoute><AddSampleCollected /></ProtectedRoute>} />
+          <Route path="/admin/sample-collected/edit/:id" element={<ProtectedRoute><EditSampleCollected /></ProtectedRoute>} />
+
+          <Route exact path="/admin/quantityof-samples" element={<ProtectedRoute><ListQuantityofSamples /></ProtectedRoute>} />
+          <Route exact path="/admin/quantityof-sample/add_new" element={<ProtectedRoute><AddQuantityofSample /></ProtectedRoute>} />
+          <Route path="/admin/quantityof-sample/edit/:id" element={<ProtectedRoute><EditQuantityofSample /></ProtectedRoute>} />
+
           <Route exact path="/admin/impexp-holders" element={<ProtectedRoute><ImpExpHolderLists /></ProtectedRoute>} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
 

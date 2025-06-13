@@ -258,16 +258,57 @@ function SideNavBar() {
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Hs Code Items"
+                                    className="submenu-custom"
+                                    open={openMenu === "hs_code_items"}
+                                    onClick={() => handleMenuClick("hs_code_items")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/hscode-items" className="submenu-link"><LiaFileExportSolid /> All Hs Codes</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/hscode-item/add_new" className="submenu-link"><LiaFileExportSolid /> Add New Hs Code</Link>
+                                    </MenuItem>
+                                </SubMenu>
+
+                                <SubMenu
                                     icon={<FaFileSignature />}
                                     label="Nature of Biomaterial"
                                     className="submenu-custom"
                                     open={openMenu === "nature"}
                                     onClick={() => handleMenuClick("nature")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><FaFileSignature /> All Narural Biomaterials</Link>
+                                        <Link to="/admin/naturalof-biomaterials" className="submenu-link"><FaFileSignature /> All Narural Biomaterials</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New Narural Biomaterial</Link>
+                                        <Link to="/admin/naturalof-biomaterial/add_new" className="submenu-link"><FaFileSignature /> Add New Narural Biomaterial</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaFileSignature />}
+                                    label="Where Sapmle Collected"
+                                    className="submenu-custom"
+                                    open={openMenu === "sample_collected"}
+                                    onClick={() => handleMenuClick("sample_collected")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/samples-collected" className="submenu-link"><FaFileSignature /> All Samples Collected</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/sample-collected/add_new" className="submenu-link"><FaFileSignature /> Add New Sample Collected</Link>
+                                    </MenuItem>
+                                </SubMenu>
+
+                                <SubMenu
+                                    icon={<FaFileSignature />}
+                                    label="Quantity of Samples"
+                                    className="submenu-custom"
+                                    open={openMenu === "auantity"}
+                                    onClick={() => handleMenuClick("auantity")}>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/quantityof-samples" className="submenu-link"><FaFileSignature /> All Quantity of Samples</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/admin/quantityof-sample/add_new" className="submenu-link"><FaFileSignature /> Add New Quantity of Samples</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
@@ -309,19 +350,7 @@ function SideNavBar() {
                                         <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New Samples Exported Volume</Link>
                                     </MenuItem>
                                 </SubMenu>
-                                <SubMenu
-                                    icon={<FaChartArea />}
-                                    label="Decision"
-                                    className="submenu-custom"
-                                    open={openMenu === "decision"}
-                                    onClick={() => handleMenuClick("decision")}>
-                                    <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
-                                    </MenuItem>
-                                    <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
-                                    </MenuItem>
-                                </SubMenu>
+
                                 <SubMenu
                                     icon={<FaChartArea />}
                                     label="Decision"

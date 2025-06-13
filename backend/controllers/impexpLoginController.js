@@ -12,7 +12,7 @@ exports.loginImpExpUser = async (req, res) => {
   }
 
   try {
-    console.log("🔍 Attempting login for IEC:", iec_code);
+    // console.log("🔍 Attempting login for IEC:", iec_code);
 
     const userLogin = await UserLogin.findOne({ iec_code }).populate({
       path: "impexp_userId",
@@ -20,31 +20,31 @@ exports.loginImpExpUser = async (req, res) => {
     });
 
     if (!userLogin) {
-      console.log("❌ IEC Code not found in UserLogin");
+      //console.log("❌ IEC Code not found in UserLogin");
       return res.status(401).json({ message: "Invalid credentials: IEC Code not found." });
     }
 
     if (!userLogin.password) {
-      console.log("❌ Password not set for this user");
+      //console.log("❌ Password not set for this user");
       return res.status(401).json({ message: "Password not set. Please set your password first." });
     }
 
     const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
 
     if (userLogin.password !== hashedPassword) {
-      console.log("❌ Password mismatch");
+      //console.log("❌ Password mismatch");
       return res.status(401).json({ message: "Incorrect password" });
     }
 
     if (!userLogin.impexp_userId) {
-      console.log("❌ impexp_userId not linked in UserLogin");
+      //console.log("❌ impexp_userId not linked in UserLogin");
       return res.status(500).json({ message: "Linked Importer Exporter user not found." });
     }
 
     const impexp_user = await ImpExpModel.findById(userLogin.impexp_userId._id);
 
     if (!impexp_user) {
-      console.log("❌ ImpExp user data not found");
+      //console.log("❌ ImpExp user data not found");
       return res.status(500).json({ message: "User record missing." });
     }
 
@@ -52,7 +52,7 @@ exports.loginImpExpUser = async (req, res) => {
     const roleName = userLogin.impexp_userId?.role_id?.role_name || "Unknown";
 
     if (!process.env.JWT_SECRET) {
-      console.error("❌ JWT_SECRET not defined in .env");
+      //console.error("❌ JWT_SECRET not defined in .env");
       return res.status(500).json({ message: "Server misconfiguration: missing JWT secret" });
     }
 
@@ -66,7 +66,7 @@ exports.loginImpExpUser = async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    console.log("✅ Login successful for IEC:", iec_code);
+    //console.log("✅ Login successful for IEC:", iec_code);
 
     return res.status(200).json({
       token,
@@ -79,7 +79,7 @@ exports.loginImpExpUser = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("🔥 Login error:", err);
+    //console.error("🔥 Login error:", err);
     return res.status(500).json({ message: "Login failed", error: err.message });
   }
 };

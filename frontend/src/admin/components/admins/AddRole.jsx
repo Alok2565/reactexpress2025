@@ -9,7 +9,7 @@ function AddRole() {
   const [role_name, setRoleName] = useState('');
   const [role_slug, setRoleSlug] = useState('');
   const [validated, setValidated] = useState(false);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const generateSlug = (name) => {
@@ -19,7 +19,7 @@ function AddRole() {
         .replace(/[\s\W-]+/g, '-')
         .replace(/^-+|-+$/g, '');
     };
-  
+
     setRoleSlug(generateSlug(role_name));
   }, [role_name]);
 
@@ -33,8 +33,8 @@ function AddRole() {
   };
 
   const handleRole = async (event) => {
-    event.preventDefault(); // Prevent default form submit
-    setLoading(true); // Set loading state
+    event.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post("http://localhost:5000/api/roles", { role_name, role_slug });
@@ -46,21 +46,14 @@ function AddRole() {
       console.error("Role creation failed:", error);
 
       if (error.response) {
-        // If the error has a response from the server
-        // console.error("Response data:", error.response.data);
-        // console.error("Response status:", error.response.status);
         alert("Error: " + (error.response?.data?.error || "Unknown error"));
       } else if (error.request) {
-        // If the error was caused by no response from the server
-        //console.error("Request was made but no response received:", error.request);
         alert("Error: No response from server");
       } else {
-        // For other errors, such as network issues
-        //console.error("Error in setting up the request:", error.message);
         alert("Error: " + error.message);
       }
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
@@ -80,46 +73,46 @@ function AddRole() {
                   </button>
                 </div>
               </div>
-          </Col>
-          </Row>
-          <div className="container">
-          <Row>
-            <Col xl={12}>
-            <Card>
-              <Card.Body>
-          <Form noValidate validated={validated} onSubmit={handleValidation}>
-            <Row className="mb-3">
-              <Form.Group as={Col} md="6" controlId="validationCustom01">
-                <Form.Label>Role Name <span className="text-danger">*</span></Form.Label>
-                <Form.Control
-                  value={role_name}
-                  onChange={(e) => setRoleName(e.target.value)} required placeholder="name"
-                  autoComplete="off"
-                />
-              </Form.Group>
-              <Form.Group as={Col} md="6" controlId="validationCustom02">
-                <Form.Label>Role Slug <span className="text-danger">*</span></Form.Label>
-                <Form.Control
-                  value={role_slug}
-                  onChange={(e) => setRoleSlug(e.target.value)}
-                  required
-                  placeholder="Slug"
-                  autoComplete="off"
-                />
-              </Form.Group>
-            </Row>
-            <Button
-              onClick={handleRole}
-              type="submit"
-              disabled={loading} // Disable button during request
-            >
-              {loading ? "Adding..." : "Add Role"}
-            </Button>
-          </Form>
-              </Card.Body>
-            </Card>
             </Col>
           </Row>
+          <div className="container">
+            <Row>
+              <Col xl={12}>
+                <Card>
+                  <Card.Body>
+                    <Form noValidate validated={validated} onSubmit={handleValidation}>
+                      <Row className="mb-3">
+                        <Form.Group as={Col} md="6" controlId="validationCustom01">
+                          <Form.Label>Role Name <span className="text-danger">*</span></Form.Label>
+                          <Form.Control
+                            value={role_name}
+                            onChange={(e) => setRoleName(e.target.value)} required placeholder="name"
+                            autoComplete="off"
+                          />
+                        </Form.Group>
+                        <Form.Group as={Col} md="6" controlId="validationCustom02">
+                          <Form.Label>Role Slug <span className="text-danger">*</span></Form.Label>
+                          <Form.Control
+                            value={role_slug}
+                            onChange={(e) => setRoleSlug(e.target.value)}
+                            required
+                            placeholder="Slug"
+                            autoComplete="off"
+                          />
+                        </Form.Group>
+                      </Row>
+                      <Button
+                        onClick={handleRole}
+                        type="submit"
+                        disabled={loading}
+                      >
+                        {loading ? "Adding..." : "Add Role"}
+                      </Button>
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
           </div>
         </Container>
       </div>

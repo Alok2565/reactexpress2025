@@ -184,37 +184,37 @@ function Users() {
       console.error("Error updating role status:", err);
     }
   };
-const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
     const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!',
-      });
-  
-      if (result.isConfirmed) {
-        try {
-          const response = await fetch(`http://localhost:5000/api/users/delete/${id}`, {
-            method: 'DELETE',
-          })
-  
-          if (response.ok) {
-            Swal.fire('Deleted!', 'User has been deleted.', 'success')
-            setDeleteMessage('User has been deleted successfully.')
-            fetchUsers()
-          } else {
-            Swal.fire('Error!', 'Failed to delete the user.', 'error')
-          }
-        } catch (err) {
-          setDeleteMessage('Something went wrong. Try again.' + err.message)
-          Swal.fire('Oops!', 'Something went wrong.', 'error')
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/users/delete/${id}`, {
+          method: 'DELETE',
+        })
+
+        if (response.ok) {
+          Swal.fire('Deleted!', 'User has been deleted.', 'success')
+          setDeleteMessage('User has been deleted successfully.')
+          fetchUsers()
+        } else {
+          Swal.fire('Error!', 'Failed to delete the user.', 'error')
         }
+      } catch (err) {
+        setDeleteMessage('Something went wrong. Try again.' + err.message)
+        Swal.fire('Oops!', 'Something went wrong.', 'error')
       }
+    }
   }
-  
+
   // Filtered and paginated users
   const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -225,7 +225,7 @@ const handleDelete = async(id) => {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
-  
+
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
@@ -253,19 +253,19 @@ const handleDelete = async(id) => {
           </Row>
           <Row>
             <Col xl={12}>
-            {deleteMessage && (
-          <div
-            className="alert alert-danger alert-dismissible fade show"
-            role="alert"
-          >
-            <strong>Deleted!</strong> {deleteMessage}
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="alert"
-            ></button>
-          </div>
-        )}
+              {deleteMessage && (
+                <div
+                  className="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>Deleted!</strong> {deleteMessage}
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                  ></button>
+                </div>
+              )}
               {successMessage && (
                 <div className="alert alert-success alert-dismissible fade show" role="alert">
                   <strong>Success!</strong> {successMessage}
@@ -276,39 +276,39 @@ const handleDelete = async(id) => {
               <Card>
                 <Card.Body>
                   <div style={{ overflowX: 'auto' }}>
-                  <Row className="mb-3 align-items-center">
-  <Col md={6}>
-    <div className="d-flex align-items-center">
-      <label className="me-2 mb-0">Show entries</label>
-      <Form.Select
-        style={{ width: '80px' }}
-        value={usersPerPage}
-        onChange={(e) => {
-          setCurrentPage(1); // Reset to page 1 on change
-          setUsersPerPage(Number(e.target.value));
-        }}
-      >
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </Form.Select>
-    </div>
-  </Col>
-  <Col md={6} className="text-end">
-    <Form.Control
-      type="text"
-      placeholder="Search"
-      value={searchTerm}
-      onChange={(e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on search
-      }}
-      style={{ maxWidth: '250px', marginLeft: 'auto' }}
-    />
-  </Col>
-</Row>
+                    <Row className="mb-3 align-items-center">
+                      <Col md={6}>
+                        <div className="d-flex align-items-center">
+                          <label className="me-2 mb-0">Show entries</label>
+                          <Form.Select
+                            style={{ width: '80px' }}
+                            value={usersPerPage}
+                            onChange={(e) => {
+                              setCurrentPage(1); // Reset to page 1 on change
+                              setUsersPerPage(Number(e.target.value));
+                            }}
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                          </Form.Select>
+                        </div>
+                      </Col>
+                      <Col md={6} className="text-end">
+                        <Form.Control
+                          type="text"
+                          placeholder="Search"
+                          value={searchTerm}
+                          onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1); // Reset to first page on search
+                          }}
+                          style={{ maxWidth: '250px', marginLeft: 'auto' }}
+                        />
+                      </Col>
+                    </Row>
                     <Table striped bordered hover>
                       <thead>
                         <tr>

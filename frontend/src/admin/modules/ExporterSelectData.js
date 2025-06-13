@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import axios from 'axios';
+
 export function HsCodeOptionsDescription() {
     return {
         HsCodeOptions: [
@@ -24,35 +27,73 @@ export function HsCodeOptionsDescription() {
     };
 }
 
-export function natureOfBiomaterialOptions() {
-    return {
-        nature_of_biomaterialoptions: [
-            { value: "Whole blood", label: "Whole blood" },
-            { value: "Buffy coat", label: "Buffy coat" },
-            { value: "Serum", label: "Serum" },
-            { value: "Plasma", label: "Plasma" },
-            { value: "Urine", label: "Urine" },
-            { value: "Nucleic acid(Extracted DNA)", label: "Nucleic acid(Extracted DNA)" },
-            { value: "Nucleic acid(Extracted RNA)", label: "Nucleic acid(Extracted RNA)" },
-            { value: "Any Tissue/Cells", label: "Any Tissue/Cells" },
-            { value: "Other body fluids", label: "Other body fluids" },
-            { value: "Others", label: "Others" },
+export function useNatureOfBiomaterialOptions() {
+    const [nature_of_biomaterialoptions, setNature_of_biomaterialoptions] = useState([]);
 
-        ]
-    };
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/natutalof_biomaterials")
+            .then((res) => {
+                console.log("API response:", res.data);
+
+                const filtered = res.data
+                    .filter((item) => Number(item.status) === 1)
+                    .map((item) => ({
+                        id: item._id || item.id,
+                        value: item.name || item.value,
+                        label: item.name || item.value,
+                    }))
+                    .sort((a, b) => a.id.localeCompare(b.id));
+
+                setNature_of_biomaterialoptions(filtered);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch biomaterial options", err);
+            });
+    }, []);
+
+    return { nature_of_biomaterialoptions };
 }
 
-export function whereSampleCollectedOption() {
-    return {
-        where_sample_collectedOption: [
-            { value: "Inpatient hospital facility", label: "Inpatient hospital facility" },
-            { value: "Outpatient hospital facility", label: "Outpatient hospital facility" },
-            { value: "Clinical/ Diagnostic laboratory", label: "Clinical/ Diagnostic laboratory" },
-            { value: "Research laboratory", label: "Research laboratory" },
-            { value: "Others", label: "Others" },
+// export function useWhereSampleCollectedOption() {
+//     return {
+//         whereSampleCollectedOption: [
+//             { value: "Inpatient hospital facility", label: "Inpatient hospital facility" },
+//             { value: "Outpatient hospital facility", label: "Outpatient hospital facility" },
+//             { value: "Clinical/ Diagnostic laboratory", label: "Clinical/ Diagnostic laboratory" },
+//             { value: "Research laboratory", label: "Research laboratory" },
+//             { value: "Others", label: "Others" },
 
-        ]
-    }
+//         ]
+//     }
+// }
+
+export function useWhereSampleCollectedOption() {
+    const [whereSampleCollectedOption, setWhereSampleCollected] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/samples_collected")
+            .then((res) => {
+                console.log("API response:", res.data);
+
+                const filtered = res.data
+                    .filter((item) => Number(item.status) === 1)
+                    .map((item) => ({
+                        id: item._id || item.id,
+                        value: item.name || item.value,
+                        label: item.name || item.value,
+                    }))
+                    .sort((a, b) => a.id.localeCompare(b.id));
+
+                setWhereSampleCollected(filtered);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch where sample collected options", err);
+            });
+    }, []);
+
+    return { whereSampleCollectedOption };
 }
 
 export function selectSpecifyPurposeOption() {
@@ -88,13 +129,41 @@ export function funcPurposeofSamplesOption() {
         ]
     };
 }
-export function quantityofSampleExportedOptions() {
-    return {
-        quantityofSampleExported: [
-            { value: "ML", label: "ML" },
-            { value: "L", label: "L" },
-            { value: "μL", label: "μL" },
+// export function quantityofSampleExportedOptions() {
+//     return {
+//         quantityofSampleExported: [
+//             { value: "ML", label: "ML" },
+//             { value: "L", label: "L" },
+//             { value: "μL", label: "μL" },
 
-        ]
-    };
+//         ]
+//     };
+
+// }
+export function useQuantityOfSampleExportedOptions() {
+    const [quantityofSampleExported, setQuantityOfSampleExported] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/quantityof_samples")
+            .then((res) => {
+                console.log("API response:", res.data);
+
+                const filtered = res.data
+                    .filter((item) => Number(item.status) === 1)
+                    .map((item) => ({
+                        id: item._id || item.id,
+                        value: item.name || item.value,
+                        label: item.name || item.value,
+                    }))
+                    .sort((a, b) => a.id.localeCompare(b.id));
+
+                setQuantityOfSampleExported(filtered);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch quantity of sample exported options", err);
+            });
+    }, []);
+
+    return { quantityofSampleExported };
 }

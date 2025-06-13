@@ -3,18 +3,23 @@ import { Link } from 'react-router-dom';
 import { CDBBtn } from "cdbreact";
 import { Container, Row, Col, Button, Form, Card, CardBody, Modal } from 'react-bootstrap';
 import { FaInfoCircle, FaList, FaCheckCircle, FaLongArrowAltLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { HsCodeOptionsDescription, natureOfBiomaterialOptions, whereSampleCollectedOption, selectSpecifyPurposeOption, funcwhetherSamplesUsedResearchOption, funcPurposeofSamplesOption, quantityofSampleExportedOptions } from '../../modules/ExporterSelectData';
+import { HsCodeOptionsDescription, useNatureOfBiomaterialOptions, useWhereSampleCollectedOption, selectSpecifyPurposeOption, funcwhetherSamplesUsedResearchOption, funcPurposeofSamplesOption, useQuantityOfSampleExportedOptions } from '../../modules/ExporterSelectData';
 import ValidationNocRequest from "./ValidationNocRequest";
 
 const { HsCodeOptions, HsCodeDescrip } = HsCodeOptionsDescription();
-const { nature_of_biomaterialoptions } = natureOfBiomaterialOptions();
-const { where_sample_collectedOption } = whereSampleCollectedOption();
+// const { nature_of_biomaterialoptions } = natureOfBiomaterialOptions();
+
 const { SpecifyPurposeOption } = selectSpecifyPurposeOption();
 const { whetherSamplesUsedResearchOption } = funcwhetherSamplesUsedResearchOption();
 const { PurposeofSamplesOption } = funcPurposeofSamplesOption();
-const { quantityofSampleExported } = quantityofSampleExportedOptions();
+
+
+
 
 function ApplyNocRequest() {
+    const { nature_of_biomaterialoptions } = useNatureOfBiomaterialOptions();
+    const { whereSampleCollectedOption } = useWhereSampleCollectedOption();
+    const { quantityofSampleExported } = useQuantityOfSampleExportedOptions();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         iec_code: "",
@@ -262,7 +267,7 @@ function ApplyNocRequest() {
                                 </div>
                             </Col>
                         </Row>
-                        <Form noValidate method="post"  encType="multipart/form-data">
+                        <Form noValidate method="post" encType="multipart/form-data">
                             <Row>
                                 <div className="card-body-custom">
                                     {step === 1 && (
@@ -547,9 +552,9 @@ function ApplyNocRequest() {
                                                                 onChange={handleChange}
                                                             >
                                                                 <option value="">Please Select</option>
-                                                                {nature_of_biomaterialoptions.map((option) => (
-                                                                    <option key={option.value} value={option.value}>
-                                                                        {option.label}
+                                                                {nature_of_biomaterialoptions.map((item) => (
+                                                                    <option key={item.id} value={item.value}>
+                                                                        {item.label}
                                                                     </option>
                                                                 ))}
 
@@ -590,7 +595,7 @@ function ApplyNocRequest() {
                                                             onChange={handleChange}
                                                         >
                                                             <option value="">Please Select</option>
-                                                            {where_sample_collectedOption.map((option) => (
+                                                            {whereSampleCollectedOption.map((option) => (
                                                                 <option key={option.value} value={option.value}>
                                                                     {option.label}
                                                                 </option>
