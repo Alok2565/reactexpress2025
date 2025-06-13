@@ -1,16 +1,3 @@
-// import React from 'react'
-
-// function EditNaturalofBiomaterial() {
-//   return (
-//     <div>
-
-//     </div>
-//   )
-// }
-
-// export default EditNaturalofBiomaterial
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -89,36 +76,39 @@ function EditNaturalofBiomaterial() {
                         </div>
                     </Col>
                 </Row>
+                <Card>
+                    <Card.Body>
+                        <div className="container">
+                            <Form onSubmit={handleUpdateUser}>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} md="6" controlId="name">
+                                        <Form.Label>Name of Natural Biomaterial <span className="text-danger">*</span></Form.Label>
+                                        <Form.Control
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                            autoComplete="off"
+                                        />
+                                    </Form.Group>
 
-                <div className="container">
-                    <Form onSubmit={handleUpdateUser}>
-                        <Row className="mb-3">
-                            <Form.Group as={Col} md="6" controlId="name">
-                                <Form.Label>Name of Natural Biomaterial <span className="text-danger">*</span></Form.Label>
-                                <Form.Control
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required
-                                    autoComplete="off"
-                                />
-                            </Form.Group>
+                                    <Form.Group as={Col} md="6" controlId="slug">
+                                        <Form.Label>Slug of Natural Biomaterial <span className="text-danger">*</span></Form.Label>
+                                        <Form.Control
+                                            value={slug}
+                                            onChange={(e) => setSlug(e.target.value)}
+                                            required
+                                            autoComplete="off"
+                                        />
+                                    </Form.Group>
+                                </Row>
 
-                            <Form.Group as={Col} md="6" controlId="slug">
-                                <Form.Label>Slug of Natural Biomaterial <span className="text-danger">*</span></Form.Label>
-                                <Form.Control
-                                    value={slug}
-                                    onChange={(e) => setSlug(e.target.value)}
-                                    required
-                                    autoComplete="off"
-                                />
-                            </Form.Group>
-                        </Row>
-
-                        <Button type="submit" disabled={loading}>
-                            {loading ? "Updating..." : "Update Biomaterial"}
-                        </Button>
-                    </Form>
-                </div>
+                                <Button type="submit" disabled={loading}>
+                                    {loading ? "Updating..." : "Update Biomaterial"}
+                                </Button>
+                            </Form>
+                        </div>
+                    </Card.Body>
+                </Card>
             </Container>
         </div>
     );

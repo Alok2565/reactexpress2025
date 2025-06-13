@@ -20,7 +20,8 @@ app.use("/api/hscodes", require("./routes/HsCodeRoutes"));
 app.use("/api/samples_collected", require("./routes/SampleCollectedRoutes"));
 app.use("/api/samples_collected", require("./routes/SampleCollectedRoutes"));
 app.use("/api/quantityof_samples", require("./routes/QuantitySampleRoutes"));
-
+app.use("/api/purposeof_end_uses", require("./routes/purposeofEndUseRoutes"));
+app.use("/api/research_analysises", require("./routes/WeatherResearchAnalysisRoutes"));
 
 app.use("/api/login", require("./routes/loginRoutes"));
 app.use("/api/impexp_login", require("./routes/impexpLoginRoutes"));

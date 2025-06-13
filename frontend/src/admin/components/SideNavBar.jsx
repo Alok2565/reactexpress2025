@@ -313,28 +313,28 @@ function SideNavBar() {
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaFileSignature />}
-                                    label="PurposeOf End Use"
+                                    label="Purpose of end use"
                                     className="submenu-custom"
                                     open={openMenu === "end_use"}
                                     onClick={() => handleMenuClick("end_use")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><FaFileSignature /> All PurposeOf End Uses</Link>
+                                        <Link to="/admin/purposeof-enduses" className="submenu-link"><FaFileSignature /> All Purpose Of end uses</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add PurposeOf End Uses</Link>
+                                        <Link to="/admin/purposeof-enduse/add_new" className="submenu-link"><FaFileSignature /> Add Purpose of end use</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaFileSignature />}
-                                    label="PurposeOf Sample Storage"
+                                    label="Wather Research Analysis"
                                     className="submenu-custom"
                                     open={openMenu === "sample_storage"}
                                     onClick={() => handleMenuClick("sample_storage")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><FaFileSignature /> All PurposeOf Sample Storage</Link>
+                                        <Link to="/admin/weather-research-analysises" className="submenu-link"><FaFileSignature /> All Research Analysises</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New PurposeOf Sample Storage</Link>
+                                        <Link to="/admin/weather-research-analysis/add_new" className="submenu-link"><FaFileSignature /> Add Research Analysis</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu

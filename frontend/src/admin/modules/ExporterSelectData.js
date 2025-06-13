@@ -96,28 +96,83 @@ export function useWhereSampleCollectedOption() {
     return { whereSampleCollectedOption };
 }
 
-export function selectSpecifyPurposeOption() {
-    return {
-        SpecifyPurposeOption: [
-            { value: "Calibration/ Quality assurance", label: "Calibration/ Quality assurance" },
-            { value: "Clinical Diagnostics/ Testing", label: "Clinical Diagnostics/ Testing" },
-            { value: "Others", label: "Others" },
+// export function selectSpecifyPurposeOption() {
+//     return {
+//         SpecifyPurposeOption: [
+//             { value: "Calibration/ Quality assurance", label: "Calibration/ Quality assurance" },
+//             { value: "Clinical Diagnostics/ Testing", label: "Clinical Diagnostics/ Testing" },
+//             { value: "Others", label: "Others" },
 
-        ]
-    };
+//         ]
+//     };
+// }
+export function useSelectSpecifyPurposeOptions() {
+    const [SpecifyPurposeOption, setSpecifyPurposeOption] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/purposeof_end_uses")
+            .then((res) => {
+                console.log("API response:", res.data);
+
+                const filtered = res.data
+                    .filter((item) => Number(item.status) === 1)
+                    .map((item) => ({
+                        id: item._id || item.id,
+                        value: item.name || item.value,
+                        label: item.name || item.value,
+                    }))
+                    .sort((a, b) => a.id.localeCompare(b.id));
+
+                setSpecifyPurposeOption(filtered);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch quantity of sample exported options", err);
+            });
+    }, []);
+
+    return { SpecifyPurposeOption };
 }
 
-export function funcwhetherSamplesUsedResearchOption() {
-    return {
-        whetherSamplesUsedResearchOption: [
-            { value: "Genomic studies/Gene Variant/SNP analysis", label: "Genomic studies/Gene Variant/SNP analysis" },
-            { value: "Transcriptomics Studies", label: "Transcriptomics Studies" },
-            { value: "Proteomic Studies", label: "Proteomic Studies" },
-            { value: "Metabolomic Studies", label: "Metabolomic Studies" },
-            { value: "Others", label: "Others" },
+// export function funcwhetherSamplesUsedResearchOption() {
+//     return {
+//         whetherSamplesUsedResearchOption: [
+//             { value: "Genomic studies/Gene Variant/SNP analysis", label: "Genomic studies/Gene Variant/SNP analysis" },
+//             { value: "Transcriptomics Studies", label: "Transcriptomics Studies" },
+//             { value: "Proteomic Studies", label: "Proteomic Studies" },
+//             { value: "Metabolomic Studies", label: "Metabolomic Studies" },
+//             { value: "Others", label: "Others" },
 
-        ]
-    };
+//         ]
+//     };
+// }
+
+export function useFuncwhetherSamplesUsedResearchOptions() {
+    const [whetherSamplesUsedResearchOption, setWhetherSamplesUsedResearchOption] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/research_analysises")
+            .then((res) => {
+                console.log("API response:", res.data);
+
+                const filtered = res.data
+                    .filter((item) => Number(item.status) === 1)
+                    .map((item) => ({
+                        id: item._id || item.id,
+                        value: item.name || item.value,
+                        label: item.name || item.value,
+                    }))
+                    .sort((a, b) => a.id.localeCompare(b.id));
+
+                setWhetherSamplesUsedResearchOption(filtered);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch quantity of sample exported options", err);
+            });
+    }, []);
+
+    return { whetherSamplesUsedResearchOption };
 }
 
 export function funcPurposeofSamplesOption() {
@@ -129,6 +184,7 @@ export function funcPurposeofSamplesOption() {
         ]
     };
 }
+
 // export function quantityofSampleExportedOptions() {
 //     return {
 //         quantityofSampleExported: [

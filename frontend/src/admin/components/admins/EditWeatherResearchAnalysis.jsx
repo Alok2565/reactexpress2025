@@ -1,54 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Col, Row, Form, Button, Card } from 'react-bootstrap';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 
-function AddNatureofBiomaterial() {
+function EditWeatherResearchAnalysis() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+
     const [name, setName] = useState("");
     const [slug, setSlug] = useState("");
     const [loading, setLoading] = useState(false);
-    const [validated, setValidated] = useState(false);
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const generateSlug = (name) => {
-            return name
-                .toLowerCase()
-                .trim()
-                .replace(/[\s\W-]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-        };
-
-        setSlug(generateSlug(name));
-    }, [name]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-            setValidated(true);
-            return;
-        }
-        setValidated(true);
-        setLoading(true);
-        const insertData = {
-            name,
-            slug
-        };
+    const fetchData = async () => {
         try {
-            await axios.post("http://localhost:5000/api/natutalof_biomaterials", insertData);
-            navigate("/admin/naturalof-biomaterials?success=Natural of biomaterial%20has%20been%20created%20successfully");
+            const response = await axios.get(`http://localhost:5000/api/research_analysises/${id}`);
+            const research_analysis = response.data;
+            setName(research_analysis.name);
+            setSlug(research_analysis.slug);
         } catch (error) {
-            //console.error("Natural of biomaterial creation failed:", error.response?.data);
-            alert("Error: " + (error.response?.data?.message || "Unknown error"));
+            alert("Failed to fetch Research Analysis details: " + error.message);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const handleUpdateUser = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const updateData = {
+                name,
+                slug,
+            };
+            const response = await fetch(`http://localhost:5000/api/research_analysises/update/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                navigate("/admin/weather-research-analysises?success=Weather Research Analysis%20has%20been%20Updated%20successfully");
+            } else {
+                alert("Update failed: " + data.error);
+            }
+        } catch (err) {
+            alert("An error occurred: " + err.message);
         } finally {
             setLoading(false);
         }
     };
+
     return (
         <div className="page-content py-3">
             <Container fluid>
@@ -56,13 +62,13 @@ function AddNatureofBiomaterial() {
                     <Col xl={12}>
                         <div className="page-title-box d-flex justify-content-between align-items-center">
                             <h4 className="page-title text-start" style={{ fontSize: "20px", fontWeight: "600", color: "#14468C" }}>
-                                Add Natural of Biomaterial
+                                Update Weather Research Analysis
                             </h4>
                             <div className="page-title-right">
                                 <button
                                     className="btn btn-primary mb-2"
                                     style={{ backgroundColor: "#14468C", border: "none" }}
-                                    onClick={() => navigate("/admin/naturalof-biomaterials")}
+                                    onClick={() => navigate("/admin/weather-research-analysises")}
                                 >
                                     <FaLongArrowAltLeft /> Back
                                 </button>
@@ -70,46 +76,43 @@ function AddNatureofBiomaterial() {
                         </div>
                     </Col>
                 </Row>
-
-                <div className="container">
-                    <Card>
-                        <Card.Body>
-                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Card>
+                    <Card.Body>
+                        <div className="container">
+                            <Form onSubmit={handleUpdateUser}>
                                 <Row className="mb-3">
                                     <Form.Group as={Col} md="6" controlId="name">
-                                        <Form.Label>Name of Natural Biomaterial<span className="text-danger">*</span></Form.Label>
+                                        <Form.Label>Name of Weather Research Analysis <span className="text-danger">*</span></Form.Label>
                                         <Form.Control
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             required
-                                            placeholder="name"
                                             autoComplete="off"
                                         />
                                     </Form.Group>
 
                                     <Form.Group as={Col} md="6" controlId="slug">
-                                        <Form.Label>Slug of Natural Biomaterial<span className="text-danger">*</span></Form.Label>
+                                        <Form.Label>Slug of Weather Research Analysis <span className="text-danger">*</span></Form.Label>
                                         <Form.Control
                                             value={slug}
                                             onChange={(e) => setSlug(e.target.value)}
                                             required
-                                            placeholder="Slug"
                                             autoComplete="off"
                                         />
                                     </Form.Group>
                                 </Row>
+
                                 <Button type="submit" disabled={loading}>
-                                    {loading ? "Adding..." : "Add Natural Biomaterial"}
+                                    {loading ? "Updating..." : "Update Research Analysis"}
                                 </Button>
                             </Form>
-                        </Card.Body>
-                    </Card>
-                </div>
+                        </div>
+                    </Card.Body>
+                </Card>
             </Container>
         </div>
     );
 }
 
-export default AddNatureofBiomaterial;
-
+export default EditWeatherResearchAnalysis;
 

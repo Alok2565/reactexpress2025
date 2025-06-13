@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import { CDBBtn } from "cdbreact";
 import { Container, Row, Col, Button, Form, Card, CardBody, Modal } from 'react-bootstrap';
 import { FaInfoCircle, FaList, FaCheckCircle, FaLongArrowAltLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { HsCodeOptionsDescription, useNatureOfBiomaterialOptions, useWhereSampleCollectedOption, selectSpecifyPurposeOption, funcwhetherSamplesUsedResearchOption, funcPurposeofSamplesOption, useQuantityOfSampleExportedOptions } from '../../modules/ExporterSelectData';
+import { HsCodeOptionsDescription, useNatureOfBiomaterialOptions, useWhereSampleCollectedOption, useSelectSpecifyPurposeOptions, useFuncwhetherSamplesUsedResearchOptions, funcPurposeofSamplesOption, useQuantityOfSampleExportedOptions } from '../../modules/ExporterSelectData';
 import ValidationNocRequest from "./ValidationNocRequest";
 
 const { HsCodeOptions, HsCodeDescrip } = HsCodeOptionsDescription();
 // const { nature_of_biomaterialoptions } = natureOfBiomaterialOptions();
 
-const { SpecifyPurposeOption } = selectSpecifyPurposeOption();
-const { whetherSamplesUsedResearchOption } = funcwhetherSamplesUsedResearchOption();
+
 const { PurposeofSamplesOption } = funcPurposeofSamplesOption();
 
 
@@ -20,6 +19,9 @@ function ApplyNocRequest() {
     const { nature_of_biomaterialoptions } = useNatureOfBiomaterialOptions();
     const { whereSampleCollectedOption } = useWhereSampleCollectedOption();
     const { quantityofSampleExported } = useQuantityOfSampleExportedOptions();
+    const { SpecifyPurposeOption } = useSelectSpecifyPurposeOptions();
+    const { whetherSamplesUsedResearchOption } = useFuncwhetherSamplesUsedResearchOptions();
+
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         iec_code: "",

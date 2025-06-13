@@ -52,6 +52,12 @@ import ListSamplesCollected from './admin/components/admins/ListSamplesCollected
 import ListQuantityofSamples from './admin/components/admins/ListQuantityofSamples';
 import AddQuantityofSample from './admin/components/admins/AddQuantityofSample';
 import EditQuantityofSample from './admin/components/admins/EditQuantityofSample';
+import EditPurposeofEndUse from './admin/components/admins/EditPurposeofEndUse';
+import AddPurposeofEndUse from './admin/components/admins/AddPurposeofEndUse';
+import ListPurposeofEndUses from './admin/components/admins/ListPurposeofEndUses';
+import EditWeatherResearchAnalysis from './admin/components/admins/EditWeatherResearchAnalysis';
+import AddWeatherResearchAnalysis from './admin/components/admins/AddWeatherResearchAnalysis';
+import ListWeatherResearchAnalysises from './admin/components/admins/ListWeatherResearchAnalysises';
 
 
 function App() {
@@ -101,6 +107,14 @@ function App() {
           <Route exact path="/admin/quantityof-samples" element={<ProtectedRoute><ListQuantityofSamples /></ProtectedRoute>} />
           <Route exact path="/admin/quantityof-sample/add_new" element={<ProtectedRoute><AddQuantityofSample /></ProtectedRoute>} />
           <Route path="/admin/quantityof-sample/edit/:id" element={<ProtectedRoute><EditQuantityofSample /></ProtectedRoute>} />
+
+          <Route exact path="/admin/purposeof-enduses" element={<ProtectedRoute><ListPurposeofEndUses /></ProtectedRoute>} />
+          <Route exact path="/admin/purposeof-enduse/add_new" element={<ProtectedRoute><AddPurposeofEndUse /></ProtectedRoute>} />
+          <Route path="/admin/purposeof-enduse/edit/:id" element={<ProtectedRoute><EditPurposeofEndUse /></ProtectedRoute>} />
+
+          <Route exact path="/admin/weather-research-analysises" element={<ProtectedRoute><ListWeatherResearchAnalysises /></ProtectedRoute>} />
+          <Route exact path="/admin/weather-research-analysis/add_new" element={<ProtectedRoute><AddWeatherResearchAnalysis /></ProtectedRoute>} />
+          <Route path="/admin/weather-research-analysis/edit/:id" element={<ProtectedRoute><EditWeatherResearchAnalysis /></ProtectedRoute>} />
 
           <Route exact path="/admin/impexp-holders" element={<ProtectedRoute><ImpExpHolderLists /></ProtectedRoute>} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}
