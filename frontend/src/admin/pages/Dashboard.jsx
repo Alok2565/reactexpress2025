@@ -12,35 +12,31 @@ function Dashboard() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
-        const fetchDashboardData = async () => {
-            const token = localStorage.getItem("token");
+    const fetchDashboardData = async () => {
+        const token = localStorage.getItem("token");
 
-            if (!token) {
-                navigate('/unauthorized')
-                ///window.location.href = "/unauthorized"; // not logged in
-                //navigate("admin/login")
-                return;
-            }
-
-            try {
-                const res = await axios.get("http://localhost:5000/api/admin/dashboard", {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setData(res.data.message);
-            } catch (err) {
-                if (err.response?.status === 401 || err.response?.status === 403) {
-                    navigate('/unauthorized') // not authorized
-                } else {
-                    setError("Something went wrong");
+        if (!token) {
+            navigate('/unauthorized');
+            return;
+        }
+        try {
+            const res = await axios.get("http://localhost:5000/api/admin/dashboard", {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
+            })
+            setData(res.data.message);
+        } catch (err) {
+            if (err.response?.status === 401 || err.response?.status === 403) {
+                navigate('/unauthorized');
+            } else {
+                setError("Something went wrong");
             }
-        };
+        }
+    };
 
-        fetchDashboardData();
-    }, []);
+    fetchDashboardData();
+}, [navigate]);
     return (
         <>
 
@@ -59,6 +55,8 @@ function Dashboard() {
                                 </div>
                             </div>
                         </div>
+                        {data && <p>{data}</p>}
+                        {error && <p style={{ color: "red" }}>{error}</p>}
                         <div className="card">
                             <div className="card-body">
                                 <div className="row g-3">

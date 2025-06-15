@@ -58,6 +58,12 @@ import ListPurposeofEndUses from './admin/components/admins/ListPurposeofEndUses
 import EditWeatherResearchAnalysis from './admin/components/admins/EditWeatherResearchAnalysis';
 import AddWeatherResearchAnalysis from './admin/components/admins/AddWeatherResearchAnalysis';
 import ListWeatherResearchAnalysises from './admin/components/admins/ListWeatherResearchAnalysises';
+import EditPurposeofSampleStorage from './admin/components/admins/EditPurposeofSampleStorage';
+import AddPurposeofSampleStorage from './admin/components/admins/AddPurposeofSampleStorage';
+import ListPurposeofSampleStorage from './admin/components/admins/ListPurposeofSampleStorage';
+import EditHomeBanner from './admin/components/admins/EditHomeBanner';
+import AddHomeBanner from './admin/components/admins/AddHomeBanner';
+import ListHomeBanners from './admin/components/admins/ListHomeBanners';
 
 
 function App() {
@@ -92,6 +98,11 @@ function App() {
           <Route exact path="/admin/user/add/" element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
           <Route path="/admin/user/edit/:id" element={<ProtectedRoute><EditUser /></ProtectedRoute>} />
 
+          {/* Home Banners */}
+          <Route exact path="/admin/home-banners/" element={<ProtectedRoute><ListHomeBanners /></ProtectedRoute>} />
+          <Route exact path="/admin/home-banner/add_new/" element={<ProtectedRoute><AddHomeBanner /></ProtectedRoute>} />
+          <Route path="/admin/home-banner/edit/:id" element={<ProtectedRoute><EditHomeBanner /></ProtectedRoute>} />
+
           <Route exact path="/admin/hscode-items" element={<ProtectedRoute><ListHsCodeItems /></ProtectedRoute>} />
           <Route exact path="/admin/hscode-item/add_new" element={<ProtectedRoute><AddHsCodeItem /></ProtectedRoute>} />
           <Route path="/admin/hscode-item/edit/:id" element={<ProtectedRoute><EditHsCodeItem /></ProtectedRoute>} />
@@ -115,6 +126,10 @@ function App() {
           <Route exact path="/admin/weather-research-analysises" element={<ProtectedRoute><ListWeatherResearchAnalysises /></ProtectedRoute>} />
           <Route exact path="/admin/weather-research-analysis/add_new" element={<ProtectedRoute><AddWeatherResearchAnalysis /></ProtectedRoute>} />
           <Route path="/admin/weather-research-analysis/edit/:id" element={<ProtectedRoute><EditWeatherResearchAnalysis /></ProtectedRoute>} />
+
+          <Route exact path="/admin/purposeof-samples-storage" element={<ProtectedRoute><ListPurposeofSampleStorage /></ProtectedRoute>} />
+          <Route exact path="/admin/purposeof-sample-storage/add_new" element={<ProtectedRoute><AddPurposeofSampleStorage /></ProtectedRoute>} />
+          <Route path="/admin/purposeof-sample-storage/edit/:id" element={<ProtectedRoute><EditPurposeofSampleStorage /></ProtectedRoute>} />
 
           <Route exact path="/admin/impexp-holders" element={<ProtectedRoute><ImpExpHolderLists /></ProtectedRoute>} />
           {/* <Route exact path="/admin/add-impexp-holder/" element={<Register/>} /> */}

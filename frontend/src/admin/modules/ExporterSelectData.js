@@ -175,16 +175,43 @@ export function useFuncwhetherSamplesUsedResearchOptions() {
     return { whetherSamplesUsedResearchOption };
 }
 
-export function funcPurposeofSamplesOption() {
-    return {
-        PurposeofSamplesOption: [
-            { value: "Retesting purposes", label: "Retesting purposes" },
-            { value: "Further Analysis", label: "Further Analysis" },
+// export function funcPurposeofSamplesOption() {
+//     return {
+//         PurposeofSamplesOption: [
+//             { value: "Retesting purposes", label: "Retesting purposes" },
+//             { value: "Further Analysis", label: "Further Analysis" },
 
-        ]
-    };
+//         ]
+//     };
+// }
+
+export function useFuncPurposeofSamplesOption() {
+    const [PurposeofSamplesOption, setPurposeofSamplesOption] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/api/samples_storage")
+            .then((res) => {
+                console.log("API response:", res.data);
+
+                const filtered = res.data
+                    .filter((item) => Number(item.status) === 1)
+                    .map((item) => ({
+                        id: item._id || item.id,
+                        value: item.name || item.value,
+                        label: item.name || item.value,
+                    }))
+                    .sort((a, b) => a.id.localeCompare(b.id));
+
+                setPurposeofSamplesOption(filtered);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch where sample collected options", err);
+            });
+    }, []);
+
+    return { PurposeofSamplesOption };
 }
-
 // export function quantityofSampleExportedOptions() {
 //     return {
 //         quantityofSampleExported: [

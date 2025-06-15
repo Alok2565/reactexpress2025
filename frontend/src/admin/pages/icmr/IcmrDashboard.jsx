@@ -5,11 +5,11 @@ import { FaEdit, FaListAlt } from "react-icons/fa";
 import { RiDraftFill } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
 import { TiArrowRightThick } from "react-icons/ti";
-import axios from "axios";
+// import axios from "axios";
 
 function IcmrDashboard() {
-    const [data, setData] = useState("");
-    const [error, setError] = useState("");
+    // const [data, setData] = useState("");
+    // const [error, setError] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -60,6 +60,7 @@ function IcmrDashboard() {
                         </div> */}
                         {/* {data && <p>{data}</p>}
                         {error && <p style={{ color: "red" }}>{error}</p>} */}
+                        
                         <div className="card">
                             <div className="card-body">
                                 <div className="row g-3">

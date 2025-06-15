@@ -5,7 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 dotenv.config();
 connectDB();
-
+const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -22,6 +22,9 @@ app.use("/api/samples_collected", require("./routes/SampleCollectedRoutes"));
 app.use("/api/quantityof_samples", require("./routes/QuantitySampleRoutes"));
 app.use("/api/purposeof_end_uses", require("./routes/purposeofEndUseRoutes"));
 app.use("/api/research_analysises", require("./routes/WeatherResearchAnalysisRoutes"));
+app.use("/api/samples_storage", require("./routes/PurposeofSampleStorageRoutes"));
+app.use("/api/home_sliders", require("./routes/HomeBannerSliderRoutes"));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use("/api/login", require("./routes/loginRoutes"));
 app.use("/api/impexp_login", require("./routes/impexpLoginRoutes"));

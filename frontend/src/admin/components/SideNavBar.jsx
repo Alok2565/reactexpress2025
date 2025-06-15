@@ -137,10 +137,10 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("home_slider")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> All Home Sliders</Link>
+                                        <Link to="/admin/home-banners" className="submenu-link"><LiaFileExportSolid /> All Home Sliders</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Add New Slider</Link>
+                                        <Link to="/admin/home-banner/add_new" className="submenu-link"><LiaFileExportSolid /> Add New Slider</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
@@ -339,15 +339,15 @@ function SideNavBar() {
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaFileSignature />}
-                                    label="Samples Exported Volume"
+                                    label="Purp. of Samples Storage"
                                     className="submenu-custom"
                                     open={openMenu === "exported_volumn"}
                                     onClick={() => handleMenuClick("exported_volumn")}>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><FaFileSignature /> All Samples Exported Volume</Link>
+                                        <Link to="admin/purposeof-samples-storage" className="submenu-link"><FaFileSignature /> All Samples Storage</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><FaFileSignature /> Add New Samples Exported Volume</Link>
+                                        <Link to="/admin/purposeof-sample-storage/add_new" className="submenu-link"><FaFileSignature /> Add Samples Storage</Link>
                                     </MenuItem>
                                 </SubMenu>
 
