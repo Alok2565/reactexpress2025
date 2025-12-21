@@ -85,8 +85,8 @@ function LoginImpExp() {
           <Form.Group className="mb-3">
             <Form.Label className="d-flex justify-content-between">
               Password
-              <Link to="#" style={{ textDecoration: "none", fontSize: "17px" }}>
-                Reset Password
+              <Link to="/imp-exp/forgot-password" style={{ textDecoration: "none", fontSize: "17px" }}>
+                Forgot Password
               </Link>
             </Form.Label>
             <Form.Control

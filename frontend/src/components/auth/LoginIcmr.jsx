@@ -76,7 +76,7 @@ function LoginIcmr() {
                     <Form.Group className="mb-3">
                         <Form.Label className="d-flex justify-content-between">
                             Password
-                            <Link to="#" style={{ textDecoration: "none", fontSize: "17px" }}>
+                            <Link to="/icmr/forgot-password" style={{ textDecoration: "none", fontSize: "17px" }}>
                                 Reset Password
                             </Link>
                         </Form.Label>

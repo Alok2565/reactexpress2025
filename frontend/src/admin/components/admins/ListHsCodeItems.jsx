@@ -27,7 +27,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 
-function ListNatureofBiomaterials() {
+function ListHsCodeItems() {
     const navigate = useNavigate()
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
@@ -305,5 +305,5 @@ function ListNatureofBiomaterials() {
     )
 }
 
-export default ListNatureofBiomaterials
+export default ListHsCodeItems
 

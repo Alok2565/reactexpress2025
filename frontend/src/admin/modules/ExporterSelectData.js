@@ -1,30 +1,60 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-export function HsCodeOptionsDescription() {
-    return {
-        HsCodeOptions: [
-            { value: "30021020", label: "30021020 - Antisera and other blood fractions and immunological products" },
-            { value: "30021091", label: "30021091 - Antisera and other blood fractions and immunological products" },
-            { value: "30021210", label: "30021210 - For diphtheria" },
-            { value: "30021220", label: "30021220 - For tetanus" },
-            { value: "30021230", label: "30021230 - For rabies" },
-            { value: "30021240", label: "30021240 - For snake venom" },
-            { value: "30021290", label: "30021290 - Others" },
-            { value: "30029010", label: "30029010 - Human Blood" }
-        ],
+// export function HsCodeOptionsDescription() {
+//     return {
+//         HsCodeOptions: [
+//             { value: "30021020", label: "30021020 - Antisera and other blood fractions and immunological products" },
+//             { value: "30021091", label: "30021091 - Antisera and other blood fractions and immunological products" },
+//             { value: "30021210", label: "30021210 - For diphtheria" },
+//             { value: "30021220", label: "30021220 - For tetanus" },
+//             { value: "30021230", label: "30021230 - For rabies" },
+//             { value: "30021240", label: "30021240 - For snake venom" },
+//             { value: "30021290", label: "30021290 - Others" },
+//             { value: "30029010", label: "30029010 - Human Blood" }
+//         ],
 
-        HsCodeDescrip: [
-            { value: "30021020", description: "Antisera and other blood fractions and immunological products" },
-            { value: "30021091", description: "Antisera and other blood fractions and immunological products" },
-            { value: "30021210", description: "For diphtheria" },
-            { value: "30021220", description: "For tetanus" },
-            { value: "30021230", description: "For rabies" },
-            { value: "30021240", description: "For snake venom" },
-            { value: "30021290", description: "Others" },
-            { value: "30029010", description: "Human Blood" }
-        ]
+//         HsCodeDescrip: [
+//             { value: "30021020", description: "Antisera and other blood fractions and immunological products" },
+//             { value: "30021091", description: "Antisera and other blood fractions and immunological products" },
+//             { value: "30021210", description: "For diphtheria" },
+//             { value: "30021220", description: "For tetanus" },
+//             { value: "30021230", description: "For rabies" },
+//             { value: "30021240", description: "For snake venom" },
+//             { value: "30021290", description: "Others" },
+//             { value: "30029010", description: "Human Blood" }
+//         ]
+//     };
+// }
+export function useHsCodeOptionsDescription() {
+  const [HsCodeOptions, setHsCodeOptions] = useState([]);
+  const [HsCodeDescrip, setHsCodeDescrip] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/hscodes");
+        const data = res.data;
+        data.sort((a, b) => a.hs_code.localeCompare(b.hs_code));
+        const options = data.map((item) => ({
+          value: item.hs_code,
+          label: `${item.hs_code} - ${item.description}`,
+        }));
+        const descriptions = data.map((item) => ({
+          value: item.hs_code,
+          description: item.description,
+        }));
+        setHsCodeOptions(options);
+        setHsCodeDescrip(descriptions);
+      } catch (error) {
+        alert("Failed to fetch HS code data:", error);
+        //console.error("Failed to fetch HS code data:", error);
+      }
     };
+    fetchData();
+  }, []);
+
+  return { HsCodeOptions, HsCodeDescrip };
 }
 
 export function useNatureOfBiomaterialOptions() {
@@ -34,7 +64,7 @@ export function useNatureOfBiomaterialOptions() {
         axios
             .get("http://localhost:5000/api/natutalof_biomaterials")
             .then((res) => {
-                console.log("API response:", res.data);
+                //console.log("API response:", res.data);
 
                 const filtered = res.data
                     .filter((item) => Number(item.status) === 1)
@@ -47,8 +77,9 @@ export function useNatureOfBiomaterialOptions() {
 
                 setNature_of_biomaterialoptions(filtered);
             })
-            .catch((err) => {
-                console.error("Failed to fetch biomaterial options", err);
+            .catch((error) => {
+                alert("Failed to fetch HS code data:", error);
+                //console.error("Failed to fetch biomaterial options", err);
             });
     }, []);
 
@@ -75,7 +106,7 @@ export function useWhereSampleCollectedOption() {
         axios
             .get("http://localhost:5000/api/samples_collected")
             .then((res) => {
-                console.log("API response:", res.data);
+                //console.log("API response:", res.data);
 
                 const filtered = res.data
                     .filter((item) => Number(item.status) === 1)
@@ -89,7 +120,8 @@ export function useWhereSampleCollectedOption() {
                 setWhereSampleCollected(filtered);
             })
             .catch((err) => {
-                console.error("Failed to fetch where sample collected options", err);
+                alert("Failed to fetch where sample collected options", err);
+                //console.error("Failed to fetch where sample collected options", err);
             });
     }, []);
 
@@ -113,7 +145,7 @@ export function useSelectSpecifyPurposeOptions() {
         axios
             .get("http://localhost:5000/api/purposeof_end_uses")
             .then((res) => {
-                console.log("API response:", res.data);
+                //console.log("API response:", res.data);
 
                 const filtered = res.data
                     .filter((item) => Number(item.status) === 1)
@@ -127,7 +159,8 @@ export function useSelectSpecifyPurposeOptions() {
                 setSpecifyPurposeOption(filtered);
             })
             .catch((err) => {
-                console.error("Failed to fetch quantity of sample exported options", err);
+                alert("Failed to fetch quantity of sample exported options", err);
+                //console.error("Failed to fetch quantity of sample exported options", err);
             });
     }, []);
 
@@ -154,7 +187,7 @@ export function useFuncwhetherSamplesUsedResearchOptions() {
         axios
             .get("http://localhost:5000/api/research_analysises")
             .then((res) => {
-                console.log("API response:", res.data);
+                //console.log("API response:", res.data);
 
                 const filtered = res.data
                     .filter((item) => Number(item.status) === 1)
@@ -168,7 +201,8 @@ export function useFuncwhetherSamplesUsedResearchOptions() {
                 setWhetherSamplesUsedResearchOption(filtered);
             })
             .catch((err) => {
-                console.error("Failed to fetch quantity of sample exported options", err);
+                alert("Failed to fetch quantity of sample exported options", err)
+                //console.error("Failed to fetch quantity of sample exported options", err);
             });
     }, []);
 
@@ -192,7 +226,7 @@ export function useFuncPurposeofSamplesOption() {
         axios
             .get("http://localhost:5000/api/samples_storage")
             .then((res) => {
-                console.log("API response:", res.data);
+                //console.log("API response:", res.data);
 
                 const filtered = res.data
                     .filter((item) => Number(item.status) === 1)
@@ -206,7 +240,8 @@ export function useFuncPurposeofSamplesOption() {
                 setPurposeofSamplesOption(filtered);
             })
             .catch((err) => {
-                console.error("Failed to fetch where sample collected options", err);
+                alert("Failed to fetch where sample collected options", err);
+                //console.error("Failed to fetch where sample collected options", err);
             });
     }, []);
 
@@ -230,7 +265,7 @@ export function useQuantityOfSampleExportedOptions() {
         axios
             .get("http://localhost:5000/api/quantityof_samples")
             .then((res) => {
-                console.log("API response:", res.data);
+                //console.log("API response:", res.data);
 
                 const filtered = res.data
                     .filter((item) => Number(item.status) === 1)
@@ -244,7 +279,8 @@ export function useQuantityOfSampleExportedOptions() {
                 setQuantityOfSampleExported(filtered);
             })
             .catch((err) => {
-                console.error("Failed to fetch quantity of sample exported options", err);
+                alert("Failed to fetch quantity of sample exported options", err);
+                //console.error("Failed to fetch quantity of sample exported options", err);
             });
     }, []);
 

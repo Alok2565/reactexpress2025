@@ -194,7 +194,7 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("pages")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> sdfsAll Pages</Link>
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Pages</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
                                         <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New Page</Link>
@@ -225,10 +225,10 @@ function SideNavBar() {
                                     onClick={() => handleMenuClick("doc_master")}
                                 >
                                     <MenuItem className="submenu-item">
-                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> All Documents</Link>
+                                        <Link to="/admin/doc-masters" className="submenu-link"><LiaFileExportSolid /> All Documents</Link>
                                     </MenuItem>
                                     <MenuItem className="submenu-item">
-                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Add New document</Link>
+                                        <Link to="/admin/doc-master/add_new" className="submenu-link"><LiaFileExportSolid /> Add New document</Link>
                                     </MenuItem>
                                 </SubMenu>
                                 <SubMenu
@@ -506,6 +506,87 @@ function SideNavBar() {
                                 >
                                     <MenuItem className="submenu-item">
                                         <Link to="/icmr/profile" className="submenu-link">Profile Settings</Link>
+                                    </MenuItem>
+                                </SubMenu>
+
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Exporter Applications"
+                                    className="submenu-custom"
+                                    open={openMenu === "export"}
+                                    onClick={() => handleMenuClick("export")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/icmr/exporters" className="submenu-link"><LiaFileExportSolid /> Fresh Applications<br /> &nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Archive Applications <br />&nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/icmr/rejct-applications" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Applications With <br />&nbsp;&nbsp;&nbsp;Committee Members</Link>
+                                    </MenuItem>
+                                    {/* <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC Issued</Link>
+                                    </MenuItem> */}
+                                </SubMenu>
+                                <SubMenu
+                                    icon={<FaFileExport />}
+                                    label="Importer Applications"
+                                    className="submenu-custom"
+                                    open={openMenu === "import"}
+                                    onClick={() => handleMenuClick("import")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/icmr/exporters" className="submenu-link"><LiaFileExportSolid /> Fresh Applications<br /> &nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Archive Applications <br />&nbsp;&nbsp;&nbsp;Received</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/icmr/rejct-applications" className="submenu-link"><LiaFileExportSolid /> Reject Applications</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Applications With <br />&nbsp;&nbsp;&nbsp;Committee Members</Link>
+                                    </MenuItem>
+                                    {/* <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC Issued</Link>
+                                    </MenuItem> */}
+                                </SubMenu>
+
+                                <SubMenu
+                                    icon={<FaChartArea />}
+                                    label="Total NOC Issued"
+                                    className="submenu-custom"
+                                    open={openMenu === "decision"}
+                                    onClick={() => handleMenuClick("decision")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="#" className="submenu-link"><LiaFileExportSolid /> Exporter NOC</Link>
+                                    </MenuItem>
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/imp-exp/exporter" className="submenu-link"><LiaFileExportSolid /> Importer NOC</Link>
+                                    </MenuItem>
+                                </SubMenu>
+                            </>
+                        )}
+                        {/* User Sidebar Committee */}
+                        {userRole === "committee" && (
+                            <>
+                                <MenuItem component={<NavLink to="/committee/dashboard" />} icon={<AiFillDashboard />} className="menu-item">
+                                    Dashboard
+                                </MenuItem>
+                                <SubMenu
+                                    icon={<FaUser />}
+                                    label="Profile"
+                                    className="submenu-custom"
+                                    open={openMenu === "profile"}
+                                    onClick={() => handleMenuClick("profile")}
+                                >
+                                    <MenuItem className="submenu-item">
+                                        <Link to="/committee/profile" className="submenu-link">Profile Settings</Link>
                                     </MenuItem>
                                 </SubMenu>
 

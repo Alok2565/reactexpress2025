@@ -719,7 +719,7 @@ function ApplyNocRequest() {
                                                 <Row>
                                     <CardBody>
                                     <Form.Group className="mb-3">
-                                                        <Form.Label><span className="d-flex"><Form.Check type="checkbox" name="certifythat" aria-label="checkbox 1" /> &nbsp;<span class="text-danger">*</span>&nbsp;I certify that the information provided in this request form is true and correct to the best of my knowledge, and I hereby declare that the samples referred to herein will be utilized for the purpose of
+                                                        <Form.Label><span className="d-flex"><Form.Check type="checkbox" name="certifythat" aria-label="checkbox 1" /> &nbsp;<span className="text-danger">*</span>&nbsp;I certify that the information provided in this request form is true and correct to the best of my knowledge, and I hereby declare that the samples referred to herein will be utilized for the purpose of
                                                             <br /> </span><Form.Control type="text" placeholder="Only fetch data populated"
                                                                 value={formData.icertify} onChange={handleChange} readOnly /> only, the samples will not be used for any other purposes.
                                                         </Form.Label>

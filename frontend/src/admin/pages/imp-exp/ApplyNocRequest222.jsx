@@ -957,7 +957,7 @@ function ApplyNocRequest() {
                                             <CardBody>
                                                 <Row>
                                                     <Form.Group className="mb-3">
-                                                        <Form.Label><span className="d-flex"><Form.Check type="checkbox" name="certifythat" aria-label="checkbox 1" /> &nbsp;<span class="text-danger">*</span>&nbsp;I certify that the information provided in this request form is true and correct to the best of my knowledge, and I hereby declare that the samples referred to herein will be utilized for the purpose of
+                                                        <Form.Label><span className="d-flex"><Form.Check type="checkbox" name="certifythat" aria-label="checkbox 1" /> &nbsp;<span className="text-danger">*</span>&nbsp;I certify that the information provided in this request form is true and correct to the best of my knowledge, and I hereby declare that the samples referred to herein will be utilized for the purpose of
                                                             <br /> </span><Form.Control type="text" placeholder="Only fetch data populated"
                                                                 value={formData.icertify} onChange={handleChange} readOnly /> only, the samples will not be used for any other purposes.
                                                         </Form.Label>
@@ -979,11 +979,11 @@ function ApplyNocRequest() {
                                                     <Form.Group as={Col} md="12">
                                                         <span className="d-flex">
                                                             <Form.Check type="checkbox" aria-label="checkbox 1" />&nbsp;
-                                                            <span class="text-danger">*</span>
+                                                            <span className="text-danger">*</span>
                                                             &nbsp;Certified copy of commercial contract/Proforma invoice is enclosed. Further I undertake to comply FEMA regulations and other guidelines issued by RBI regarding foreign transactions.</span>
                                                     </Form.Group>
                                                     <Form.Group as={Col} md="6">
-                                                        <Form.Label className="mt-3"><strong><span class="text-danger">*</span>Upload Certified copy of commercial Contract/Proforma Invoice</strong></Form.Label>
+                                                        <Form.Label className="mt-3"><strong><span className="text-danger">*</span>Upload Certified copy of commercial Contract/Proforma Invoice</strong></Form.Label>
                                                         <Form.Control type="file" id="exampleFormControlFile1" name="certified_copy_proforma" onChange
                                                             value={formData.certified_copy_proforma} />
                                                     </Form.Group>
@@ -1001,7 +1001,7 @@ function ApplyNocRequest() {
                                             <CardBody>
                                                 <Row>
                                                     <Form.Group as={Col} md="6">
-                                                        <Form.Label className="mt-3"><strong><span class="text-danger">*</span>Upload duly signed declaration of letter</strong></Form.Label>
+                                                        <Form.Label className="mt-3"><strong><span className="text-danger">*</span>Upload duly signed declaration of letter</strong></Form.Label>
                                                         <Form.Control type="file" id="exampleFormControlFile1" name="declaration_letter" onChange
                                                             value={formData.declaration_letter} />
                                                     </Form.Group>

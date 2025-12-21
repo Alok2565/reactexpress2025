@@ -55,13 +55,13 @@ const crypto = require("crypto");
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
-
+  
   try {
     const userLogin = await UserLogin.findOne({ email }).populate({
       path: "user_id",
       populate: { path: "role_id" }
     });
-
+console.log(userLogin);
     if (!userLogin || !userLogin.password) {
       return res.status(401).json({ message: "Invalid credentials" });
     }

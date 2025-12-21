@@ -1,3 +1,15 @@
+// import React from 'react'
+
+// function AddDocMaster() {
+//   return (
+//     <div>
+//       Add Doc Master
+//     </div>
+//   )
+// }
+
+// export default AddDocMaster
+
 import React, { useState } from "react";
 import axios from "axios";
 import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
@@ -5,7 +17,7 @@ import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function AddHsCodeItem() {
-  const [hs_code, setHsCode] = useState("");
+  const [doc_type, setDcoType] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -24,13 +36,13 @@ function AddHsCodeItem() {
     setValidated(true);
     setLoading(true);
     const insertData = {
-      hs_code,
+      doc_type,
       description,
     };
     try {
-      await axios.post("http://localhost:5000/api/hscodes", insertData);
+      await axios.post("http://localhost:5000/api/doc_masters", insertData);
       navigate(
-        "/admin/hscode-items?success=Hs Code%20has%20been%20created%20successfully"
+        "/admin/doc-masters?success=Doc Masters%20has%20been%20created%20successfully"
       );
     } catch (error) {
       //console.error("Natural of biomaterial creation failed:", error.response?.data);
@@ -53,13 +65,13 @@ function AddHsCodeItem() {
                   color: "#14468C",
                 }}
               >
-                Add Harmonized System (HS) Codes
+                Add Doc Master
               </h4>
               <div className="page-title-right">
                 <button
                   className="btn btn-primary mb-2"
                   style={{ backgroundColor: "#14468C", border: "none" }}
-                  onClick={() => navigate("/admin/hscode-items")}
+                  onClick={() => navigate("/admin/doc-masters")}
                 >
                   <FaLongArrowAltLeft /> Back
                 </button>
@@ -73,23 +85,23 @@ function AddHsCodeItem() {
             <Card.Body>
               <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row className="mb-3">
-                  <Form.Group as={Col} md="6" controlId="hs_code">
+                  <Form.Group as={Col} md="6" controlId="Doc_Type">
                     <Form.Label>
-                      Harmonized System (HS) Code
+                      Document Type
                       <span className="text-danger">*</span>
                     </Form.Label>
                     <Form.Control
-                      value={hs_code}
-                      onChange={(e) => setHsCode(e.target.value)}
+                      value={doc_type}
+                      onChange={(e) => setDcoType(e.target.value)}
                       required
-                      placeholder="hs_code"
+                      placeholder="doc_type"
                       autoComplete="off"
                     />
                   </Form.Group>
 
                   <Form.Group as={Col} md="6" controlId="description">
                     <Form.Label>
-                      Harmonized System Description
+                      Doc Description
                       <span className="text-danger">*</span>
                     </Form.Label>
                     <Form.Control
@@ -104,7 +116,7 @@ function AddHsCodeItem() {
                   </Form.Group>
                 </Row>
                 <Button type="submit" disabled={loading}>
-                  {loading ? "Adding..." : "Add Hs Code"}
+                  {loading ? "Adding..." : "Add Doc Master"}
                 </Button>
               </Form>
             </Card.Body>

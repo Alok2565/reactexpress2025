@@ -10,7 +10,7 @@
 
 const express = require("express");
 const router = express.Router();
-const { createImpExp, getImpExpData, getImpExpById } = require("../controllers/ExporterAppController");
+const { createImpExp, getImpExpData, getImpExpById } = require("../controllers/ImpExpRegistrationController");
 
 router.post("/", createImpExp);
 router.get("/", getImpExpData);

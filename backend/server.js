@@ -40,6 +40,9 @@ app.use("/api/admin", require("./routes/adminDashboardRoutes"));
 
 app.use("/api/importers-exporters", require("./routes/ImpExpRoutes"));
 
+app.use("/api/doc_masters", require("./routes/DocMasterRoutes"));
+app.use("/api/exporter_applications",require("./routes/RequestNocRoutes"));
+
 
 // app.get('/logout', (req, res) => {
 //     req.session.destroy(err => {

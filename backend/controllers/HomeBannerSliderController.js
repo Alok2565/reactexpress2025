@@ -54,16 +54,7 @@ exports.getBannerSliderById = async (req, resp) => {
         resp.status(400).json({ error: err.message });
     }
 };
-// exports.updateBannerSlider = async (req, resp) => {
-//     try {
-//         const banner_slider = await BannerSlider.findByIdAndUpdate(req.params.id, req.body, { new: true });
-//         logger.info(`Home Banner Slider updated successfully: ${JSON.stringify({ name: banner_slider.name, slug: banner_slider.slug })}`, { code: '200' });
-//         resp.status(200).json(banner_slider);
-//     } catch (err) {
-//         logger.error(`Home Banner Slider update failed: ${err.message}`, { code: '500' });
-//         resp.status(400).json({ error: err.message });
-//     }
-// };
+
 exports.updateBannerSlider = async (req, resp) => {
     try {
         const bannerSlider = await BannerSlider.findById(req.params.id);

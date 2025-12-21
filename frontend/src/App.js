@@ -64,6 +64,12 @@ import ListPurposeofSampleStorage from './admin/components/admins/ListPurposeofS
 import EditHomeBanner from './admin/components/admins/EditHomeBanner';
 import AddHomeBanner from './admin/components/admins/AddHomeBanner';
 import ListHomeBanners from './admin/components/admins/ListHomeBanners';
+import ListDocMasters from './admin/components/admins/ListDocMasters';
+import AddDocMaster from './admin/components/admins/AddDocMaster';
+import EditDocMaster from './admin/components/admins/EditDocMaster';
+import ChangePassword from './components/auth/ChangePassword';
+import AllForgotPasswordLink from './components/auth/AllForgotPassowrdLink';
+import LoginOtpAuthenticate from './components/auth/LoginOtpAuthenticate';
 
 
 function App() {
@@ -83,7 +89,12 @@ function App() {
           <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
           <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
           <Route exact path="/:role_slug/pasword-generate" element={<AllUsersPasswordGenerate />} />
+          
+         <Route exact path="/imp-exp/forgot-password" element={<AllForgotPasswordLink/>} />
+          <Route exact path="/icmr/forgot-password" element={<AllForgotPasswordLink/>} />
+          <Route exact path="/committee/forgot-pasword" element={<AllForgotPasswordLink/>} />
           <Route exact path="/:role_slug/impexp-pasword-generate" element={<ImpExpPdwComponent />} />
+          <Route exact path="/login-otp" element={<LoginOtpAuthenticate/>} />
         </Route>
 
         <Route path="/" element={<Layouts />}>
@@ -97,11 +108,16 @@ function App() {
           <Route exact path="/admin/users/" element={<ProtectedRoute><Users /></ProtectedRoute>} />
           <Route exact path="/admin/user/add/" element={<ProtectedRoute><AddUser /></ProtectedRoute>} />
           <Route path="/admin/user/edit/:id" element={<ProtectedRoute><EditUser /></ProtectedRoute>} />
-
+          <Route path="/admin/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} /> 
+          
           {/* Home Banners */}
           <Route exact path="/admin/home-banners/" element={<ProtectedRoute><ListHomeBanners /></ProtectedRoute>} />
           <Route exact path="/admin/home-banner/add_new/" element={<ProtectedRoute><AddHomeBanner /></ProtectedRoute>} />
           <Route path="/admin/home-banner/edit/:id" element={<ProtectedRoute><EditHomeBanner /></ProtectedRoute>} />
+
+          <Route exact path="/admin/doc-masters/" element={<ProtectedRoute><ListDocMasters /></ProtectedRoute>} />
+          <Route exact path="/admin/doc-master/add_new/" element={<ProtectedRoute><AddDocMaster /></ProtectedRoute>} />
+          <Route path="/admin/doc-master/edit/:id" element={<ProtectedRoute><EditDocMaster /></ProtectedRoute>} />
 
           <Route exact path="/admin/hscode-items" element={<ProtectedRoute><ListHsCodeItems /></ProtectedRoute>} />
           <Route exact path="/admin/hscode-item/add_new" element={<ProtectedRoute><AddHsCodeItem /></ProtectedRoute>} />
@@ -142,6 +158,7 @@ function App() {
           <Route exact path="/imp-exp/add-new" element={<ProtectedRoute><ApplyNocRequest /></ProtectedRoute>} />
           <Route exact path="imp-exp/exporters" element={<ProtectedRoute><ExporterAppList /></ProtectedRoute>} />
           <Route exact path="imp-exp/rejct-applications" element={<ProtectedRoute><RejectExpAppList /></ProtectedRoute>} />
+          <Route exact path="imp-exp/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
 
           {/* ICMR Route */}
 
@@ -149,6 +166,7 @@ function App() {
           <Route exact path="/icmr/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route exact path="icmr/exporters" element={<ProtectedRoute><ExporterAppList /></ProtectedRoute>} />
           <Route exact path="icmr/rejct-applications" element={<ProtectedRoute><RejectExpAppList /></ProtectedRoute>} />
+          <Route exact path="icmr/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
 
           {/* Committee Route */}
           <Route exact path="committee/dashboard" element={<ProtectedRoute><CommDashboard /></ProtectedRoute>} />
