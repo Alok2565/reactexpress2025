@@ -26,7 +26,7 @@ app.use("/api/samples_storage", require("./routes/PurposeofSampleStorageRoutes")
 app.use("/api/home_sliders", require("./routes/HomeBannerSliderRoutes"));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use("/api/login", require("./routes/loginRoutes"));
+app.use("/api", require("./routes/loginRoutes"));
 app.use("/api/impexp_login", require("./routes/impexpLoginRoutes"));
 app.use("/api/impexp", require("./routes/ImpExpDashboardRoutes"));
 app.use("/api/password-setup", require("./routes/passwordRoutes"));

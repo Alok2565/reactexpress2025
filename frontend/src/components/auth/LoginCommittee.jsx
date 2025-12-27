@@ -11,42 +11,76 @@ function LoginCommittee() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // 🔒 Redirect if already logged in
+    // // 🔒 Redirect if already logged in
+    // useEffect(() => {
+    //     const role = localStorage.getItem("role");
+    //     if (role === "committee") {
+    //         navigate("/committee/dashboard");
+    //     }
+    // }, [navigate]);
+
+    // const LogiData = async (e) => {
+    //     e.preventDefault();
+
+    //     try {
+    //         const response = await axios.post("http://localhost:5000/api/login", {
+    //             email,
+    //             password,
+    //         });
+
+    //         const { token, user } = response.data;
+
+    //         localStorage.setItem("token", token);
+    //         localStorage.setItem("role", user.role);
+    //         localStorage.setItem("email", user.email);
+    //         localStorage.setItem("name", user.name);
+    //         localStorage.setItem("designation", user.designation);
+
+    //         if (user.role === "committee") {
+    //             navigate("/committee/dashboard");
+    //         } else {
+    //             navigate("/unauthorized");
+    //         }
+
+    //     } catch (err) {
+    //         console.error("Login failed:", err);
+    //         alert("Invalid credentials");
+    //     }
+    // };
     useEffect(() => {
-        const role = localStorage.getItem("role");
-        if (role === "committee") {
-            navigate("/committee/dashboard");
-        }
-    }, [navigate]);
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-    const LogiData = async (e) => {
-        e.preventDefault();
+  if (token && role === "committee") {
+    navigate("/committee/dashboard", { replace: true });
+  }
+}, [navigate]);
 
-        try {
-            const response = await axios.post("http://localhost:5000/api/login", {
-                email,
-                password,
-            });
+  const LogiData = async (e) => {
+    e.preventDefault();
 
-            const { token, user } = response.data;
+    if (!email || !password) {
+      alert("Email and password are required");
+      return;
+    }
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("role", user.role);
-            localStorage.setItem("email", user.email);
-            localStorage.setItem("name", user.name);
-            localStorage.setItem("designation", user.designation);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/login",
+        { email, password }
+      );
 
-            if (user.role === "committee") {
-                navigate("/committee/dashboard");
-            } else {
-                navigate("/unauthorized");
-            }
+      // 🔐 OTP REQUIRED
+      if (response.data.otp_required) {
+        sessionStorage.setItem("otp_token", response.data.otp_token);
+        navigate("/verify-otp");
+        return;
+      }
 
-        } catch (err) {
-            console.error("Login failed:", err);
-            alert("Invalid credentials");
-        }
-    };
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
 
     return (
         <Container>

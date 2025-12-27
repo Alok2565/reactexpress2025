@@ -1,5 +1,5 @@
-const ImpExpModel = require("../models/ImpoterExporter");
-const UserLogin = require("../models/UserLogin");
+const ImpExpModel = require("../models/ImpExpUser");
+const UserLogin = require("../models/ImpExpUserLogin");
 const logger = require("../utils/logger");
 const crypto = require("crypto");
 

@@ -128,17 +128,21 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const email = localStorage.getItem("email");
-    const name = localStorage.getItem("name");
-    const designation = localStorage.getItem("designation");
-    const role = localStorage.getItem("role");
-    const iec_code = localStorage.getItem("iec_code");
+  console.log("LS email:", localStorage.getItem("email"));
+  console.log("LS designation:", localStorage.getItem("designation"));
+  console.log("LS role:", localStorage.getItem("role"));
+}, []);
 
-    if (email || name || designation || role || iec_code) {
-      setUser({ email, name, designation, role, iec_code });
-      setUserRole(role);
-    }
-  }, []);
+  useEffect(() => {
+  const email = localStorage.getItem("email");
+  const designation = localStorage.getItem("designation");
+  const role = localStorage.getItem("role");
+  const iec_code = localStorage.getItem("iec_code");
+
+  setUser({ email, designation, role, iec_code });
+  setUserRole(role);
+}, []);
+
 
   const handleLogout = () => {
     try {
@@ -167,27 +171,59 @@ function Header() {
     }
   };
 
-  const renderUserInfo = () => {
-    if (!user || !userRole) return <span>Loading...</span>;
+  // const renderUserInfo = () => {
+  //   if (!user || !userRole) return <span>Loading...</span>;
 
-    if (userRole === "admin" || userRole === "icmr" || userRole === "committee") {
-      return (
-        <>
-          <h5 className="my-0 fw-normal text-success">{user.name}</h5>
-          <h6 className="my-0 fw-normal text-dark">{user.designation}</h6>
-        </>
-      );
-    } else if (userRole === "imp-exp") {
-      return (
-        <>
-          <h5 className="my-0 fw-normal text-success">{user.iec_code}</h5>
-          <h6 className="my-0 fw-normal text-dark">{user.designation}</h6>
-        </>
-      );
-    } else {
-      return <span>User</span>;
-    }
-  };
+  //   if (userRole === "admin" || userRole === "icmr" || userRole === "committee") {
+  //     return (
+  //       <>
+  //         <h5 className="my-0 fw-normal text-success">{user.email}</h5>
+  //         <h6 className="my-0 fw-normal text-dark">{user.designation}</h6>
+  //       </>
+  //     );
+  //   } else if (userRole === "imp-exp") {
+  //     return (
+  //       <>
+  //         <h5 className="my-0 fw-normal text-success">{user.iec_code}</h5>
+  //         <h6 className="my-0 fw-normal text-dark">{user.designation}</h6>
+  //       </>
+  //     );
+  //   } else {
+  //     return <span>User</span>;
+  //   }
+  // };
+  const renderUserInfo = () => {
+  if (!userRole) return <span>Loading...</span>;
+
+  if (["admin", "icmr", "committee"].includes(userRole)) {
+    return (
+      <>
+        <h5 className="my-0 fw-normal text-success">
+          {user?.email}
+        </h5>
+        <h6 className="my-0 fw-normal text-dark">
+          {user?.designation || "-"}
+        </h6>
+      </>
+    );
+  }
+
+  if (userRole === "imp-exp") {
+    return (
+      <>
+        <h5 className="my-0 fw-normal text-success">
+          {user?.iec_code}
+        </h5>
+        <h6 className="my-0 fw-normal text-dark">
+          {user?.designation || "-"}
+        </h6>
+      </>
+    );
+  }
+
+  return <span>User</span>;
+};
+
 
   const getProfilePath = () => {
     if (userRole === "admin") return "/admin/profile";
@@ -245,7 +281,7 @@ function Header() {
               >
                 <FaUserTie className="me-2" /> Profile
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="{getChangePasswordPath()}">
+              <NavDropdown.Item as={Link} to={getChangePasswordPath()}>
                 <FaLock className="me-2" /> Change Password
               </NavDropdown.Item>
               <NavDropdown.Divider />

@@ -70,6 +70,7 @@ import EditDocMaster from './admin/components/admins/EditDocMaster';
 import ChangePassword from './components/auth/ChangePassword';
 import AllForgotPasswordLink from './components/auth/AllForgotPassowrdLink';
 import LoginOtpAuthenticate from './components/auth/LoginOtpAuthenticate';
+import OTPVerify from './components/auth/OTPVerify';
 
 
 function App() {
@@ -95,6 +96,7 @@ function App() {
           <Route exact path="/committee/forgot-pasword" element={<AllForgotPasswordLink/>} />
           <Route exact path="/:role_slug/impexp-pasword-generate" element={<ImpExpPdwComponent />} />
           <Route exact path="/login-otp" element={<LoginOtpAuthenticate/>} />
+          <Route exact path="/verify-otp" element={<OTPVerify/>}/>
         </Route>
 
         <Route path="/" element={<Layouts />}>

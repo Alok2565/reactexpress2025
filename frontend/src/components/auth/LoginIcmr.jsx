@@ -11,42 +11,77 @@ function LoginIcmr() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // 🔒 Redirect if already logged in
-    useEffect(() => {
+//     // 🔒 Redirect if already logged in
+//     useEffect(() => {
+//     const role = localStorage.getItem("role");
+//     if (role === "icmr") {
+//         navigate("/icmr/dashboard");
+//     }
+// }, [navigate]);
+
+//     const LogiData = async (e) => {
+//         e.preventDefault();
+
+//         try {
+//             const response = await axios.post("http://localhost:5000/api/login", {
+//                 email,
+//                 password,
+//             });
+
+//             const { token, user } = response.data;
+
+//             localStorage.setItem("token", token);
+//             localStorage.setItem("role", user.role);
+//             localStorage.setItem("email", user.email);
+//             localStorage.setItem("name", user.name);
+//             localStorage.setItem("designation", user.designation);
+
+//             if (user.role === "icmr") {
+//                 navigate("/icmr/dashboard");
+//             } else {
+//                 navigate("/unauthorized");
+//             }
+
+//         } catch (err) {
+//             console.error("Login failed:", err);
+//             alert("Invalid credentials");
+//         }
+//     };
+// 🔒 Redirect if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
-    if (role === "icmr") {
-        navigate("/icmr/dashboard");
+
+    if (token && role === "icmr") {
+      navigate("/icmr/dashboard", { replace: true });
     }
-}, [navigate]);
+  }, [navigate]);
 
-    const LogiData = async (e) => {
-        e.preventDefault();
+  const LogiData = async (e) => {
+    e.preventDefault();
 
-        try {
-            const response = await axios.post("http://localhost:5000/api/login", {
-                email,
-                password,
-            });
+    if (!email || !password) {
+      alert("Email and password are required");
+      return;
+    }
 
-            const { token, user } = response.data;
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/login",
+        { email, password }
+      );
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("role", user.role);
-            localStorage.setItem("email", user.email);
-            localStorage.setItem("name", user.name);
-            localStorage.setItem("designation", user.designation);
+      // 🔐 OTP REQUIRED
+      if (response.data.otp_required) {
+        sessionStorage.setItem("otp_token", response.data.otp_token);
+        navigate("/verify-otp");
+        return;
+      }
 
-            if (user.role === "icmr") {
-                navigate("/icmr/dashboard");
-            } else {
-                navigate("/unauthorized");
-            }
-
-        } catch (err) {
-            console.error("Login failed:", err);
-            alert("Invalid credentials");
-        }
-    };
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
 
     return (
         <Container>

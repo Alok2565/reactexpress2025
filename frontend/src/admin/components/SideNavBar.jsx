@@ -125,9 +125,10 @@ function SideNavBar() {
                                     open={openMenu === "profile"}
                                     onClick={() => handleMenuClick("profile")}
                                 >
-                                    <MenuItem className="submenu-item">
+                                    {/* <MenuItem className="submenu-item">
                                         <Link to="/admin/profile" className="submenu-link">Profile Settings</Link>
-                                    </MenuItem>
+                                    </MenuItem> */}
+                                    <MenuItem component={<Link to="/admin/profile"/>} className="submenu-link">Profile Settings</MenuItem>
                                 </SubMenu>
                                 <SubMenu
                                     icon={<FaSlidersH />}

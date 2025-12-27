@@ -11,16 +11,25 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
+            // const response = await axios.post("http://localhost:5000/api/login", {
+            //     email,
+            //     password,
+            // });
             const response = await axios.post("http://localhost:5000/api/login", {
-                email,
-                password,
-            });
+  email,
+  password,
+});
+
+if (response.data.otp_required) {
+  sessionStorage.setItem("otp_token", response.data.otp_token);
+  navigate("/verify-otp");
+}
 
             const { token, user } = response.data;
 
             // Save token and role to localStorage
             localStorage.setItem("token", token);
-            localStorage.setItem("role", user.role);
+            const role = localStorage.setItem("role", user.role);
             localStorage.setItem("email", user.email);
 
             // Redirect based on role
@@ -33,7 +42,7 @@ const LoginForm = () => {
             } else if (user.role === "imp-exp") {
                 navigate("/imp-exp/dashboard");
             } else {
-                navigate("/login"); // fallback
+                navigate(`${role}/login`); // fallback
             }
 
         } catch (err) {
