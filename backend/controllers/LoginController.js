@@ -61,10 +61,14 @@ exports.loginUser = async (req, res, next) => {
     logger.info(`OTP sent successfully to ${email}`);
 
     // ⛔ IMPORTANT: RETURN ONLY OTP RESPONSE
+    // return res.status(200).json({
+    //   otp_required: true,
+    //   otp_token: otpToken,
+    // });
     return res.status(200).json({
-      otp_required: true,
-      otp_token: otpToken,
-    });
+  otp_required: true,
+  otp_token: otpToken,
+});
   } catch (err) {
     logger.error("Login error", err);
     next(err);

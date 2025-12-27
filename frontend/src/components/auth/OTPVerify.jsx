@@ -252,7 +252,6 @@ const OTPVerify = () => {
       alert("Enter valid 6 digit OTP");
       return;
     }
-
     try {
       const res = await axios.post(
         "http://localhost:5000/api/verify-otp",

@@ -71,6 +71,8 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const UserLogin = require("../models/UserLogin");
 const User = require("../models/User");
+const ImpExpUserLogin = require("../models/ImpExpUserLogin");
+const ImpExpUser = require("../models/ImpExpUser");
 const logger = require("../utils/logger");
 
 exports.verifyOtp = async (req, res) => {
@@ -135,3 +137,92 @@ exports.verifyOtp = async (req, res) => {
     return res.status(401).json({ message: "OTP expired or invalid" });
   }
 };
+
+
+exports.verifyOtpImpExp = async (req, res) => {
+  try {
+    const { otp, otp_token } = req.body;
+
+    /* 1️⃣ Validate input */
+    if (!otp || !otp_token) {
+      return res.status(400).json({
+        message: "OTP and token are required",
+      });
+    }
+
+    /* 2️⃣ Verify OTP token */
+    const decoded = jwt.verify(otp_token, process.env.JWT_SECRET);
+
+    /* 3️⃣ Compare OTP */
+    const hashedOtp = crypto
+      .createHash("sha256")
+      .update(otp.trim())
+      .digest("hex");
+
+    if (hashedOtp !== decoded.otp) {
+      return res.status(401).json({ message: "Invalid OTP" });
+    }
+
+    /* 4️⃣ Fetch login record */
+    const impExpLogin = await ImpExpUserLogin.findById(decoded.uid);
+
+    if (!impExpLogin) {
+      return res.status(404).json({ message: "Login record not found" });
+    }
+
+    if (!impExpLogin.impexp_userId) {
+      return res.status(500).json({
+        message: "ImpExp user not linked with login record",
+      });
+    }
+
+    /* 5️⃣ Fetch actual ImpExp user + role */
+    const impExpUser = await ImpExpUser
+      .findById(impExpLogin.impexp_userId)
+      .populate("role_id");
+
+    if (!impExpUser || !impExpUser.role_id) {
+      return res.status(500).json({
+        message: "Role not assigned to Importer Exporter",
+      });
+    }
+
+    /* 6️⃣ Mark OTP verified */
+    impExpLogin.otp_verified = true;
+    await impExpLogin.save();
+
+    /* 7️⃣ Generate final auth token */
+    const token = jwt.sign(
+      {
+        id: impExpLogin._id,
+        iec_code: impExpLogin.iec_code,
+        role: impExpUser.role_id.role_slug,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+
+    logger.info(`OTP verified | IEC: ${impExpLogin.iec_code}`);
+
+    /* 8️⃣ Send response */
+    return res.status(200).json({
+      token,
+      user: {
+        iec_code: impExpLogin.iec_code,
+        email: impExpLogin.email,
+        name: impExpUser.name || null,
+        designation: impExpUser.designation || null,
+        role: impExpUser.role_id.role_slug,
+        role_name: impExpUser.role_id.role_name,
+      },
+    });
+
+  } catch (err) {
+    logger.error("OTP verification failed", err);
+    return res.status(401).json({
+      message: "OTP expired or invalid",
+    });
+  }
+};
+
+

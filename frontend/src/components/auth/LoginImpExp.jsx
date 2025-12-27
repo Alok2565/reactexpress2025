@@ -11,50 +11,91 @@ function LoginImpExp() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const role = localStorage.getItem("role");
+  //   if (role === "imp-exp") {
+  //     navigate("/imp-exp/dashboard");
+  //   }
+  // }, [navigate]);
+
+  // const LogiData = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!iec_code || !password) {
+  //     alert("Please fill in all fields");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.post("http://localhost:5000/api/impexp_login", {
+  //       iec_code,
+  //       password,
+  //     });
+
+  //     const { token, impexp_user } = response.data;
+
+  //     localStorage.setItem("token", token);
+  //     localStorage.setItem("role", impexp_user.role);
+  //     localStorage.setItem("iec_code", impexp_user.iec_code);
+  //     localStorage.setItem("name", impexp_user.name);
+  //     localStorage.setItem("designation", impexp_user.designation);
+
+  //     if (impexp_user.role === "imp-exp") {
+  //       navigate("/imp-exp/dashboard");
+  //     } else {
+  //       navigate("/unauthorized"); 
+  //     }
+  //   } catch (err) {
+  //     console.error("Login failed:", err);
+
+  //     if (err.response && err.response.data && err.response.data.message) {
+  //       alert(err.response.data.message);
+  //     } else {
+  //       alert("Login failed due to server error.");
+  //     }
+  //   }
+  // };
+
   useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (role === "imp-exp") {
-      navigate("/imp-exp/dashboard");
-    }
-  }, [navigate]);
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-  const LogiData = async (e) => {
-    e.preventDefault();
+  if (token && role === "imp-exp") {
+    navigate("/imp-exp/dashboard", { replace: true });
+  }
+}, [navigate]);
+  
+    const LogiData = async (e) => {
+  e.preventDefault();
 
-    if (!iec_code || !password) {
-      alert("Please fill in all fields");
+  if (!iec_code || !password) {
+    alert("IEC code and password are required");
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/impexp_login",
+      { iec_code, password }
+    );
+
+    console.log("LOGIN RESPONSE:", response.data);
+
+    // ✅ CORRECT OTP CHECK
+    if (response.data.otp_required) {
+      sessionStorage.setItem("otp_token", response.data.otp_token);
+      navigate("/otp-verify");
       return;
     }
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/impexp_login", {
-        iec_code,
-        password,
-      });
+    alert("Unexpected response from server");
 
-      const { token, impexp_user } = response.data;
+  } catch (err) {
+    console.error(err);
+    alert(err.response?.data?.message || "Login failed");
+  }
+};
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", impexp_user.role);
-      localStorage.setItem("iec_code", impexp_user.iec_code);
-      localStorage.setItem("name", impexp_user.name);
-      localStorage.setItem("designation", impexp_user.designation);
-
-      if (impexp_user.role === "imp-exp") {
-        navigate("/imp-exp/dashboard");
-      } else {
-        navigate("/unauthorized");
-      }
-    } catch (err) {
-      console.error("Login failed:", err);
-
-      if (err.response && err.response.data && err.response.data.message) {
-        alert(err.response.data.message);
-      } else {
-        alert("Login failed due to server error.");
-      }
-    }
-  };
 
   return (
     <Container>

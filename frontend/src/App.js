@@ -71,6 +71,7 @@ import ChangePassword from './components/auth/ChangePassword';
 import AllForgotPasswordLink from './components/auth/AllForgotPassowrdLink';
 import LoginOtpAuthenticate from './components/auth/LoginOtpAuthenticate';
 import OTPVerify from './components/auth/OTPVerify';
+import VerifyImpExpOtp from './components/auth/verifyImpExpOtp';
 
 
 function App() {
@@ -97,6 +98,8 @@ function App() {
           <Route exact path="/:role_slug/impexp-pasword-generate" element={<ImpExpPdwComponent />} />
           <Route exact path="/login-otp" element={<LoginOtpAuthenticate/>} />
           <Route exact path="/verify-otp" element={<OTPVerify/>}/>
+          <Route path="/otp-verify" element={<VerifyImpExpOtp />} />
+
         </Route>
 
         <Route path="/" element={<Layouts />}>
