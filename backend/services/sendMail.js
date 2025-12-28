@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 const sendMail = async ({ to, subject, html }) => {
   return transporter.sendMail({
-    from: `"ICMR Auth" <${process.env.SMTP_USER}>`,
+    from: `"User Auth" <${process.env.SMTP_USER}>`,
     to,
     subject,
     html,

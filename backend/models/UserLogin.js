@@ -6,16 +6,6 @@ const userLoginSchema = new mongoose.Schema({
     ref: "User",
     sparse: true
   },
-  impexp_userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Imp_Exp_Users",
-    sparse: true
-  },
-  iec_code: {
-    type: String,
-    unique: true,
-    sparse: true
-  },
   email: {
     type: String,
     unique: true,

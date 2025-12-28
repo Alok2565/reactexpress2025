@@ -11,13 +11,15 @@
 const express = require("express");
 const router = express.Router();
 
-const { loginUser } = require("../controllers/LoginController");
+const { loginUser, logoutUser } = require("../controllers/LoginController");
 const { verifyOtp } = require("../controllers/verifyOtpController");
+
 
 // LOGIN
 router.post("/login", loginUser);
 
 // VERIFY OTP
 router.post("/verify-otp", verifyOtp);
+router.post("/logout", logoutUser);
 
 module.exports = router;

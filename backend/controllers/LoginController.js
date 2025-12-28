@@ -1,4 +1,5 @@
 const UserLogin = require("../models/UserLogin");
+const LoginHistory = require("../models/UserLoginHistory");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../services/sendMail");
@@ -58,6 +59,15 @@ exports.loginUser = async (req, res, next) => {
       `,
     });
 
+
+const history = await LoginHistory.create({
+      login_type: "USER",
+      user_loginId: userLogin._id,
+      email: userLogin.email,
+      ip_address: req.ip,
+      browser: req.headers["user-agent"],
+      platform: req.headers["sec-ch-ua-platform"],
+    });
     logger.info(`OTP sent successfully to ${email}`);
 
     // ⛔ IMPORTANT: RETURN ONLY OTP RESPONSE
@@ -66,6 +76,7 @@ exports.loginUser = async (req, res, next) => {
     //   otp_token: otpToken,
     // });
     return res.status(200).json({
+        historyId: history._id,
   otp_required: true,
   otp_token: otpToken,
 });
@@ -75,7 +86,15 @@ exports.loginUser = async (req, res, next) => {
   }
 };
 
+exports.logoutUser = async (req, res) => {
+  const { historyId } = req.body;
 
+  await LoginHistory.findByIdAndUpdate(historyId, {
+    logout_datetime: new Date(),
+  });
+
+  res.json({ message: "Logged out successfully" });
+};
 
 // const UserLogin = require("../models/UserLogin");
 // const User = require("../models/User");
